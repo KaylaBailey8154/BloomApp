@@ -24,132 +24,132 @@ class _SignInState extends State<SignIn>{
     return Scaffold(
       body: CustomPaint(
         painter: ShapesPainter(),
-        child: Container(
-          height: 700,
-          child: new Column(
-            children: <Widget>[
+        child: SingleChildScrollView(
+          child: Container(
+            height: 700,
+            child: new Column(
+              children: <Widget>[
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0,90,0,0),
-                    child: Text(
-                      'BLOOM',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red[200],
-                        fontFamily: 'Archivo',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Image(
-                    image: AssetImage('assets/bloomlogo.png'),
-                    width: 100,
-                    height: 100,
-                  ),
-                ],
-
-              ),
-
-              Container(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 100, 10, 0),
-                      child: SizedBox(
-                        height: 50,
-                        width: 300,
-                        child: TextFormField(
-                          validator: (val)=> val.isEmpty? 'Enter an Email' : null,
-                          onChanged: (val){
-                            setState(() {
-                              email = val;
-                            });
-                          },
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: InputBorder.none,
-                              labelText: 'email'
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: SizedBox(
-                        height: 50,
-                        width: 300,
-                        child: TextFormField(
-                          validator: (val) => val.length <6 ? 'Enter a longer password': null,
-                          obscureText: true,
-                          onChanged: (val){
-                            setState(() {
-                              password = val;
-                            });
-                          },
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: InputBorder.none,
-                              labelText: 'password'
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 50,),
-                    RaisedButton(
-                      onPressed: () async{
-                        if(_formKey.currentState.validate()){
-                          print('valid');
-
-                        dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                        if(result == null)
-                        {
-                          setState(() {
-                            error = 'Incorrect credentials';
-                          });
-                        }
-                        }
-                      },
-                      color: Colors.green,
-                      child: Text('Login',
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0,90,0,0),
+                      child: Text(
+                        'BLOOM',
                         style: TextStyle(
-                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red[200],
+                          fontFamily: 'Archivo',
                         ),
                       ),
-
                     ),
-                    SizedBox(height: 12,),
-                    Text(error,
-                      style: TextStyle(color: Colors.red, fontSize: 14),),
-                    SizedBox(height: 20,),
-                    GestureDetector(
-                        child: Text("New User? Sign Up",
-                            style: TextStyle(
-                                color: Colors.black)),
-                        onTap: () {
-                          widget.toggleView();
-                          // do what you need to do when the text is gets clicked
-                        }
-                    ),
-
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage('assets/bloomlogo.png'),
+                      width: 100,
+                      height: 100,
+                    ),
+                  ],
                 ),
-              ),
+
+                Container(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 100, 10, 0),
+                        child: SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: TextFormField(
+                            validator: (val)=> val.isEmpty? 'Enter an Email' : null,
+                            onChanged: (val){
+                              setState(() {
+                                email = val;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: InputBorder.none,
+                                labelText: 'email'
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        child: SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: TextFormField(
+                            validator: (val) => val.length <6 ? 'Enter a longer password': null,
+                            obscureText: true,
+                            onChanged: (val){
+                              setState(() {
+                                password = val;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: InputBorder.none,
+                                labelText: 'password'
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 50,),
+                      RaisedButton(
+                        onPressed: () async{
+                          if(_formKey.currentState.validate()){
+                            print('valid');
+
+                          dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                          if(result == null)
+                          {
+                            setState(() {
+                              error = 'Incorrect credentials';
+                            });
+                          }
+                          }
+                        },
+                        color: Colors.green,
+                        child: Text('Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+
+                      ),
+                      SizedBox(height: 12,),
+                      Text(error,
+                        style: TextStyle(color: Colors.red, fontSize: 14),),
+                      SizedBox(height: 20,),
+                      GestureDetector(
+                          child: Text("New User? Sign Up",
+                              style: TextStyle(
+                                  color: Colors.black)),
+                          onTap: () {
+                            widget.toggleView();
+                            // do what you need to do when the text is gets clicked
+                          }
+                      ),
+
+                    ],
+                  ),
+                  ),
+                ),
 
 
 
@@ -159,9 +159,10 @@ class _SignInState extends State<SignIn>{
 
 
 
-            ],
-          ),
-              ),
+              ],
+            ),
+                ),
+        ),
 
           ),
 
