@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ class Register extends StatefulWidget {
 
   final Function toggleView;
   Register({this.toggleView});
+
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -200,7 +202,9 @@ class _RegisterState extends State<Register> {
                               height: 30,
                               width: 100,
                               child: FlatButton(
-                                onPressed: (){},
+                                onPressed: (){
+
+                                },
                                 color: Colors.red[200],
                                 child: Text('Browse'),
                                 shape: RoundedRectangleBorder(
@@ -234,10 +238,10 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                         ),
-
+                        SizedBox(height: 10,),
                         Text(error,
                           style: TextStyle(color: Colors.red, fontSize: 14),),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 5,),
                         GestureDetector(
                             child: Text("Existing User? Login",
                                 style: TextStyle(
@@ -248,7 +252,6 @@ class _RegisterState extends State<Register> {
                               // do what you need to do when the text is gets clicked
                             }
                         ),
-
                       ],
                     ),
                   ),
@@ -259,8 +262,6 @@ class _RegisterState extends State<Register> {
         ),
 
       ),
-
-
     );
   }
 }
