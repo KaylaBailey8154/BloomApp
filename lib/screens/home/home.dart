@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
 
@@ -19,19 +20,290 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Bloom'),
-        backgroundColor: Colors.green[300],
-        elevation: 0.0,
-        actions: <Widget>[FlatButton.icon(onPressed: () {
-          _showDetailsPanel();
-        },
-            icon: Icon(Icons.settings), label: Text('Settings')),
-          FlatButton.icon(onPressed: () async {
-            await _auth.signOut();
-          }, icon: Icon(Icons.person), label: Text('Logout')),
-
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Text(
+            'HOME',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Archivo',
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          backgroundColor: Colors.green,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),),
+          ),
+            leading: IconButton(
+              padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
+              onPressed: (){},
+              color: Colors.black,
+              iconSize: 30,
+              icon: Icon(Icons.arrow_back,),
+            ),
+          ),
+      ),
+      body: Container(
+        height:510 ,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.purpleAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'Add Stock',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/stock.png'),
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                   Padding(
+                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                     child: RaisedButton(
+                        onPressed: () {},
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Colors.yellowAccent,
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              'Edit Stock',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Image(
+                              image: AssetImage('assets/edit.png'),
+                              width: 80,
+                              height: 80,
+                            )
+                          ],
+                        ),
+                      ),
+                   ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.orangeAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            ''' Negotiation
+       Room''' ,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/chat.png'),
+                            width: 70,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.lightGreenAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'Analytics',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/analytics.png'),
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.blueAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            ''''Transaction 
+        History''',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/invoices.png'),
+                            width: 70,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.grey,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'Account',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/account.png'),
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.redAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '''Contacts Book''',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/contacts.png'),
+                            width: 60,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: ClipRRect(
+            borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),),
+        child: BottomAppBar(
+          color: Colors.pinkAccent[100],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.add_circle),
+                onPressed: () {
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.chat),
+                onPressed: () {
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.equalizer),
+                onPressed: () {
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.account_circle),
+                onPressed: (){
+                  _showDetailsPanel();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () async { await _auth.signOut();},
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
