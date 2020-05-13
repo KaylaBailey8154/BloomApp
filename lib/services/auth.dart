@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService{
@@ -53,14 +54,14 @@ class AuthService{
 
 
   //register with email and pass
-  Future registerWithEmailAndPassword(String email, String password) async{
+  Future registerWithEmailAndPassword(String email, String password, String fullName, String companyName, String phoneNumber ) async{
     try{
 
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+      FirebaseUser  user = result.user;
 
       //create doc for user
-      //await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
+      await DatabaseService(uid: user.uid).updateUserData(fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
     catch(e){

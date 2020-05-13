@@ -22,6 +22,9 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
+  String fullName = '';
+  String companyName = '';
+  String phoneNumber = '';
 
 
   @override
@@ -88,6 +91,14 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                               ),
+
+                              validator: (val)=> val.isEmpty? 'Enter a name' : null,
+                                onChanged: (val){
+                                  setState(() {
+                                    fullName=val;
+                                  });
+                                }
+
                             ),
                           ),
                         ),
@@ -110,6 +121,12 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                               ),
+                                validator: (val)=> val.isEmpty? 'Enter a Company Name' : null,
+                                onChanged: (val){
+                                  setState(() {
+                                    companyName=val;
+                                  });
+                                }
                             ),
                           ),
                         ),
@@ -132,6 +149,12 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                               ),
+                                validator: (val)=> val.isEmpty? 'Enter a mobile number' : null,
+                                onChanged: (val){
+                                  setState(() {
+                                    phoneNumber=val;
+                                  });
+                                }
                             ),
                           ),
                         ),
@@ -222,7 +245,7 @@ class _RegisterState extends State<Register> {
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
 
-                                dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                dynamic result = await _auth.registerWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
                                 if(result == null)
                                 {
                                   setState(() {
@@ -249,7 +272,7 @@ class _RegisterState extends State<Register> {
                             onTap: () {
                               widget.toggleView();
 
-                              // do what you need to do when the text is gets clicked
+                              // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
                         ),
                       ],

@@ -1,7 +1,7 @@
 import 'package:bloomflutterapp/screens/authenticate/register.dart';
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:bloomflutterapp/screens/authenticate/register.dart';
+
 
 
 class Authenticate extends StatefulWidget {
