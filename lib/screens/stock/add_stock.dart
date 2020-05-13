@@ -166,8 +166,10 @@ class _AddStockState extends State<AddStock>{
                 height: 45,
                 width: 200,
                   child: RaisedButton(
-                    onPressed: () async{
-                      await DatabaseService(uid: user.uid).updateStockData(flowerType, _itemCount, flowerColour);
+
+                    onPressed: () async {
+                      await DatabaseService(uid: user.uid).updateStockData(
+                          flowerType, _itemCount, flowerColour);
                     },
                     color: Colors.red[200],
                       child: Text('Save',
