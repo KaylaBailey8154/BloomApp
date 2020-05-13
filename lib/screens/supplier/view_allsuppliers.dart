@@ -27,20 +27,96 @@ class ViewAllSuppliers extends StatelessWidget {
     return StreamProvider<List<Supplier>>.value(
       value: DatabaseService().suppliers,
       child: Scaffold(
-        backgroundColor: Colors.green[300],
-        appBar: AppBar(
-          title: Text('Bloom'),
-          backgroundColor: Colors.green[300],
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(onPressed: () async {
-              await _auth.signOut();
-            }, icon: Icon(Icons.person), label: Text('Logout')),
-            FlatButton.icon(onPressed: () => _showSettingsPanel(), icon: Icon(Icons.settings), label: Text('Settings'))
-          ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            centerTitle: true,
+            title: Text(
+              'CONTACTS BOOK',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Archivo',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            backgroundColor: Colors.green,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(30),),
+            ),
+            leading: IconButton(
+              padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
+              onPressed: (){},
+              color: Colors.black,
+              iconSize: 30,
+              icon: Icon(Icons.arrow_back,),
+            ),
+          ),
         ),
-        body: Container(
-            child: SupplierList()),
+        body: Padding(
+          padding: EdgeInsets.all(10),
+          child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.brown,
+                boxShadow: [
+                  BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+                ],
+              ),
+              height: 550,
+              width: 400,
+              child: SupplierList()),
+        ),
+        bottomNavigationBar: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),),
+          child: BottomAppBar(
+            color: Colors.green[400],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.add_circle),
+                  onPressed: () {
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.chat),
+                  onPressed: () {
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.equalizer),
+                  onPressed: () {
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.account_circle),
+                  onPressed: (){
+                    _showSettingsPanel();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () async { await _auth.signOut();},
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
