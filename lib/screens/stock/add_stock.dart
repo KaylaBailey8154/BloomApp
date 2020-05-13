@@ -24,8 +24,8 @@ class _AddStockState extends State<AddStock>{
 
    String flowerColour = '';
   // DateTime dateAdded = DateTime.now();
-   List<String> flowers = ['Protea', 'Rose', 'Flour'];
-   List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
+  // List<String> flowers = ['Protea', 'Rose', 'Flour'];
+   //List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
 
   @override
   Widget build(BuildContext context){
@@ -170,6 +170,8 @@ class _AddStockState extends State<AddStock>{
                     onPressed: () async {
                       await DatabaseService(uid: user.uid).updateStockData(
                           flowerType, _itemCount, flowerColour);
+
+                      Navigator.pop(context);
                     },
                     color: Colors.red[200],
                       child: Text('Save',

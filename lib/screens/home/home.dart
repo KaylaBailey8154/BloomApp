@@ -1,3 +1,5 @@
+import 'package:bloomflutterapp/screens/stock/add_stock.dart';
+import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/shared/update_supplierdetails.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +60,10 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStock()),
+                        );
+                      },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -171,7 +176,9 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -198,7 +205,9 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -228,7 +237,10 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllSuppliers()),
+                        );
+                      },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
