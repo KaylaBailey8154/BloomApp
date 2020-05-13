@@ -25,58 +25,68 @@ class _AddStockState extends State<AddStock>{
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FadeInImage.memoryNetwork(
-                  height: 200,
-                  width: 400,
-                  placeholder: kTransparentImage,
-                  image: 'finalImage.png'
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('assets/imageplaceholder.jpg'),
+                    width: 400,
+                    height: 400,
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                  'Flower Type:   ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+              ),
+            ),
+                  DropdownButton<String>(
+                    items: null,
+                    onChanged: null,
+                    disabledHint: Text("Select Flower Type"),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Flower Type:   ',
+                    'Quantity:    ',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
-                  DropdownButton(
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    isExpanded: true, //Set the dropdown's inner contents to horizontally fill its parent.
-                    style: TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.red[400],
+                  _itemCount!=0? new  IconButton(
+                    icon: new Icon(Icons.remove),
+                    onPressed: ()=>setState(()=>_itemCount--),
+                  ):new Container(),
+                  new Text(
+                      _itemCount.toString()
+                  ),
+                  new IconButton(
+                      icon: new Icon(Icons.add),
+                      onPressed: ()=>setState(()=>_itemCount++)
+                  ),
+                  Text(
+                    'in stems',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
                   ),
                 ],
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Quantity:   ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    _itemCount!=0? new  IconButton(icon: new Icon(Icons.remove),onPressed: ()=>setState(()=>_itemCount--),):new Container(),
-                    new Text(_itemCount.toString()),
-                    new IconButton(icon: new Icon(Icons.add),onPressed: ()=>setState(()=>_itemCount++)),
-                    Text(
-                      'in stems',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,21 +96,17 @@ class _AddStockState extends State<AddStock>{
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
-                  DropdownButton(
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    isExpanded: true, //Set the dropdown's inner contents to horizontally fill its parent.
-                    style: TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.red[400],
-                    ),
+                  DropdownButton<String>(
+                    items: null,
+                    onChanged: null,
+                    disabledHint: Text("Select Flower Colour"),
                   ),
                 ],
               ),
+              SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -109,30 +115,33 @@ class _AddStockState extends State<AddStock>{
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                   Text(
                     date.format(DateTime.now()),
                     style: new TextStyle(
-                      color: Colors.grey[850],
+                        color: Colors.grey[850],
                         fontSize: 14.0),
                   ),
                 ],
               ),
+              SizedBox(height: 20,),
               SizedBox(
                 height: 45,
                 width: 200,
-                child: RaisedButton(
-                  onPressed: (){},
-                  color: Colors.red[200],
-                  child: Text('Save',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: RaisedButton(
+                    onPressed: (){},
+                    color: Colors.red[200],
+                      child: Text('Save',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
                 ),
               ),
-                  ],
+            ),
+          ),
+            ],
               ),
           ),
         ),

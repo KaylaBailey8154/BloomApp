@@ -6,6 +6,7 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/user.dart';
+import 'screens/home/home.dart';
 
 void main() {
   runApp(MyApp(),
@@ -22,11 +23,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
 
         //Whichever screen Widget is defined in next line will be the screen shown when the app is run
-        home: AddStock(), //this will show the Add Stock screen
+        //home: AddStock(), //this will show the Add Stock screen
         //home: SignIn(), //this would show the sign in screen
-       // home: Register(), //this would show the register screen
+        //home: Register(), //this would show the register screen
         // home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
-
+        home: Home(),
       ),
     );
   }
