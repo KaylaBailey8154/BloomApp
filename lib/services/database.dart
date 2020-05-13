@@ -9,6 +9,17 @@ class DatabaseService {
 
   //collection reference
   final CollectionReference supplierCollection = Firestore.instance.collection('suppliers');
+  final CollectionReference stockCollection = Firestore.instance.collection('stocks');
+
+  Future updateStockData(String flowerType, int quantity, String flowerColour, DateTime dateAdded) async{
+    return await stockCollection.document().setData({
+      'supplierUID': uid,
+      'flowerType': flowerType,
+      'quantity': quantity,
+      'flowerColour': flowerColour,
+      'dateAdded': dateAdded,
+    });
+  }
 
   Future updateUserData(String fullName, String companyName, String phoneNumber) async{
     return await supplierCollection.document(uid).setData({
@@ -17,7 +28,7 @@ class DatabaseService {
       'phoneNumber': phoneNumber,
     });
   }
-  //brew list from snapshot
+  //Supplier list from snapshot
   List<Supplier> _supplierListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
       return Supplier(
