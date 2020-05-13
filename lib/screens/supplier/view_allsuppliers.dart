@@ -110,7 +110,7 @@ class ViewAllSuppliers extends StatelessWidget {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.phonelink_ring),
                   onPressed: () async { await _auth.signOut();},
                 ),
               ],

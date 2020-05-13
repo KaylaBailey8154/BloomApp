@@ -251,6 +251,33 @@ class Home extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.tealAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            ''''Marketplace 
+        Stock''',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/marketplace.png'),
+                            width: 50,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -298,7 +325,7 @@ class Home extends StatelessWidget {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.phonelink_ring),
                 onPressed: () async { await _auth.signOut();},
               ),
             ],
