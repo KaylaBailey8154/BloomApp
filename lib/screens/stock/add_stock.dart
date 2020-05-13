@@ -132,7 +132,6 @@ class _AddStockState extends State<AddStock>{
                 width: 200,
                   child: RaisedButton(
                     onPressed: (){
-
                     },
                     color: Colors.red[200],
                       child: Text('Save',
