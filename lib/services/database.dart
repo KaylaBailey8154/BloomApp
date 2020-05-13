@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,6 +41,19 @@ class DatabaseService {
 
   }
 
+  //Stock list from snapshot
+  List<Stock> _stockListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return Stock(
+          uid: doc.data['supplierUID'] ?? '',
+          flowerColour: doc.data['flowerColour'] ?? '',
+          quantity: doc.data['quantity']?? 0,
+          flowerType:  doc.data['flowerType'] ?? '',
+        dateAdded: doc.data['dateAdded']?? null,
+      );
+    }).toList();
+
+  }
   //userData from snapshot
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
@@ -57,6 +71,12 @@ class DatabaseService {
   Stream<List<Supplier>> get suppliers{
     return supplierCollection.snapshots()
         .map(_supplierListFromSnapshot);
+  }
+
+  //get stocks stream
+  Stream<List<Stock>> get stocks{
+    return stockCollection.snapshots()
+        .map(_stockListFromSnapshot);
   }
 
   //get user doc stream
