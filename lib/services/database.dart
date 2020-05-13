@@ -12,13 +12,13 @@ class DatabaseService {
   final CollectionReference supplierCollection = Firestore.instance.collection('suppliers');
   final CollectionReference stockCollection = Firestore.instance.collection('stocks');
 
-  Future updateStockData(String flowerType, int quantity, String flowerColour, DateTime dateAdded) async{
+  Future updateStockData(String flowerType, int quantity, String flowerColour) async{
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'flowerType': flowerType,
       'quantity': quantity,
       'flowerColour': flowerColour,
-      'dateAdded': dateAdded,
+      'dateAdded': DateTime.now(),
     });
   }
 
@@ -67,6 +67,20 @@ class DatabaseService {
 
   }
 
+  //StockData from snapshot
+
+  Stock _stockDataFromSnapshot(DocumentSnapshot snapshot){
+
+    return Stock(
+      uid: uid,
+      flowerType: snapshot.data['flowerType'],
+      quantity: snapshot.data['quantity'],
+      flowerColour: snapshot.data['flowerColour'],
+      dateAdded: snapshot.data['dateAdded'],
+    );
+
+  }
+
   //get suppliers stream
   Stream<List<Supplier>> get suppliers{
     return supplierCollection.snapshots()
@@ -77,6 +91,12 @@ class DatabaseService {
   Stream<List<Stock>> get stocks{
     return stockCollection.snapshots()
         .map(_stockListFromSnapshot);
+  }
+  //get stocks doc stream
+
+  Stream<Stock> get stockData{
+    return supplierCollection.document(uid).snapshots()
+        .map(_stockDataFromSnapshot);
   }
 
   //get user doc stream

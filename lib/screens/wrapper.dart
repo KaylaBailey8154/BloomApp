@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
+import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class Wrapper extends StatelessWidget {
       return Authenticate();
     }
     else{
-      return Home();
+      return AddStock();
     }
 
   }

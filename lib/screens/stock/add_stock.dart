@@ -1,6 +1,10 @@
+import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AddStock extends StatefulWidget{
@@ -9,14 +13,23 @@ class AddStock extends StatefulWidget{
 }
 
 class _AddStockState extends State<AddStock>{
+
   final _formKey = GlobalKey<FormState>();
 
   int _itemCount = 0;
 
   final date = new DateFormat('dd-MM-yyyy');
 
+   String flowerType = '';
+
+   String flowerColour = '';
+  // DateTime dateAdded = DateTime.now();
+   List<String> flowers = ['Protea', 'Rose', 'Flour'];
+   List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
+
   @override
   Widget build(BuildContext context){
+    final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -50,10 +63,22 @@ class _AddStockState extends State<AddStock>{
               ),
             ),
                   DropdownButton<String>(
-                    items: null,
-                    onChanged: null,
+                    items: <String>['Protea', 'Rose', 'Flour']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (val){
+                      setState(() {
+                        flowerType=val;
+                      });
+                    },
                     disabledHint: Text("Select Flower Type"),
+
                   ),
+
                 ],
               ),
               Row(
@@ -100,8 +125,18 @@ class _AddStockState extends State<AddStock>{
                     ),
                   ),
                   DropdownButton<String>(
-                    items: null,
-                    onChanged: null,
+                    items: <String>['Red', 'Green', 'Flour (off-white)']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (val){
+                      setState(() {
+                        flowerColour=val;
+                      });
+                    },
                     disabledHint: Text("Select Flower Colour"),
                   ),
                 ],
@@ -131,8 +166,8 @@ class _AddStockState extends State<AddStock>{
                 height: 45,
                 width: 200,
                   child: RaisedButton(
-                    onPressed: (){
-
+                    onPressed: () async{
+                      await DatabaseService(uid: user.uid).updateStockData(flowerType, _itemCount, flowerColour);
                     },
                     color: Colors.red[200],
                       child: Text('Save',

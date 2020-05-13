@@ -60,7 +60,7 @@ class AuthService{
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser  user = result.user;
 
-      //create doc for user (supplier)
+      //create doc for supplier
       await DatabaseService(uid: user.uid).updateUserData(fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
@@ -70,13 +70,13 @@ class AuthService{
     }
      }
 //  //creating a doc for a stock (not sure if this should be in auth)
-//  Future addStockToDatabase(String email, String password, String fullName, String companyName, String phoneNumber ) async{
+//  Future addStockToDatabase(String supplierUID, String flowerType, int quantity, String flowerColour, DateTime dateAdded) async{
 //    try{
-//
+//  FirebaseUser user = _userFromFirebaseUser(user)
 //      AuthResult result = await _auth.
 //
 //      //create doc for user (supplier)
-//      await DatabaseService(uid: uid).updateUserData(fullName, companyName, phoneNumber);
+//      await DatabaseService(uid: uid);
 //      return _userFromFirebaseUser(user);
 //    }
 //    catch(e){
