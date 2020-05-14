@@ -12,6 +12,7 @@ import 'view_mystock.dart';
 
 class AddStock extends StatefulWidget{
 
+
   @override
   _AddStockState createState() => _AddStockState();
 }
@@ -24,11 +25,10 @@ class _AddStockState extends State<AddStock>{
 
   final date = new DateFormat('dd-MM-yyyy');
 
-   String flowerType = '';
-
+  String flowerType = '';
    String flowerColour = '';
   // DateTime dateAdded = DateTime.now();
-  // List<String> flowers = ['Protea', 'Rose', 'Flour'];
+  // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
    //List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
 
   @override
@@ -49,7 +49,7 @@ class _AddStockState extends State<AddStock>{
                 padding: EdgeInsets.fromLTRB(20, 30, 370, 0),
                 icon: Icon(Icons.arrow_back),
                 onPressed: (){
-                  Navigator.pop(context); 
+                  Navigator.pop(context);
                 },
               ),
               Row(
@@ -75,21 +75,22 @@ class _AddStockState extends State<AddStock>{
                     fontSize: 18,
               ),
             ),
-                  DropdownButton<String>(
-                    items: <String>['Protea', 'Rose', 'Flour']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (val){
-                      setState(() {
-                        flowerType=val;
-                      });
-                    },
-                    hint: Text("Select Flower Type"),
-
+                  Container(
+                    width: 158,
+                    height: 50,
+                    child: DropdownButtonFormField<String>(
+                      hint: Text("Select Flower Type"),
+                      value:  null,
+                      items:['Protea', 'Rose', 'Flour']
+                        .map((label) => DropdownMenuItem(
+                            child: Text(label),
+                            value: label,
+                      ))
+                        .toList(),
+                      onChanged: (value){
+                        setState(() => flowerType =value);
+                      }
+                    ),
                   ),
 
                 ],
@@ -137,20 +138,22 @@ class _AddStockState extends State<AddStock>{
                       fontSize: 18,
                     ),
                   ),
-                  DropdownButton<String>(
-                    items: <String>['Red', 'Green', 'Flour (off-white)']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (val){
-                      setState(() {
-                        flowerColour=val;
-                      });
-                    },
-                    hint: Text("Select Flower Colour"),
+                  Container(
+                    width: 171,
+                    height: 50,
+                    child: DropdownButtonFormField<String>(
+                        hint: Text("Select Flower Colour"),
+                        value:  null,
+                        items:['Green', 'Red', 'Flour (off-white)']
+                            .map((label) => DropdownMenuItem(
+                          child: Text(label),
+                          value: label,
+                        ))
+                            .toList(),
+                        onChanged: (value){
+                          setState(() => flowerColour =value);
+                        }
+                    ),
                   ),
                 ],
               ),
