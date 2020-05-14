@@ -11,7 +11,6 @@ import '../../services/auth.dart';
 import 'view_mystock.dart';
 
 class AddStock extends StatefulWidget{
-  final AuthService _auth = AuthService();
 
   @override
   _AddStockState createState() => _AddStockState();
@@ -44,6 +43,15 @@ class _AddStockState extends State<AddStock>{
           key: _formKey,
           child: Column(
             children: <Widget>[
+              IconButton(
+                iconSize: 30,
+                color: Colors.black,
+                padding: EdgeInsets.fromLTRB(20, 30, 370, 0),
+                icon: Icon(Icons.arrow_back),
+                onPressed: (){
+                  Navigator.pop(context); 
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,57 +199,6 @@ class _AddStockState extends State<AddStock>{
               ),
           ),
         ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(30),
-          topLeft: Radius.circular(30),),
-        child: BottomAppBar(
-          color: Colors.green[400],
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.add_circle),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.chat),
-                onPressed: () {
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.equalizer),
-                onPressed: () {
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.account_circle),
-                onPressed: (){
-
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.phonelink_ring),
-               // onPressed: () async { await _auth.signOut();},
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
