@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/stock/mystock_list.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -67,7 +68,7 @@ class ViewMyStock extends StatelessWidget {
               ),
               height: 550,
               width: 400,
-              child: StockList()),
+              child: MyStockList()),
         ),
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.only(
