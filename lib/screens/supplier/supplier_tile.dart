@@ -1,5 +1,7 @@
 import 'package:bloomflutterapp/models/supplier.dart';
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SupplierTile extends StatelessWidget {
 
@@ -8,6 +10,7 @@ class SupplierTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Padding(
       padding: EdgeInsets.only(top:8),
       child: Card(
@@ -19,7 +22,7 @@ class SupplierTile extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              //Text(supplier.email),
+               Text(supplier.companyName),
               Text(supplier.phoneNumber),
 
             ],

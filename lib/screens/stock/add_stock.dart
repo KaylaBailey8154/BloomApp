@@ -81,7 +81,7 @@ class _AddStockState extends State<AddStock>{
                     child: DropdownButtonFormField<String>(
                       hint: Text("Select Flower Type"),
                       value:  null,
-                      items:['Protea', 'Rose', 'Flour']
+                      items:['King Protea', 'Rose', 'Disa', 'Erica']
                         .map((label) => DropdownMenuItem(
                             child: Text(label),
                             value: label,
@@ -108,14 +108,14 @@ class _AddStockState extends State<AddStock>{
                   ),
                   _itemCount!=0? new  IconButton(
                     icon: new Icon(Icons.remove),
-                    onPressed: ()=>setState(()=>_itemCount--),
+                    onPressed: ()=>setState(()=>_itemCount = _itemCount-10),
                   ):new Container(),
                   new Text(
                       _itemCount.toString()
                   ),
                   new IconButton(
                       icon: new Icon(Icons.add),
-                      onPressed: ()=>setState(()=>_itemCount++)
+                      onPressed: ()=>setState(()=>_itemCount = _itemCount+10)
                   ),
                   Text(
                     'in stems',
@@ -144,7 +144,7 @@ class _AddStockState extends State<AddStock>{
                     child: DropdownButtonFormField<String>(
                         hint: Text("Select Flower Colour"),
                         value:  null,
-                        items:['Green', 'Red', 'Flour (off-white)']
+                        items:['Red', 'White', 'Yellow', 'Green', 'Pink']
                             .map((label) => DropdownMenuItem(
                           child: Text(label),
                           value: label,
