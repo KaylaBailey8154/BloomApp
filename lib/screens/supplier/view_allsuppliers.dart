@@ -6,6 +6,9 @@ import 'package:bloomflutterapp/shared/update_supplierdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../stock/add_stock.dart';
+import '../stock/view_mystock.dart';
+
 class ViewAllSuppliers extends StatelessWidget {
   final AuthService _auth = AuthService();
 
@@ -48,7 +51,9 @@ class ViewAllSuppliers extends StatelessWidget {
             ),
             leading: IconButton(
               padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pop(context);
+              },
               color: Colors.black,
               iconSize: 30,
               icon: Icon(Icons.arrow_back,),
@@ -81,16 +86,19 @@ class ViewAllSuppliers extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.home),
                   onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.add_circle),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
                   },
                 ),
                 IconButton(
@@ -106,7 +114,7 @@ class ViewAllSuppliers extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.account_circle),
                   onPressed: (){
-                    _showSettingsPanel();
+
                   },
                 ),
                 IconButton(

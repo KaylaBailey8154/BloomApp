@@ -7,6 +7,8 @@ import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'add_stock.dart';
+
 class ViewMyStock extends StatelessWidget {
   final AuthService _auth = AuthService();
 
@@ -33,7 +35,7 @@ class ViewMyStock extends StatelessWidget {
           child: AppBar(
             centerTitle: true,
             title: Text(
-              'CONTACTS BOOK',
+              'MY STOCK',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Archivo',
@@ -49,7 +51,9 @@ class ViewMyStock extends StatelessWidget {
             ),
             leading: IconButton(
               padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pop(context);
+              },
               color: Colors.black,
               iconSize: 30,
               icon: Icon(Icons.arrow_back,),
@@ -61,7 +65,7 @@ class ViewMyStock extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.brown,
+                color: Colors.red[200],
                 boxShadow: [
                   BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
                 ],
@@ -82,16 +86,19 @@ class ViewMyStock extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.home),
                   onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.add_circle),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
                   },
                 ),
                 IconButton(

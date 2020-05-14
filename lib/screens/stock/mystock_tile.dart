@@ -22,9 +22,17 @@ class MyStockTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: ListTile(
+          isThreeLine: true,
 
-          title: Text('$flowerColour $flowerType ($flowerQuantity)'),
-          subtitle: Text('Added On: $dateAdded'),
+          title: Text('Flower Type: $flowerType'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('Number of stems: $flowerQuantity'),
+              Text('Flower Colour: $flowerColour'),
+              Text('Date Added: $dateAdded'),
+            ],
+          ),
 
         ),
       ),

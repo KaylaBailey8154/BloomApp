@@ -43,13 +43,6 @@ class Home extends StatelessWidget {
             borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30),),
           ),
-            leading: IconButton(
-              padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
-              onPressed: (){},
-              color: Colors.black,
-              iconSize: 30,
-              icon: Icon(Icons.arrow_back,),
-            ),
           ),
       ),
       body: Container(
@@ -314,18 +307,19 @@ class Home extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.home),
                 onPressed: () {
-
+                  Navigator.pop(context);
                 },
               ),
               IconButton(
                 icon: Icon(Icons.add_circle),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStock()),);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
                 },
               ),
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
                 },
               ),
               IconButton(
@@ -341,7 +335,7 @@ class Home extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.account_circle),
                 onPressed: (){
-                  _showDetailsPanel();
+
                 },
               ),
               IconButton(
@@ -350,6 +344,7 @@ class Home extends StatelessWidget {
               ),
             ],
           ),
+
         ),
       ),
     );

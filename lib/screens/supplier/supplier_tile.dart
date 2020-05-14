@@ -13,9 +13,17 @@ class SupplierTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: ListTile(
+          isThreeLine: true,
 
           title: Text(supplier.fullName),
-          subtitle: Text(supplier.phoneNumber),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //Text(supplier.email),
+              Text(supplier.phoneNumber),
+
+            ],
+          ),
 
         ),
       ),

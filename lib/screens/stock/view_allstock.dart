@@ -6,6 +6,9 @@ import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'add_stock.dart';
+import 'view_mystock.dart';
+
 class ViewAllStock extends StatelessWidget {
   final AuthService _auth = AuthService();
 
@@ -32,7 +35,7 @@ class ViewAllStock extends StatelessWidget {
           child: AppBar(
             centerTitle: true,
             title: Text(
-              'CONTACTS BOOK',
+              'MARKETPLACE STOCK',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Archivo',
@@ -47,8 +50,10 @@ class ViewAllStock extends StatelessWidget {
                 bottom: Radius.circular(30),),
             ),
             leading: IconButton(
-              padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
-              onPressed: (){},
+              padding: EdgeInsets.fromLTRB(20, 0, 100, 0),
+              onPressed: (){
+                Navigator.pop(context);
+              },
               color: Colors.black,
               iconSize: 30,
               icon: Icon(Icons.arrow_back,),
@@ -60,7 +65,7 @@ class ViewAllStock extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.brown,
+                color: Colors.pink[200],
                 boxShadow: [
                   BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
                 ],
@@ -81,16 +86,19 @@ class ViewAllStock extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.home),
                   onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.add_circle),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
                   },
                 ),
                 IconButton(
@@ -115,6 +123,7 @@ class ViewAllStock extends StatelessWidget {
                 ),
               ],
             ),
+
           ),
         ),
       ),
