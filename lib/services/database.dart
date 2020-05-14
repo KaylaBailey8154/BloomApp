@@ -2,6 +2,7 @@ import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 
 class DatabaseService {
@@ -10,7 +11,7 @@ class DatabaseService {
 
   //collection reference
   final CollectionReference supplierCollection = Firestore.instance.collection('suppliers');
-  final CollectionReference stockCollection = Firestore.instance.collection('stocks');
+  final CollectionReference  stockCollection = Firestore.instance.collection('stocks');
 
   Future updateStockData(String flowerType, int quantity, String flowerColour) async{
     return await stockCollection.document().setData({
@@ -18,7 +19,7 @@ class DatabaseService {
       'flowerType': flowerType,
       'quantity': quantity,
       'flowerColour': flowerColour,
-      'dateAdded': DateTime.now(),
+      'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
     });
   }
 
@@ -88,17 +89,25 @@ class DatabaseService {
   }
 
   //get stocks stream
-  Stream<List<Stock>> get stocks{
+  Stream<List<Stock>> get myStocks{
+    return stockCollection.where('supplierUID', isEqualTo: uid).snapshots()
+        .map(_stockListFromSnapshot);
+  }
+
+  //get stocks stream
+  Stream<List<Stock>> get allStocks{
     return stockCollection.snapshots()
         .map(_stockListFromSnapshot);
   }
+ 
   //get stocks doc stream
 
   Stream<Stock> get stockData{
     return supplierCollection.document(uid).snapshots()
         .map(_stockDataFromSnapshot);
   }
-
+ 
+ 
   //get user doc stream
 
   Stream<UserData> get userData{

@@ -69,21 +69,7 @@ class AuthService{
       return null;
     }
      }
-//  //creating a doc for a stock (not sure if this should be in auth)
-//  Future addStockToDatabase(String supplierUID, String flowerType, int quantity, String flowerColour, DateTime dateAdded) async{
-//    try{
-//  FirebaseUser user = _userFromFirebaseUser(user)
-//      AuthResult result = await _auth.
-//
-//      //create doc for user (supplier)
-//      await DatabaseService(uid: uid);
-//      return _userFromFirebaseUser(user);
-//    }
-//    catch(e){
-//      print(e.toString());
-//      return null;
-//    }
-//  }
+
   //sign out
 
   Future signOut()async{

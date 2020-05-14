@@ -5,7 +5,7 @@ class Stock {
   final String flowerType;
   final int quantity;
   final String flowerColour;
-  final DateTime dateAdded;
+  final String dateAdded;
 
   Stock({this.uid, this.flowerType, this.quantity, this.flowerColour, this.dateAdded});
 

@@ -1,4 +1,6 @@
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
+import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
+import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/shared/update_supplierdetails.dart';
@@ -89,7 +91,9 @@ class Home extends StatelessWidget {
                    Padding(
                      padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                      child: RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMyStock()));
+                        },
                         elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -98,7 +102,7 @@ class Home extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              'Edit Stock',
+                              'My Stock',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -205,8 +209,8 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
-                      onPressed: () {
-
+                      onPressed: (){
+                        _showDetailsPanel();
                       },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -266,7 +270,9 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllStock()),);
+                      },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -308,11 +314,13 @@ class Home extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.home),
                 onPressed: () {
+
                 },
               ),
               IconButton(
                 icon: Icon(Icons.add_circle),
                 onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStock()),);
                 },
               ),
               IconButton(
