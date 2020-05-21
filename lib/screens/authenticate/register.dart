@@ -2,6 +2,8 @@ import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class Register extends StatefulWidget {
 

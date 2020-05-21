@@ -1,11 +1,14 @@
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
+import 'package:bloomflutterapp/services/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+
 
 import '../../services/auth.dart';
 import 'view_mystock.dart';
@@ -61,7 +64,21 @@ class _AddStockState extends State<AddStock>{
                     width: 400,
                     height: 350,
                   ),
-                ],
+
+                  ],
+              ),
+              SizedBox(height: 10,),
+              RaisedButton(
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ImageCapture()));
+                },
+                color: Colors.red[200],
+                child: Text('Upload Image',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
               ),
               SizedBox(height: 10,),
               Row(
