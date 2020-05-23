@@ -3,10 +3,10 @@ import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-import 'package:bloomflutterapp/shared/update_supplierdetails.dart';
+import 'file:///C:/Bloom/lib/screens/supplier/update_supplierdetails.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class SupplierHome extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   @override
@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
         child: AppBar(
           centerTitle: true,
           title: Text(
-            'HOME',
+            'BUYER HOME',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Archivo',
@@ -41,9 +41,9 @@ class Home extends StatelessWidget {
           elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),),
+              bottom: Radius.circular(30),),
           ),
-          ),
+        ),
       ),
       body: Container(
         height:510 ,
@@ -81,34 +81,34 @@ class Home extends StatelessWidget {
                       ),
                     ),
                   ),
-                   Padding(
-                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                     child: RaisedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMyStock()));
-                        },
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        color: Colors.yellowAccent,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              'My Stock',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Image(
-                              image: AssetImage('assets/edit.png'),
-                              width: 80,
-                              height: 80,
-                            )
-                          ],
-                        ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMyStock()));
+                      },
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                   ),
+                      color: Colors.yellowAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'My Stock',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/edit.png'),
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Row(
@@ -296,9 +296,9 @@ class Home extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: ClipRRect(
-            borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30),
+          topLeft: Radius.circular(30),),
         child: BottomAppBar(
           color: Colors.pinkAccent[100],
           child: Row(

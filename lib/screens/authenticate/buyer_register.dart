@@ -2,7 +2,7 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Buyer_Register extends StatefulWidget {
+class BuyerRegister extends StatefulWidget {
 
   //final Function toggleView;
   //Register({this.toggleView});
@@ -11,7 +11,7 @@ class Buyer_Register extends StatefulWidget {
   _BuyerRegisterState createState() => _BuyerRegisterState();
 }
 
-class _BuyerRegisterState extends State<Buyer_Register>{
+class _BuyerRegisterState extends State<BuyerRegister>{
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -218,7 +218,7 @@ class _BuyerRegisterState extends State<Buyer_Register>{
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
 
-                                dynamic result = await _auth.registerWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
+                                dynamic result = await _auth.registerBuyerWithEmailAndPassword(email, password,fullName,phoneNumber);
                                 if(result == null)
                                 {
                                   setState(() {

@@ -53,15 +53,15 @@ class AuthService{
 
 
 
-  //register with email and pass
-  Future registerWithEmailAndPassword(String email, String password, String fullName, String companyName, String phoneNumber ) async{
+  //register supplier with email and pass
+  Future registerSupplierWithEmailAndPassword(String email, String password, String fullName, String companyName, String phoneNumber ) async{
     try{
 
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser  user = result.user;
 
       //create doc for supplier
-      await DatabaseService(uid: user.uid).updateUserData(fullName, companyName, phoneNumber);
+      await DatabaseService(uid: user.uid).updateSupplierUserData(fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
     catch(e){
@@ -69,6 +69,23 @@ class AuthService{
       return null;
     }
      }
+
+  //register buyer with email and pass
+  Future registerBuyerWithEmailAndPassword(String email, String password, String fullName, String phoneNumber ) async{
+    try{
+
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser  user = result.user;
+
+      //create doc for supplier
+      await DatabaseService(uid: user.uid).updateBuyerUserData(fullName, phoneNumber);
+      return _userFromFirebaseUser(user);
+    }
+    catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 
   //sign out
 

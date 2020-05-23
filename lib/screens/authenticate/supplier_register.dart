@@ -5,17 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
-class Register extends StatefulWidget {
+class SupplierRegister extends StatefulWidget {
 
   final Function toggleView;
-  Register({this.toggleView});
+  SupplierRegister({this.toggleView});
 
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _SupplierRegisterState createState() => _SupplierRegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _SupplierRegisterState extends State<SupplierRegister> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -27,6 +27,7 @@ class _RegisterState extends State<Register> {
   String fullName = '';
   String companyName = '';
   String phoneNumber = '';
+  bool authUploaded = false;
 
 
   @override
@@ -228,6 +229,7 @@ class _RegisterState extends State<Register> {
                               width: 100,
                               child: FlatButton(
                                 onPressed: (){
+                                  authUploaded = true;
 
                                 },
                                 color: Colors.red[200],
@@ -246,14 +248,20 @@ class _RegisterState extends State<Register> {
                           child: RaisedButton(
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
+                                if(authUploaded == false){
+                                  setState(() {
+                                    error = 'Please upload supporting documentation';
+                                  });
+                                }
 
-                                dynamic result = await _auth.registerWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
+                                dynamic result = await _auth.registerSupplierWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
                                 if(result == null)
                                 {
                                   setState(() {
                                     error = 'please supply a valid email';
                                   });
-                                }}
+                                }
+                              Navigator.pop(context);}
                             },
                             color: Colors.green,
                             child: Text('Register',

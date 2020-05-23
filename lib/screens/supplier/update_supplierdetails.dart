@@ -75,7 +75,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                         ),
                         onPressed: () async {
                           if(_formKey.currentState.validate()){
-                            await DatabaseService(uid: user.uid).updateUserData(
+                            await DatabaseService(uid: user.uid).updateSupplierUserData(
 
                               _currentFullName ?? userData.fullName,
                               _currentCompanyName ?? userData.companyName,

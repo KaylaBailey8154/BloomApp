@@ -2,7 +2,7 @@ import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/screens/supplier/supplier_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
-import 'package:bloomflutterapp/shared/update_supplierdetails.dart';
+import 'file:///C:/Bloom/lib/screens/supplier/update_supplierdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

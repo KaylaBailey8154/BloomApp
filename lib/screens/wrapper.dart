@@ -4,7 +4,7 @@ import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'home/home.dart';
+import 'supplier/supplier_home.dart';
 
 
 class Wrapper extends StatelessWidget {
@@ -16,10 +16,12 @@ class Wrapper extends StatelessWidget {
 
     //return either home or Auth widget
     if(user==null){
-      return Authenticate();
+            return Authenticate();
     }
     else{
-      return Home();
+//TODO conditional send to different landing screen based on role type (check where document name is the same as the current user uid, then check role type)
+
+      return SupplierHome();
     }
 
   }
