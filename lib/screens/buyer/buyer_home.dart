@@ -3,10 +3,12 @@ import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-import 'file:///C:/Bloom/lib/screens/supplier/update_supplierdetails.dart';
+
 import 'package:flutter/material.dart';
 
-class SupplierHome extends StatelessWidget {
+import '../supplier/update_supplierdetails.dart';
+
+class BuyerHome extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   @override

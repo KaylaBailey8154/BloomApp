@@ -2,12 +2,13 @@ import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/screens/supplier/supplier_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
-import 'file:///C:/Bloom/lib/screens/supplier/update_supplierdetails.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../stock/add_stock.dart';
 import '../stock/view_mystock.dart';
+import 'update_supplierdetails.dart';
 
 class ViewAllSuppliers extends StatelessWidget {
   final AuthService _auth = AuthService();

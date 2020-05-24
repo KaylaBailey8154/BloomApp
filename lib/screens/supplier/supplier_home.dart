@@ -3,8 +3,10 @@ import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-import 'file:///C:/Bloom/lib/screens/supplier/update_supplierdetails.dart';
+
 import 'package:flutter/material.dart';
+
+import 'update_supplierdetails.dart';
 
 class SupplierHome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -25,11 +27,11 @@ class SupplierHome extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
+        preferredSize: Size.fromHeight(60.0),
         child: AppBar(
           centerTitle: true,
           title: Text(
-            'SUPPLIER HOME',
+            'HOME',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Archivo',
@@ -37,7 +39,7 @@ class SupplierHome extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.white,
           elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
@@ -295,56 +297,74 @@ class SupplierHome extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: ClipRRect(
-            borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),),
-        child: BottomAppBar(
-          color: Colors.pinkAccent[100],
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.add_circle),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.chat),
-                onPressed: () {
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.equalizer),
-                onPressed: () {
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.account_circle),
-                onPressed: (){
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        child: const Icon(
+          Icons.add_circle,
+        ),
+        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));},
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+              borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),),
+          child: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            color: Colors.white,
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  child: IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.chat),
+                  onPressed: () {
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                  child: IconButton(
+                    icon: Icon(Icons.equalizer),
+                    onPressed: () {
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.account_circle),
+                  onPressed: (){
 
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.phonelink_ring),
-                onPressed: () async { await _auth.signOut();},
-              ),
-            ],
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.phonelink_ring),
+                  onPressed: () async { await _auth.signOut();},
+                ),
+              ],
+            ),
+
           ),
-
         ),
       ),
     );

@@ -7,6 +7,8 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/user.dart';
+import 'screens/authenticate/buyer_register.dart';
+import 'screens/buyer/buyer_home.dart';
 import 'screens/supplier/supplier_home.dart';
 
 void main() {
@@ -28,8 +30,8 @@ class MyApp extends StatelessWidget {
         //home: SignIn(), //this would show the sign in screen
         //home: Register(), //this would show the register screen
          //home: ViewAllSuppliers(),  //shows all the suppliers (basic 'contact book')
-         home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
-         //home: Home(),
+         //home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
+         home: SupplierHome(),
       ),
     );
   }

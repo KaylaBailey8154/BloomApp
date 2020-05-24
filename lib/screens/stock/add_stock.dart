@@ -57,28 +57,26 @@ class _AddStockState extends State<AddStock>{
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Image(
                     image: AssetImage('assets/imageplaceholder.jpg'),
                     width: 400,
-                    height: 350,
+                    height: 300,
                   ),
-
                   ],
               ),
-              SizedBox(height: 10,),
-              RaisedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ImageCapture()));
-                },
-                color: Colors.red[200],
-                child: Text('Upload Image',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
+              SizedBox(height: 5,),
+              GestureDetector(
+                  child: Text("Upload Photo",
+                      style: TextStyle(
+                        fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent)),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ImageCapture()));
+                    // do what you need to do when the text is gets clicked
+                  }
               ),
               SizedBox(height: 10,),
               Row(
@@ -89,12 +87,12 @@ class _AddStockState extends State<AddStock>{
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 16,
               ),
             ),
                   Container(
                     width: 158,
-                    height: 50,
+                    height: 45,
                     child: DropdownButtonFormField<String>(
                       hint: Text("Select Flower Type"),
                       value:  null,
@@ -120,7 +118,7 @@ class _AddStockState extends State<AddStock>{
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                   _itemCount!=0? new  IconButton(
@@ -152,12 +150,12 @@ class _AddStockState extends State<AddStock>{
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                   Container(
                     width: 171,
-                    height: 50,
+                    height: 45,
                     child: DropdownButtonFormField<String>(
                         hint: Text("Select Flower Colour"),
                         value:  null,
@@ -174,7 +172,7 @@ class _AddStockState extends State<AddStock>{
                   ),
                 ],
               ),
-              SizedBox(height: 5,),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -183,7 +181,7 @@ class _AddStockState extends State<AddStock>{
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                   Text(
@@ -194,10 +192,10 @@ class _AddStockState extends State<AddStock>{
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 25,),
               SizedBox(
-                height: 45,
-                width: 200,
+                height: 40,
+                width: 150,
                   child: RaisedButton(
 
                     onPressed: () async {
