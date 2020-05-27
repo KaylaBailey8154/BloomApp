@@ -363,7 +363,6 @@ class SupplierHome extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
         ),
       ),

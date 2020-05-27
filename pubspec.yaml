@@ -23,6 +23,7 @@ environment:
 dependencies:
   intl: ^0.16.1
   transparent_image: ^1.0.0
+  flappy_search_bar: 1.4.1
   flutter:
     sdk: flutter
 

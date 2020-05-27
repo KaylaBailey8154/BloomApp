@@ -7,6 +7,7 @@ import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../supplier/supplier_home.dart';
 import 'add_stock.dart';
 
 class ViewMyStock extends StatelessWidget {
@@ -30,6 +31,7 @@ class ViewMyStock extends StatelessWidget {
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService(uid: user.uid).myStocks,
       child: Scaffold(
+        backgroundColor: Colors.red[200],
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
@@ -43,7 +45,7 @@ class ViewMyStock extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.white,
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
@@ -63,65 +65,76 @@ class ViewMyStock extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.all(10),
           child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.red[200],
-                boxShadow: [
-                  BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-                ],
-              ),
               height: 550,
               width: 400,
               child: MyStockList()),
         ),
-        bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),),
-          child: BottomAppBar(
-            color: Colors.green[400],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.add_circle),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.chat),
-                  onPressed: () {
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.equalizer),
-                  onPressed: () {
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.account_circle),
-                  onPressed: (){
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.redAccent,
+          child: const Icon(
+            Icons.add_circle,
+          ),
+          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));},
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),),
+            child: BottomAppBar(
+              shape: CircularNotchedRectangle(),
+              color: Colors.white,
+              child: Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                    child: IconButton(
+                      icon: Icon(Icons.home),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome()));
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.chat),
+                    onPressed: () {
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                    child: IconButton(
+                      icon: Icon(Icons.equalizer),
+                      onPressed: () {
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.account_circle),
+                    onPressed: (){
 
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.phonelink_ring),
-                  onPressed: () async { await _auth.signOut();},
-                ),
-              ],
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.phonelink_ring),
+                    onPressed: () async { await _auth.signOut();},
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
+import 'package:bloomflutterapp/screens/buyer/cart.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/screens/wrapper.dart';
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
          //home: ViewAllSuppliers(),  //shows all the suppliers (basic 'contact book')
          //home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
          home: SupplierHome(),
+        //home: BuyerHome(),
+        //home: Cart(),
       ),
     );
   }

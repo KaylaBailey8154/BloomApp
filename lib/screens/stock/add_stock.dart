@@ -6,12 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
-
-
-import '../../services/auth.dart';
-import 'view_mystock.dart';
 
 class AddStock extends StatefulWidget{
 
@@ -46,27 +41,38 @@ class _AddStockState extends State<AddStock>{
           key: _formKey,
           child: Column(
             children: <Widget>[
-              IconButton(
-                iconSize: 30,
-                color: Colors.black,
-                padding: EdgeInsets.fromLTRB(20, 30, 370, 0),
-                icon: Icon(Icons.arrow_back),
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Image(
-                    image: AssetImage('assets/imageplaceholder.jpg'),
-                    width: 400,
-                    height: 300,
+              Container(
+                height: 350,
+                width: 420,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(40),),
+                  image: new DecorationImage(
+                    image: new AssetImage('assets/imageplaceholder.jpg'),
+                    fit: BoxFit.cover,
                   ),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black, spreadRadius: 0, blurRadius: 20),
                   ],
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    new Positioned(
+                        left: 0.0,
+                        top: 20.0,
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          color: Colors.black,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          iconSize: 30,
+                        )
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(height: 20,),
               GestureDetector(
                   child: Text("Upload Photo",
                       style: TextStyle(
