@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -224,7 +225,28 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                   setState(() {
                                     error = 'please supply a valid email';
                                   });
-                                }}
+                                }
+                                else showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      // return object of type Dialog
+                                      return AlertDialog(
+                                        title: Text ("Email Verification"),
+                                        content: Text("Please check your email to verify your account"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("Cancel"),
+                                            onPressed: () {Navigator.of(context).pop(); },
+                                          ),
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              }
                             },
                             color: Colors.green,
                             child: Text('Register',

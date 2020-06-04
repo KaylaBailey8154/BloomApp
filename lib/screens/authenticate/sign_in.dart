@@ -2,6 +2,8 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'forgot_password.dart';
+
 class SignIn extends StatefulWidget{
   final Function toggleView;
   SignIn({this.toggleView});
@@ -109,17 +111,43 @@ class _SignInState extends State<SignIn>{
                           ),
                         ),
                       ),
-                      SizedBox(height: 50,),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(180, 0, 0, 0),
+                        child: GestureDetector(
+                            child: Text("Forgot Password?",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                decoration: TextDecoration.underline)),
+                            onTap: () {
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                              // do what you need to do when the text is gets clicked
+                            }
+                        ),
+                      ),
+                      SizedBox(height: 40,),
                       RaisedButton(
                         onPressed: () async{
                           if(_formKey.currentState.validate()){
                             print('valid');
-
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                           if(result == null)
                           {
                             setState(() {
-                              error = 'Incorrect credentials';
+                              showDialog(
+                                  context: context,
+                                builder: (BuildContext context){
+                                  return AlertDialog(
+                                    title: Text ("Error"),
+                                    content: Text("Incorrect credentials or If you are a new registered user, please check your email to verify your account before logging in"),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text("OK"),
+                                        onPressed: () {Navigator.of(context).pop();},
+                                      )
+                                    ],
+                                  );
+                                }
+                              );
                             });
                           }
                           }
@@ -168,7 +196,6 @@ class _SignInState extends State<SignIn>{
 
 
     );
-
   }
 }
 

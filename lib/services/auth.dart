@@ -1,6 +1,12 @@
+
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:intl/intl.dart';
 
 class AuthService{
 
@@ -22,32 +28,22 @@ class AuthService{
   //sign in anonymously
   Future signInAnon() async{
 
-    try{
-
-      AuthResult result =  await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
+    AuthResult result =  await _auth.signInAnonymously();
+    FirebaseUser user = result.user;
+    if(user.isEmailVerified){
       return _userFromFirebaseUser(user);
-
-    } catch(e){
-      print(e.toString());
-      return null;
     }
-
-
+    return null;
   }
 
   //sign in email and pass
   Future signInWithEmailAndPassword(String email, String password) async{
-    try{
-
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+    AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    FirebaseUser user = result.user;
+    if(user.isEmailVerified){
       return _userFromFirebaseUser(user);
     }
-    catch(e){
-      print(e.toString());
-      return null;
-    }
+    return null;
 
   }
 
@@ -55,36 +51,40 @@ class AuthService{
 
   //register supplier with email and pass
   Future registerSupplierWithEmailAndPassword(String email, String password, String fullName, String companyName, String phoneNumber ) async{
+    AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    FirebaseUser  user = result.user;
+
     try{
-
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser  user = result.user;
-
+      await user.sendEmailVerification();
       //create doc for supplier
-      await DatabaseService(uid: user.uid).updateSupplierUserData(fullName, companyName, phoneNumber);
+      DatabaseService(uid: user.uid).updateSupplierUserData(fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
     catch(e){
-      print(e.toString());
-      return null;
+      print("An error occurred while trying to send email verification");
+      print(e.message);
     }
      }
 
   //register buyer with email and pass
   Future registerBuyerWithEmailAndPassword(String email, String password, String fullName, String phoneNumber ) async{
+    AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    FirebaseUser  user = result.user;
     try{
-
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser  user = result.user;
-
+      await user.sendEmailVerification();
       //create doc for supplier
-      await DatabaseService(uid: user.uid).updateBuyerUserData(fullName, phoneNumber);
+      DatabaseService(uid: user.uid).updateBuyerUserData(fullName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
     catch(e){
-      print(e.toString());
-      return null;
+      print("An error occurred while trying to send email verification");
+      print(e.message);
     }
+  }
+
+  //forgot password
+  Future forgotpassword(String email) async{
+    await _auth.sendPasswordResetEmail(email: email);
   }
 
   //sign out
