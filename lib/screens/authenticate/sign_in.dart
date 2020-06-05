@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -169,7 +170,9 @@ class _SignInState extends State<SignIn>{
                               style: TextStyle(
                                   color: Colors.black)),
                           onTap: () {
-                            widget.toggleView();
+                            //widget.toggleView();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserTypeSelection()));
+
                             // do what you need to do when the text is gets clicked
                           }
                       ),
