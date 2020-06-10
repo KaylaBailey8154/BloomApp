@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
+import 'sign_in.dart';
+
 class SupplierRegister extends StatefulWidget {
 
   final Function toggleView;
@@ -261,7 +263,27 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                     error = 'please supply a valid email';
                                   });
                                 }
-                              Navigator.pop(context);}
+                                else showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      // return object of type Dialog
+                                      return AlertDialog(
+                                        title: Text ("Email Verification"),
+                                        content: Text("Please check your email to verify your account"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("Cancel"),
+                                            onPressed: () {Navigator.of(context).pop(); },
+                                          ),
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              }
                             },
                             color: Colors.green,
                             child: Text('Register',
