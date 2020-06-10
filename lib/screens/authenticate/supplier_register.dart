@@ -1,11 +1,11 @@
-import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
-import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+
+import 'sign_in.dart';
 
 class SupplierRegister extends StatefulWidget {
 
@@ -74,7 +74,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                             icon: Icon(Icons.account_circle) ,
                             iconSize: 80,
                             onPressed: (){
-                              //TODO uploading profile photo functionality for new account
+                              //uploading profile photo
                             },
                           ),
                         ),
@@ -232,6 +232,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                               child: FlatButton(
                                 onPressed: (){
                                   authUploaded = true;
+
                                 },
                                 color: Colors.red[200],
                                 child: Text('Browse'),
@@ -248,8 +249,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           width: 150,
                           child: RaisedButton(
                             onPressed: () async{
-
-                              //TODO solve problem where register is pressed without documentation, followed by pressing browse registers the user
                               if(_formKey.currentState.validate()){
                                 if(authUploaded == false){
                                   setState(() {
@@ -264,8 +263,27 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                     error = 'please supply a valid email';
                                   });
                                 }
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => SupplierHome()) );
-                             }
+                                else showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      // return object of type Dialog
+                                      return AlertDialog(
+                                        title: Text ("Email Verification"),
+                                        content: Text("Please check your email to verify your account"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("Cancel"),
+                                            onPressed: () {Navigator.of(context).pop(); },
+                                          ),
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              }
                             },
                             color: Colors.green,
                             child: Text('Register',
@@ -284,9 +302,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             onTap: () {
-                             // widget.toggleView();
+                              widget.toggleView();
 
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => SignIn()) );
                               // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
                         ),
