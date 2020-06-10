@@ -1,4 +1,6 @@
+import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
+import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,7 +74,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                             icon: Icon(Icons.account_circle) ,
                             iconSize: 80,
                             onPressed: (){
-                              //uploading profile photo
+                              //TODO uploading profile photo functionality for new account
                             },
                           ),
                         ),
@@ -230,7 +232,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                               child: FlatButton(
                                 onPressed: (){
                                   authUploaded = true;
-
                                 },
                                 color: Colors.red[200],
                                 child: Text('Browse'),
@@ -247,6 +248,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           width: 150,
                           child: RaisedButton(
                             onPressed: () async{
+
+                              //TODO solve problem where register is pressed without documentation, followed by pressing browse registers the user
                               if(_formKey.currentState.validate()){
                                 if(authUploaded == false){
                                   setState(() {
@@ -261,7 +264,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                     error = 'please supply a valid email';
                                   });
                                 }
-                              Navigator.pop(context);}
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => SupplierHome()) );
+                             }
                             },
                             color: Colors.green,
                             child: Text('Register',
@@ -280,8 +284,9 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             onTap: () {
-                              widget.toggleView();
+                             // widget.toggleView();
 
+                              Navigator.push(context,MaterialPageRoute(builder: (context) => SignIn()) );
                               // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
                         ),

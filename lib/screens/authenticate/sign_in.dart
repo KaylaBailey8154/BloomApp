@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
+import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -151,7 +152,9 @@ class _SignInState extends State<SignIn>{
                               );
                             });
                           }
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
                           }
+
                         },
                         color: Colors.green,
                         child: Text('Login',

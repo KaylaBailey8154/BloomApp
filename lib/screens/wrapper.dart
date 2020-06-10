@@ -19,7 +19,6 @@ class Wrapper extends StatelessWidget {
             return Authenticate();
     }
     else{
-//TODO conditional send to different landing screen based on role type (check where document name is the same as the current user uid, then check role type)
 
       return SupplierHome();
     }

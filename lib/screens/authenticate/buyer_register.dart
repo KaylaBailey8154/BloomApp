@@ -266,6 +266,7 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                     color: Colors.black)),
                             onTap: () {
                               //widget.toggleView();
+                              Navigator.push(context,MaterialPageRoute(builder: (context) => SignIn()) );
 
                               // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
