@@ -16,6 +16,9 @@ class _BuyerRegisterState extends State<BuyerRegister>{
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  // Initially password is obscure
+  bool _obscureText = true;
+
   // text field state
   String email = '';
   String password = '';
@@ -189,7 +192,6 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             height: 40,
                             width: 350,
                             child: TextFormField(
-                              obscureText: true,
                               validator: (val) => val.length <6 ? 'Enter a longer password': null,
                               onChanged: (val){
                                 setState(() {
@@ -207,7 +209,18 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                       width: 2
                                   ),
                                 ),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _obscureText =! _obscureText;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                                    ),
+                                  )
                               ),
+                              obscureText: _obscureText,
                             ),
                           ),
                         ),
@@ -219,7 +232,7 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
 
-                                dynamic result = await _auth.registerBuyerWithEmailAndPassword(email, password,fullName,phoneNumber);
+                                dynamic result = await _auth.registerBuyerWithEmailAndPassword(fullName,companyName, phoneNumber, email, password);
                                 if(result == null)
                                 {
                                   setState(() {
@@ -267,8 +280,6 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             onTap: () {
                               //widget.toggleView();
                               Navigator.push(context,MaterialPageRoute(builder: (context) => SignIn()) );
-
-                              // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
                         ),
                       ],

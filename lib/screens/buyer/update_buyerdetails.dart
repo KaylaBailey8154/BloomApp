@@ -11,36 +11,32 @@ enum PageEnum {
   signout,
 }
 
-class SupplierDetailsForm extends StatefulWidget {
+class BuyerDetailsForm extends StatefulWidget {
 
 
   @override
-  _SupplierDetailsFormState createState() => _SupplierDetailsFormState();
+  _BuyerDetailsFormState createState() => _BuyerDetailsFormState();
 }
 
-class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
+class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-
-  bool authUploaded = false;
-
 
 
   String _currentFullName;
   String _currentCompanyName;
   String _currentPhoneNumber;
-  String _currentEmail;
 
-_onSelect(PageEnum value){
-  switch (value){
-    case PageEnum.settings:
-      Navigator.of(context).pop();
-      break;
+  _onSelect(PageEnum value){
+    switch (value){
+      case PageEnum.settings:
+        Navigator.of(context).pop();
+        break;
 
-    case PageEnum.signout:
-       _auth.signOut();
-      break;
-  }
+      case PageEnum.signout:
+           _auth.signOut();
+        break;
+    }
   }
 
   @override
@@ -98,7 +94,6 @@ _onSelect(PageEnum value){
                                 child: Text("Sign Out"),
                               )
                             ],
-
                           ),
                         ],
                       ),
@@ -120,7 +115,7 @@ _onSelect(PageEnum value){
                             labelText: 'Name',
                           ),
                           initialValue: userData.fullName,
-                         // decoration: textInputDecoration,
+                          // decoration: textInputDecoration,
                           validator: (val) => val.isEmpty ? 'Please Enter a Name': null,
                           onChanged: (val) => setState(() => _currentFullName = val),
                         ),
@@ -136,7 +131,7 @@ _onSelect(PageEnum value){
                             labelText: 'Company Name',
                           ),
                           initialValue: userData.companyName,
-                         // decoration: textInputDecoration,
+                          // decoration: textInputDecoration,
                           validator: (val) => val.isEmpty ? 'Please Enter a Company Name': null,
                           onChanged: (val) => setState(() =>_currentCompanyName = val),
                         ),
@@ -152,34 +147,10 @@ _onSelect(PageEnum value){
                             labelText: 'Phone Number',
                           ),
                           initialValue: userData.phoneNumber,
-                         // decoration: textInputDecoration,
+                          // decoration: textInputDecoration,
                           validator: (val) => val.isEmpty ? 'Please Enter a Phone Number': null,
                           onChanged: (val) => setState(() => _currentPhoneNumber = val),
                         ),
-                      ),
-                      SizedBox(height: 20,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Upload accreditation document:   ',
-                          ),
-                          SizedBox(
-                            height: 30,
-                            width: 100,
-                            child: FlatButton(
-                              onPressed: (){
-                                authUploaded = true;
-
-                              },
-                              color: Colors.green,
-                              child: Text('Browse'),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                       SizedBox(height: 20,),
                       SizedBox(
@@ -197,7 +168,7 @@ _onSelect(PageEnum value){
 
                                 _currentFullName ?? userData.fullName,
                                 _currentCompanyName ?? userData.companyName,
-                                _currentPhoneNumber ?? userData.phoneNumber,
+                                _currentPhoneNumber ?? userData.phoneNumber
 
                               );
                               Navigator.pop(context);
@@ -212,7 +183,7 @@ _onSelect(PageEnum value){
 
             }else{
               //return Loading();
-              return null;
+              return Container(height: 0, width: 0,);
             }
 
           }

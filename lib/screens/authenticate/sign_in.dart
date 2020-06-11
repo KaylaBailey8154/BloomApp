@@ -17,6 +17,10 @@ class _SignInState extends State<SignIn>{
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  // Initially password is obscure
+  bool _obscureText = true;
+
+
   // text field state
   String email = '';
   String password = '';
@@ -43,7 +47,7 @@ class _SignInState extends State<SignIn>{
                       child: Text(
                         'BLOOM',
                         style: TextStyle(
-                          fontSize: 40,
+                          fontSize:50,
                           fontWeight: FontWeight.bold,
                           color: Colors.red[200],
                           fontFamily: 'Archivo',
@@ -63,7 +67,6 @@ class _SignInState extends State<SignIn>{
                     ),
                   ],
                 ),
-
                 Container(
                   child: Form(
                     key: _formKey,
@@ -71,7 +74,7 @@ class _SignInState extends State<SignIn>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(10, 100, 10, 0),
+                        padding: EdgeInsets.fromLTRB(10, 80, 10, 0),
                         child: SizedBox(
                           height: 50,
                           width: 300,
@@ -98,7 +101,6 @@ class _SignInState extends State<SignIn>{
                           width: 300,
                           child: TextFormField(
                             validator: (val) => val.length <6 ? 'Enter a longer password': null,
-                            obscureText: true,
                             onChanged: (val){
                               setState(() {
                                 password = val;
@@ -108,8 +110,19 @@ class _SignInState extends State<SignIn>{
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: InputBorder.none,
-                                labelText: 'password'
+                                labelText: 'password',
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText =! _obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                                ),
+                              )
                             ),
+                            obscureText: _obscureText,
                           ),
                         ),
                       ),

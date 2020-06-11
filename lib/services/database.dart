@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
@@ -31,9 +32,10 @@ class DatabaseService {
       'role': 'supplier',
     });
   }
-  Future updateBuyerUserData(String fullName, String phoneNumber) async{
+  Future updateBuyerUserData(String fullName, String companyName, String phoneNumber) async{
     return await userCollection.document(uid).setData({
       'fullName': fullName,
+      'companyName': companyName,
       'phoneNumber': phoneNumber,
       'role': 'buyer',
     });
@@ -42,6 +44,18 @@ class DatabaseService {
   List<Supplier> _supplierListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
       return Supplier(
+          fullName: doc.data['fullName'] ?? '',
+          companyName: doc.data['companyName']?? '',
+          phoneNumber:  doc.data['phoneNumber'] ?? ''
+      );
+    }).toList();
+
+  }
+
+  //Buyer list from snapshot
+  List<Buyer> _buyerListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return Buyer(
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName']?? '',
           phoneNumber:  doc.data['phoneNumber'] ?? ''
@@ -94,6 +108,12 @@ class DatabaseService {
   Stream<List<Supplier>> get suppliers{
     return userCollection.snapshots()
         .map(_supplierListFromSnapshot);
+  }
+
+  //get buyers stream
+  Stream<List<Buyer>> get buyers{
+    return userCollection.snapshots()
+        .map(_buyerListFromSnapshot);
   }
 
   //get stocks stream
