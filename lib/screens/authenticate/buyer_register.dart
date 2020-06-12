@@ -231,34 +231,35 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                           child: RaisedButton(
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
-
-                                dynamic result = await _auth.registerBuyerWithEmailAndPassword(fullName,companyName, phoneNumber, email, password);
-                                if(result == null)
-                                {
+                                try{
+                                   await _auth.registerBuyerWithEmailAndPassword(fullName,companyName, phoneNumber, email, password);
+                                  showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    // return object of type Dialog
+                                    return AlertDialog(
+                                      title: Text ("Email Verification"),
+                                      content: Text("Please check your email to verify your account"),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("Cancel"),
+                                          onPressed: () {Navigator.of(context).pop(); },
+                                        ),
+                                        FlatButton(
+                                          child: Text("OK"),
+                                          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                                }
+                                catch(e){
+                                  print(e);
                                   setState(() {
-                                    error = 'please supply a valid email';
+                                    error = e.message;
                                   });
                                 }
-                                else showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      // return object of type Dialog
-                                      return AlertDialog(
-                                        title: Text ("Email Verification"),
-                                        content: Text("Please check your email to verify your account"),
-                                        actions: <Widget>[
-                                          FlatButton(
-                                            child: Text("Cancel"),
-                                            onPressed: () {Navigator.of(context).pop(); },
-                                          ),
-                                          FlatButton(
-                                            child: Text("OK"),
-                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
-                                          )
-                                        ],
-                                      );
-                                    }
-                                );
                               }
                             },
                             color: Colors.green,

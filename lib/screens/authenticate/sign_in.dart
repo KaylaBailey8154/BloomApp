@@ -38,12 +38,11 @@ class _SignInState extends State<SignIn>{
     return Scaffold(
       body: CustomPaint(
         painter: ShapesPainter(),
-        child: SingleChildScrollView(
-          child: Container(
-            height: 700,
+        child: Container(
+          height: 700,
+          child: SingleChildScrollView(
             child: new Column(
               children: <Widget>[
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,6 +72,12 @@ class _SignInState extends State<SignIn>{
                     ),
                   ],
                 ),
+                SizedBox(height: 12,),
+                Container(
+                  color: Colors.redAccent,
+                  child: Text(error, maxLines: 3,
+                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),),
+                ),
                 Container(
                   child: Form(
                     key: _formKey,
@@ -80,7 +85,7 @@ class _SignInState extends State<SignIn>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(10, 80, 10, 0),
+                        padding: EdgeInsets.fromLTRB(10, 40, 10, 0),
                         child: SizedBox(
                           height: 50,
                           width: 300,
@@ -149,6 +154,7 @@ class _SignInState extends State<SignIn>{
                       RaisedButton(
                         onPressed: () async{
                           if(_formKey.currentState.validate()){
+<<<<<<< HEAD
                             print('valid');
 
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
@@ -186,15 +192,40 @@ class _SignInState extends State<SignIn>{
                               else if(role == 'supplier'){
                                 print(result);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
+=======
+                            //print('valid');
+                            try{
+                              dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                              String uid = result;
+                              Firestore.instance
+                                  .collection('users')
+                                  .document(uid)
+                                  .get()
+                                  .then((DocumentSnapshot ds) {
+                                var role = ds['role'];
+                                if(role == 'buyer'){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
+                                }
+                                else if(role == 'supplier'){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
+                                }
                               }
-                                                          }
-
-
-                            );
-
-
+                              );
+                              if(result == null)
+                              {
+                                setState(() {
+                                  error = "Please check your email to verify your account before logging in";
+                                });
+>>>>>>> 02eafb6e9201b13ff1d881712f661320dfe7094e
+                              }
+                            }
+                            catch(e){
+                              print(e);
+                              setState(() {
+                                error = e.message;
+                              });
+                            }
                           }
-
                         },
                         color: Colors.green,
                         child: Text('Login',
@@ -204,9 +235,6 @@ class _SignInState extends State<SignIn>{
                         ),
 
                       ),
-                      SizedBox(height: 12,),
-                      Text(error,
-                        style: TextStyle(color: Colors.red, fontSize: 14),),
                       SizedBox(height: 20,),
                       GestureDetector(
                           child: Text("New User? Sign Up",
@@ -243,6 +271,7 @@ class _SignInState extends State<SignIn>{
 
     );
   }
+
 }
 
 // drawing the background shapes
