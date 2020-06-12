@@ -1,6 +1,7 @@
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
+import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -150,6 +151,7 @@ class _SignInState extends State<SignIn>{
                           if(_formKey.currentState.validate()){
                             print('valid');
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                          //TODO incorrect passwords are not showing error on app to user, only in console
                           if(result == null)
                           {
                             setState(() {
@@ -170,14 +172,27 @@ class _SignInState extends State<SignIn>{
                               );
                             });
                           } // End of error checking
-
-                            //TODO send user to different home screen based on their role
-
+                            String uid = result;
 
 
-                           DatabaseService().homePageRedirect();
+                             Firestore.instance
+                            .collection('users')
+                            .document(uid)
+                            .get()
+                            .then((DocumentSnapshot ds) {
+                              var role = ds['role'];
+                              if(role == 'buyer'){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
+                              }
+                              else if(role == 'supplier'){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
+                              }
+                                                          }
 
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
+
+                            );
+
+
                           }
 
                         },
