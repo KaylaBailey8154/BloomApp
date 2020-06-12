@@ -302,8 +302,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             onTap: () {
-                              widget.toggleView();
-
+                              //widget.toggleView();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
                               // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
                             }
                         ),

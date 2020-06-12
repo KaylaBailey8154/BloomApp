@@ -1,8 +1,12 @@
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
+import 'package:bloomflutterapp/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'forgot_password.dart';
 
@@ -24,6 +28,7 @@ class _SignInState extends State<SignIn>{
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       body: CustomPaint(
@@ -151,8 +156,15 @@ class _SignInState extends State<SignIn>{
                                 }
                               );
                             });
-                          }
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
+                          } // End of error checking
+
+                            //TODO send user to different home screen based on their role
+
+
+
+                           DatabaseService().homePageRedirect();
+
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
                           }
 
                         },

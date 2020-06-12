@@ -102,6 +102,8 @@ class DatabaseService {
         .map(_stockListFromSnapshot);
   }
 
+
+
   //get stocks stream
   Stream<List<Stock>> get allStocks{
     return stockCollection.snapshots()
@@ -121,6 +123,12 @@ class DatabaseService {
   Stream<UserData> get userData{
     return userCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
+  }
+
+  void homePageRedirect() {
+
+
+
   }
 
 
