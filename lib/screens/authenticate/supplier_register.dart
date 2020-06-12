@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -315,8 +316,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             onTap: () {
-                              widget.toggleView();
-
+                             // widget.toggleView();
+                              return Authenticate();
                             }
                         ),
                       ],

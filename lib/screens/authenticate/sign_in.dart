@@ -150,6 +150,7 @@ class _SignInState extends State<SignIn>{
                         onPressed: () async{
                           if(_formKey.currentState.validate()){
                             print('valid');
+
                           dynamic result = await _auth.signInWithEmailAndPassword(email, password);
 
                           //TODO incorrect passwords are not showing error on app to user, only in console
@@ -179,9 +180,11 @@ class _SignInState extends State<SignIn>{
                              Firestore.instance.collection('users').document(uid).get().then((DocumentSnapshot ds) {
                               var role = ds['role'];
                               if(role == 'buyer'){
+                                print(result);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
                               }
                               else if(role == 'supplier'){
+                                print(result);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
                               }
                                                           }

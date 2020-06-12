@@ -361,7 +361,9 @@ class SupplierHome extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.phonelink_ring),
-                  onPressed: () async { await _auth.signOut();},
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await _auth.signOut();},
                 ),
               ],
             ),

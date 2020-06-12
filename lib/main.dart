@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
 
         //Whichever screen Widget is defined in next line will be the screen shown when the app is run
         //home: AddStock(), //this will show the Add Stock screen
-        home: SignIn(), //this would show the sign in screen
+        //home: SignIn(), //this would show the sign in screen
         //home: Register(), //this would show the register screen
          //home: ViewAllSuppliers(),  //shows all the suppliers (basic 'contact book')
-         //home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
+         home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
          //home: SupplierHome(),
         //home: BuyerHome(),
         //home: Cart(),
