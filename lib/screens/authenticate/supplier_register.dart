@@ -263,39 +263,41 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           child: RaisedButton(
                             onPressed: () async{
                               if(_formKey.currentState.validate()){
-                                if(authUploaded == false){
-                                  setState(() {
-                                    error = 'Please upload supporting documentation';
-                                  });
-                                }
+                                try{
+                                  if(authUploaded == false){
+                                    setState(() {
+                                      error = 'Please upload supporting documentation';
+                                    });
+                                  }
 
-                                dynamic result = await _auth.registerSupplierWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
-                                if(result == null)
-                                {
+                                  dynamic result = await _auth.registerSupplierWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context){
+                                        // return object of type Dialog
+                                        return AlertDialog(
+                                          title: Text ("Email Verification"),
+                                          content: Text("Please check your email to verify your account"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text("Cancel"),
+                                              onPressed: () {Navigator.of(context).pop(); },
+                                            ),
+                                            FlatButton(
+                                              child: Text("OK"),
+                                              onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                            )
+                                          ],
+                                        );
+                                      }
+                                  );
+                                }
+                                catch(e){
+                                  print(e);
                                   setState(() {
-                                    error = 'please supply a valid email';
+                                    error = e.message;
                                   });
                                 }
-                                else showDialog(
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      // return object of type Dialog
-                                      return AlertDialog(
-                                        title: Text ("Email Verification"),
-                                        content: Text("Please check your email to verify your account"),
-                                        actions: <Widget>[
-                                          FlatButton(
-                                            child: Text("Cancel"),
-                                            onPressed: () {Navigator.of(context).pop(); },
-                                          ),
-                                          FlatButton(
-                                            child: Text("OK"),
-                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
-                                          )
-                                        ],
-                                      );
-                                    }
-                                );
                               }
                             },
                             color: Colors.green,
