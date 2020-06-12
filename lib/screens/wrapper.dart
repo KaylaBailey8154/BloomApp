@@ -19,7 +19,6 @@ class Wrapper extends StatelessWidget {
             return Authenticate();
     }
     else{
-
       return SupplierHome();
     }
 

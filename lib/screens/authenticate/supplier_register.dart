@@ -269,7 +269,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                   });
                                 }
 
-                                dynamic result = await _auth.registerSupplierWithEmailAndPassword(email, password,fullName,companyName,phoneNumber);
+                                dynamic result = await _auth.registerSupplierWithEmailAndPassword(fullName,companyName,phoneNumber,email, password,);
                                 if(result == null)
                                 {
                                   setState(() {

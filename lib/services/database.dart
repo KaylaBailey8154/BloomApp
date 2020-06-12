@@ -145,11 +145,4 @@ class DatabaseService {
         .map(_userDataFromSnapshot);
   }
 
-  void homePageRedirect() {
-
-
-
-  }
-
-
 }
