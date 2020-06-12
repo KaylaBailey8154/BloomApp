@@ -154,45 +154,6 @@ class _SignInState extends State<SignIn>{
                       RaisedButton(
                         onPressed: () async{
                           if(_formKey.currentState.validate()){
-<<<<<<< HEAD
-                            print('valid');
-
-                          dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-
-                          //TODO incorrect passwords are not showing error on app to user, only in console
-                          if(result == null)
-                          {
-                            setState(() {
-                              showDialog(
-                                  context: context,
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    title: Text ("Error"),
-                                    content: Text("Incorrect credentials or If you are a new registered user, please check your email to verify your account before logging in"),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text("OK"),
-                                        onPressed: () {Navigator.of(context).pop();},
-                                      )
-                                    ],
-                                  );
-                                }
-                              );
-                            });
-                          } // End of error checking
-                            String uid = result.uid;
-
-
-                             Firestore.instance.collection('users').document(uid).get().then((DocumentSnapshot ds) {
-                              var role = ds['role'];
-                              if(role == 'buyer'){
-                                print(result);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
-                              }
-                              else if(role == 'supplier'){
-                                print(result);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
-=======
                             //print('valid');
                             try{
                               dynamic result = await _auth.signInWithEmailAndPassword(email, password);
@@ -216,7 +177,6 @@ class _SignInState extends State<SignIn>{
                                 setState(() {
                                   error = "Please check your email to verify your account before logging in";
                                 });
->>>>>>> 02eafb6e9201b13ff1d881712f661320dfe7094e
                               }
                             }
                             catch(e){
