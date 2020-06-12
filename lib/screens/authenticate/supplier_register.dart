@@ -22,6 +22,9 @@ class _SupplierRegisterState extends State<SupplierRegister> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  // Initially password is obscure
+  bool _obscureText = true;
+
   // text field state
   String email = '';
   String password = '';
@@ -197,7 +200,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                             height: 40,
                             width: 350,
                             child: TextFormField(
-                              obscureText: true,
                               validator: (val) => val.length <6 ? 'Enter a longer password': null,
                               onChanged: (val){
                                 setState(() {
@@ -208,6 +210,16 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                   filled: true,
                                   fillColor: Colors.white,
                                   labelText: 'password',
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _obscureText =! _obscureText;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                                    ),
+                                  ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(25),
                                   borderSide: BorderSide(
@@ -216,6 +228,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                   ),
                                 ),
                               ),
+                              obscureText: _obscureText,
                             ),
                           ),
                         ),
@@ -302,9 +315,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 style: TextStyle(
                                     color: Colors.black)),
                             onTap: () {
-                              //widget.toggleView();
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
-                              // do what you need to do when the text is gets clicked - Ammaarah this is some of your worst grammar
+                              widget.toggleView();
+
                             }
                         ),
                       ],

@@ -7,6 +7,7 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 import 'update_supplierdetails.dart';
+import 'update_supplierdetails.dart';
 
 class SupplierHome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -14,15 +15,15 @@ class SupplierHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    void _showDetailsPanel(){
+   // void _showDetailsPanel(){
 
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-          child: SupplierDetailsForm(),
-        );
-      });
-    }
+      //showModalBottomSheet(context: context, builder: (context){
+        //return Container(
+         // padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
+          //child: SupplierDetailsForm(),
+        //);
+      //});
+    //}
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -205,7 +206,8 @@ class SupplierHome extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
                       onPressed: (){
-                        _showDetailsPanel();
+                        //_showDetailsPanel();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierDetailsForm()));
                       },
                       elevation: 5,
                       shape: RoundedRectangleBorder(

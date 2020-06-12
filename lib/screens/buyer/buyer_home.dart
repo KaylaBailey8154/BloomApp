@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/screens/buyer/cart.dart';
 import 'package:bloomflutterapp/screens/buyer/flower_list.dart';
+import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
@@ -324,7 +325,7 @@ class BuyerHome extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.account_circle),
                   onPressed: (){
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerDetailsForm()));
                   },
                 ),
                 IconButton(

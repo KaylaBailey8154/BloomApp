@@ -52,7 +52,7 @@ class AuthService{
 
 
   //register supplier with email and pass
-  Future registerSupplierWithEmailAndPassword(String email, String password, String fullName, String companyName, String phoneNumber ) async{
+  Future registerSupplierWithEmailAndPassword(String fullName, String companyName, String phoneNumber, String email, String password ) async{
     AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     FirebaseUser  user = result.user;
 
@@ -69,13 +69,13 @@ class AuthService{
      }
 
   //register buyer with email and pass
-  Future registerBuyerWithEmailAndPassword(String email, String password, String fullName, String phoneNumber ) async{
+  Future registerBuyerWithEmailAndPassword(String fullName, String companyName, String phoneNumber, String email, String password ) async{
     AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     FirebaseUser  user = result.user;
     try{
       await user.sendEmailVerification();
       //create doc for supplier
-      DatabaseService(uid: user.uid).updateBuyerUserData(fullName, phoneNumber);
+      DatabaseService(uid: user.uid).updateBuyerUserData(fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     }
     catch(e){
