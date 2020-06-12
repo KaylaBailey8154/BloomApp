@@ -14,6 +14,7 @@ class _MyStockListState extends State<MyStockList> {
   Widget build(BuildContext context) {
 
     final stocks = Provider.of<List<Stock>>(context)?? [];
+    print(stocks.length);
 
 
 

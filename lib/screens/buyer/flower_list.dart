@@ -115,6 +115,12 @@ class FlowerList extends StatelessWidget {
             ],
           ),
 
+
+          //Beginning of where list of stocks matching selected flower type value should be populated
+
+          //something like 'mystock_list' containing 'mystock_tiles' which take in data from 'stock.$value'
+
+
           Container(
             height:495,
             width: 400,
