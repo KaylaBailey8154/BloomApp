@@ -3,6 +3,7 @@ import 'package:bloomflutterapp/screens/buyer/flower_list.dart';
 import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
+import 'package:bloomflutterapp/screens/stock/view_flowertypestock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/services/auth.dart';
@@ -103,10 +104,11 @@ class BuyerHome extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: RaisedButton(
                           onPressed: () {
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FlowerList()));
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'King Protea',)));
                           },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
@@ -134,7 +136,13 @@ class BuyerHome extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Lily',)));
+
+                          },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -348,3 +356,5 @@ class BuyerHome extends StatelessWidget {
     );
   }
 }
+
+

@@ -173,7 +173,8 @@ class _SignInState extends State<SignIn> {
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
-                                String uid = result;
+                                if(result is User){
+                                String uid = result.uid;
                                 Firestore.instance
                                     .collection('users')
                                     .document(uid)
@@ -192,8 +193,8 @@ class _SignInState extends State<SignIn> {
                                             builder: (context) =>
                                                 SupplierHome()));
                                   }
-                                });
-                                if (result == null) {
+                                });}
+                                if (result is !User) {
                                   setState(() {
                                     error =
                                         "Please check your email to verify your account before logging in";

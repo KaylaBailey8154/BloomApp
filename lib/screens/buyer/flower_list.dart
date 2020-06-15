@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
+import 'package:bloomflutterapp/screens/stock/flowertypestock_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
@@ -134,7 +135,17 @@ class FlowerList extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: RaisedButton(
+                    child: FlowerTypeStockList(),
+
+            ),
+          ]),
+    ))],
+      ),
+    );
+  }
+}
+
+                    /*RaisedButton(
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -455,11 +466,4 @@ class FlowerList extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+              ),*/
