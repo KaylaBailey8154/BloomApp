@@ -32,16 +32,17 @@ class BuyerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    void _showDetailsPanel(){
-
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-          child: SupplierDetailsForm(),
-        );
-      });
+    void _showDetailsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+              child: SupplierDetailsForm(),
+            );
+          });
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -51,7 +52,8 @@ class BuyerHome extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(120),),
+                    bottom: Radius.circular(120),
+                  ),
                   color: Colors.green,
                 ),
                 width: MediaQuery.of(context).size.width,
@@ -61,9 +63,9 @@ class BuyerHome extends StatelessWidget {
                   child: Text(
                     "BROWSE",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'Archivo',
                     ),
                   ),
@@ -74,25 +76,24 @@ class BuyerHome extends StatelessWidget {
                 child: Container(
                   height: 80,
                   width: 350,
-                    child: SearchBar<Post>(
-                      onSearch: search,
-                      onItemFound: (Post post, int index){
-                        return ListTile(
-                          title: Text(post.title),
-                          subtitle: Text(post.description),
-                        );
-                      },
-                      searchBarStyle: SearchBarStyle(
-                        backgroundColor: Colors.white,
-                      ),
+                  child: SearchBar<Post>(
+                    onSearch: search,
+                    onItemFound: (Post post, int index) {
+                      return ListTile(
+                        title: Text(post.title),
+                        subtitle: Text(post.description),
+                      );
+                    },
+                    searchBarStyle: SearchBarStyle(
+                      backgroundColor: Colors.white,
                     ),
+                  ),
                 ),
               ),
             ],
           ),
-
           Container(
-            height:420 ,
+            height: 420,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -102,7 +103,10 @@ class BuyerHome extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: RaisedButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => FlowerList()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FlowerList()));
                           },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
@@ -197,7 +201,7 @@ class BuyerHome extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                  'Tulip',
+                                'Tulip',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -219,9 +223,7 @@ class BuyerHome extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: RaisedButton(
-                          onPressed: () {
-
-                          },
+                          onPressed: () {},
                           elevation: 20,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -248,7 +250,7 @@ class BuyerHome extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
                         child: RaisedButton(
-                          onPressed: (){
+                          onPressed: () {
                             _showDetailsPanel();
                           },
                           elevation: 20,
@@ -293,7 +295,8 @@ class BuyerHome extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),),
+            topLeft: Radius.circular(30),
+          ),
           child: BottomAppBar(
             shape: CircularNotchedRectangle(),
             color: Colors.white,
@@ -301,36 +304,41 @@ class BuyerHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.home),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome()));
-                    },
-                  ),
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => BuyerHome()));
+                  },
+                ),
                 IconButton(
                   icon: Icon(Icons.shopping_cart),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Cart()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.chat),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
-                    icon: Icon(Icons.history),
-                    onPressed: () {
-                    },
-                  ),
+                  icon: Icon(Icons.history),
+                  onPressed: () {},
+                ),
                 IconButton(
                   icon: Icon(Icons.account_circle),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerDetailsForm()));
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BuyerDetailsForm()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.phonelink_ring),
-                  onPressed: () async { await _auth.signOut();},
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
                 ),
               ],
             ),
@@ -338,9 +346,5 @@ class BuyerHome extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
-
-
-

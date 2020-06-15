@@ -3,7 +3,7 @@ import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class UserTypeSelection extends StatelessWidget{
+class UserTypeSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -19,7 +19,10 @@ class UserTypeSelection extends StatelessWidget{
                 padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
                 child: RaisedButton(
                   onPressed: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => BuyerRegister()) );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BuyerRegister()));
                   },
                   elevation: 10,
                   shape: RoundedRectangleBorder(
@@ -57,7 +60,10 @@ class UserTypeSelection extends StatelessWidget{
                 padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
                 child: RaisedButton(
                   onPressed: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => SupplierRegister()) );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SupplierRegister()));
                   },
                   elevation: 10,
                   shape: RoundedRectangleBorder(

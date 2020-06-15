@@ -11,18 +11,13 @@ class StockList extends StatefulWidget {
 class _StockListState extends State<StockList> {
   @override
   Widget build(BuildContext context) {
-
-    final stocks = Provider.of<List<Stock>>(context)?? [];
-
-
-
+    final stocks = Provider.of<List<Stock>>(context) ?? [];
 
     return ListView.builder(
       itemCount: stocks.length,
-      itemBuilder: (context, index){
-        return StockTile(stock : stocks[index]);
+      itemBuilder: (context, index) {
+        return StockTile(stock: stocks[index]);
       },
-
     );
   }
 }

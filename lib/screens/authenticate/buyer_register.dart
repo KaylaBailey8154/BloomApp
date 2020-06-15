@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BuyerRegister extends StatefulWidget {
-
   //final Function toggleView;
   //Register({this.toggleView});
 
@@ -12,7 +11,7 @@ class BuyerRegister extends StatefulWidget {
   _BuyerRegisterState createState() => _BuyerRegisterState();
 }
 
-class _BuyerRegisterState extends State<BuyerRegister>{
+class _BuyerRegisterState extends State<BuyerRegister> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -39,13 +38,12 @@ class _BuyerRegisterState extends State<BuyerRegister>{
             height: 700,
             child: new Column(
               children: <Widget>[
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(10,140,0,0),
+                      padding: EdgeInsets.fromLTRB(10, 140, 0, 0),
                       child: Text(
                         'Create an Account',
                         style: TextStyle(
@@ -66,9 +64,9 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                         Padding(
                           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: IconButton(
-                            icon: Icon(Icons.account_circle) ,
+                            icon: Icon(Icons.account_circle),
                             iconSize: 80,
-                            onPressed: (){
+                            onPressed: () {
                               //uploading profile photo
                             },
                           ),
@@ -86,20 +84,16 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(
-                                        color: Colors.green,
-                                        width: 2
-                                    ),
+                                        color: Colors.green, width: 2),
                                   ),
                                 ),
-
-                                validator: (val)=> val.isEmpty? 'Enter a name' : null,
-                                onChanged: (val){
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter a name' : null,
+                                onChanged: (val) {
                                   setState(() {
-                                    fullName=val;
+                                    fullName = val;
                                   });
-                                }
-
-                            ),
+                                }),
                           ),
                         ),
                         Padding(
@@ -108,7 +102,6 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             height: 40,
                             width: 350,
                             child: TextFormField(
-
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -116,18 +109,16 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(
-                                        color: Colors.green,
-                                        width: 2
-                                    ),
+                                        color: Colors.green, width: 2),
                                   ),
                                 ),
-                                validator: (val)=> val.isEmpty? 'Enter a Company Name' : null,
-                                onChanged: (val){
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter a Company Name' : null,
+                                onChanged: (val) {
                                   setState(() {
-                                    companyName=val;
+                                    companyName = val;
                                   });
-                                }
-                            ),
+                                }),
                           ),
                         ),
                         Padding(
@@ -136,7 +127,6 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             height: 40,
                             width: 350,
                             child: TextFormField(
-
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -144,18 +134,17 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25),
                                     borderSide: BorderSide(
-                                        color: Colors.green,
-                                        width: 2
-                                    ),
+                                        color: Colors.green, width: 2),
                                   ),
                                 ),
-                                validator: (val)=> val.isEmpty? 'Enter a mobile number' : null,
-                                onChanged: (val){
+                                validator: (val) => val.isEmpty
+                                    ? 'Enter a mobile number'
+                                    : null,
+                                onChanged: (val) {
                                   setState(() {
-                                    phoneNumber=val;
+                                    phoneNumber = val;
                                   });
-                                }
-                            ),
+                                }),
                           ),
                         ),
                         Padding(
@@ -164,8 +153,9 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                             height: 40,
                             width: 350,
                             child: TextFormField(
-                              validator: (val)=> val.isEmpty? 'Enter an Email' : null,
-                              onChanged: (val){
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter an Email' : null,
+                              onChanged: (val) {
                                 setState(() {
                                   email = val;
                                 });
@@ -176,85 +166,97 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                                 labelText: 'email',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide(
-                                      color: Colors.green,
-                                      width: 2
-                                  ),
+                                  borderSide:
+                                      BorderSide(color: Colors.green, width: 2),
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: SizedBox(
                             height: 40,
                             width: 350,
                             child: TextFormField(
-                              validator: (val) => val.length <6 ? 'Enter a longer password': null,
-                              onChanged: (val){
+                              validator: (val) => val.length < 6
+                                  ? 'Enter a longer password'
+                                  : null,
+                              onChanged: (val) {
                                 setState(() {
                                   password = val;
                                 });
                               },
                               decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                labelText: 'password',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide(
-                                      color: Colors.green,
-                                      width: 2
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  labelText: 'password',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: BorderSide(
+                                        color: Colors.green, width: 2),
                                   ),
-                                ),
                                   suffixIcon: GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        _obscureText =! _obscureText;
+                                        _obscureText = !_obscureText;
                                       });
                                     },
                                     child: Icon(
-                                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                                      _obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
                                     ),
-                                  )
-                              ),
+                                  )),
                               obscureText: _obscureText,
                             ),
                           ),
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         SizedBox(
                           height: 45,
                           width: 150,
                           child: RaisedButton(
-                            onPressed: () async{
-                              if(_formKey.currentState.validate()){
-                                try{
-                                   await _auth.registerBuyerWithEmailAndPassword(fullName,companyName, phoneNumber, email, password);
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                try {
+                                  await _auth.registerBuyerWithEmailAndPassword(
+                                      fullName,
+                                      companyName,
+                                      phoneNumber,
+                                      email,
+                                      password);
                                   showDialog(
-                                  context: context,
-                                  builder: (BuildContext context){
-                                    // return object of type Dialog
-                                    return AlertDialog(
-                                      title: Text ("Email Verification"),
-                                      content: Text("Please check your email to verify your account"),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text("Cancel"),
-                                          onPressed: () {Navigator.of(context).pop(); },
-                                        ),
-                                        FlatButton(
-                                          child: Text("OK"),
-                                          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
-                                        )
-                                      ],
-                                    );
-                                  }
-                              );
-                                }
-                                catch(e){
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        // return object of type Dialog
+                                        return AlertDialog(
+                                          title: Text("Email Verification"),
+                                          content: Text(
+                                              "Please check your email to verify your account"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text("Cancel"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text("OK"),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SignIn()));
+                                              },
+                                            )
+                                          ],
+                                        );
+                                      });
+                                } catch (e) {
                                   print(e);
                                   setState(() {
                                     error = e.message;
@@ -263,26 +265,34 @@ class _BuyerRegisterState extends State<BuyerRegister>{
                               }
                             },
                             color: Colors.green,
-                            child: Text('Register',
+                            child: Text(
+                              'Register',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
-                        Text(error,
-                          style: TextStyle(color: Colors.red, fontSize: 14),),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          error,
+                          style: TextStyle(color: Colors.red, fontSize: 14),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         GestureDetector(
                             child: Text("Existing User? Login",
-                                style: TextStyle(
-                                    color: Colors.black)),
+                                style: TextStyle(color: Colors.black)),
                             onTap: () {
                               //widget.toggleView();
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => SignIn()) );
-                            }
-                        ),
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignIn()));
+                            }),
                       ],
                     ),
                   ),
@@ -291,7 +301,6 @@ class _BuyerRegisterState extends State<BuyerRegister>{
             ),
           ),
         ),
-
       ),
     );
   }
@@ -327,6 +336,7 @@ class ShapesPainter extends CustomPainter {
 
     canvas.drawPath(path, paint);
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

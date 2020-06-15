@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StockTile extends StatelessWidget {
-
   final Stock stock;
   StockTile({this.stock});
-
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +15,12 @@ class StockTile extends StatelessWidget {
     String dateAdded = stock.dateAdded;
     String flowerColour = stock.flowerColour;
 
-
-
     return Padding(
-      padding: EdgeInsets.only(top:8),
+      padding: EdgeInsets.only(top: 8),
       child: Card(
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: ListTile(
           isThreeLine: true,
-
           title: Text('Flower Type: $flowerType'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +30,6 @@ class StockTile extends StatelessWidget {
               Text('Date Added: $dateAdded'),
             ],
           ),
-
         ),
       ),
     );

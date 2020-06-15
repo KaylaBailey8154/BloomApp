@@ -5,6 +5,4 @@ class Buyer {
   final String phoneNumber;
 
   Buyer({this.uid, this.fullName, this.companyName, this.phoneNumber});
-
-
 }

@@ -16,17 +16,15 @@ class ViewAllSuppliers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-    void _showSettingsPanel(){
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-          child: SupplierDetailsForm(
-          ),
-        );
-      });
+    void _showSettingsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+              child: SupplierDetailsForm(),
+            );
+          });
     }
 
     return StreamProvider<List<Supplier>>.value(
@@ -50,32 +48,35 @@ class ViewAllSuppliers extends StatelessWidget {
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),),
+                bottom: Radius.circular(30),
+              ),
             ),
             leading: IconButton(
               padding: EdgeInsets.fromLTRB(30, 0, 100, 0),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
               color: Colors.black,
               iconSize: 30,
-              icon: Icon(Icons.arrow_back,),
+              icon: Icon(
+                Icons.arrow_back,
+              ),
             ),
           ),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
-          child: Container(
-              height: 550,
-              width: 400,
-              child: SupplierList()),
+          child: Container(height: 550, width: 400, child: SupplierList()),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.brown[900],
           child: const Icon(
             Icons.add_circle,
           ),
-          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddStock()));
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
@@ -89,7 +90,8 @@ class ViewAllSuppliers extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),),
+              topLeft: Radius.circular(30),
+            ),
             child: BottomAppBar(
               shape: CircularNotchedRectangle(),
               color: Colors.white,
@@ -101,38 +103,42 @@ class ViewAllSuppliers extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.home),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SupplierHome()));
                       },
                     ),
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewMyStock()));
                     },
                   ),
                   IconButton(
                     icon: Icon(Icons.chat),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
                     child: IconButton(
                       icon: Icon(Icons.equalizer),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
                   IconButton(
                     icon: Icon(Icons.account_circle),
-                    onPressed: (){
-
-                    },
+                    onPressed: () {},
                   ),
                   IconButton(
                     icon: Icon(Icons.phonelink_ring),
-                    onPressed: () async { await _auth.signOut();},
+                    onPressed: () async {
+                      await _auth.signOut();
+                    },
                   ),
                 ],
               ),

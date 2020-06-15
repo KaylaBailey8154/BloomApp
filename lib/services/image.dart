@@ -13,36 +13,28 @@ class ImageCapture extends StatefulWidget {
 class _ImageCaptureState extends State<ImageCapture> {
   File _imageFile;
 
-
-  Future<void> _pickImage(ImageSource source) async{
+  Future<void> _pickImage(ImageSource source) async {
     File selected = await ImagePicker.pickImage(source: (source));
 
-  setState(() {
-    _imageFile = selected;
-  });
-
+    setState(() {
+      _imageFile = selected;
+    });
   }
 
-  Future<void> _cropImage() async{
+  Future<void> _cropImage() async {
     File cropped = await ImageCropper.cropImage(
-      sourcePath:_imageFile.path,
-
-
+      sourcePath: _imageFile.path,
     );
     setState(() {
       _imageFile = cropped ?? _imageFile;
     });
   }
 
-  void _clear(){
+  void _clear() {
     setState(() {
       _imageFile = null;
     });
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +48,14 @@ class _ImageCaptureState extends State<ImageCapture> {
             ),
             IconButton(
               icon: Icon(Icons.photo_library),
-              onPressed: ()=> _pickImage(ImageSource.gallery),
+              onPressed: () => _pickImage(ImageSource.gallery),
             ),
           ],
         ),
       ),
       body: ListView(
         children: <Widget>[
-          if(_imageFile!=null) ... [
+          if (_imageFile != null) ...[
             Image.file(_imageFile),
             Row(
               children: <Widget>[
@@ -88,7 +80,7 @@ class _ImageCaptureState extends State<ImageCapture> {
 class Uploader extends StatefulWidget {
   final File file;
 
-  Uploader({Key key, this.file}) : super(key:key);
+  Uploader({Key key, this.file}) : super(key: key);
 
   @override
   _UploaderState createState() => _UploaderState();
@@ -100,47 +92,48 @@ class _UploaderState extends State<Uploader> {
 
   StorageUploadTask _uploadTask;
 
-  void _startUpload(){
+  void _startUpload() {
     String filePath = 'images/${DateTime.now()}.png';
     setState(() {
       _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    if(_uploadTask!=null){
-return StreamBuilder<StorageTaskEvent>(
-  stream: _uploadTask.events,
-  builder: (context,snapshot){
-    var event = snapshot?.data?.snapshot;
-    double progressPercent = event !=null
-        ?event.bytesTransferred/event.totalByteCount
-        :0;
-    return Column(
-children: <Widget>[
-  if(_uploadTask.isComplete)
-    Text('Complete'),
-  if(_uploadTask.isPaused)
-    FlatButton(
-      child: Icon(Icons.play_arrow),
-      onPressed: _uploadTask.resume,
-    ),
-  if(_uploadTask.isPaused)
-    FlatButton(
-      child: Icon(Icons.pause),
-      onPressed: _uploadTask.pause,
-    ),
-  LinearProgressIndicator(value: progressPercent,),
-  Text('${(progressPercent*100).toStringAsFixed(2)} %'),
-],
-    );
-  }
-);
-    }else{
-      return FlatButton.icon(onPressed: _startUpload, icon: Icon(Icons.cloud_upload), label: Text('Upload to cloud storage'));
+    if (_uploadTask != null) {
+      return StreamBuilder<StorageTaskEvent>(
+          stream: _uploadTask.events,
+          builder: (context, snapshot) {
+            var event = snapshot?.data?.snapshot;
+            double progressPercent = event != null
+                ? event.bytesTransferred / event.totalByteCount
+                : 0;
+            return Column(
+              children: <Widget>[
+                if (_uploadTask.isComplete) Text('Complete'),
+                if (_uploadTask.isPaused)
+                  FlatButton(
+                    child: Icon(Icons.play_arrow),
+                    onPressed: _uploadTask.resume,
+                  ),
+                if (_uploadTask.isPaused)
+                  FlatButton(
+                    child: Icon(Icons.pause),
+                    onPressed: _uploadTask.pause,
+                  ),
+                LinearProgressIndicator(
+                  value: progressPercent,
+                ),
+                Text('${(progressPercent * 100).toStringAsFixed(2)} %'),
+              ],
+            );
+          });
+    } else {
+      return FlatButton.icon(
+          onPressed: _startUpload,
+          icon: Icon(Icons.cloud_upload),
+          label: Text('Upload to cloud storage'));
     }
   }
 }
-
-
-

@@ -11,20 +11,19 @@ import 'package:provider/provider.dart';
 
 import 'forgot_password.dart';
 
-class SignIn extends StatefulWidget{
+class SignIn extends StatefulWidget {
   final Function toggleView;
   SignIn({this.toggleView});
-    @override
+  @override
   _SignInState createState() => _SignInState();
 }
-class _SignInState extends State<SignIn>{
 
+class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   // Initially password is obscure
   bool _obscureText = true;
-
 
   // text field state
   String email = '';
@@ -33,7 +32,6 @@ class _SignInState extends State<SignIn>{
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       body: CustomPaint(
@@ -48,11 +46,11 @@ class _SignInState extends State<SignIn>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(0,90,0,0),
+                      padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
                       child: Text(
                         'BLOOM',
                         style: TextStyle(
-                          fontSize:50,
+                          fontSize: 50,
                           fontWeight: FontWeight.bold,
                           color: Colors.red[200],
                           fontFamily: 'Archivo',
@@ -72,166 +70,178 @@ class _SignInState extends State<SignIn>{
                     ),
                   ],
                 ),
-                SizedBox(height: 12,),
+                SizedBox(
+                  height: 12,
+                ),
                 Container(
                   color: Colors.redAccent,
-                  child: Text(error, maxLines: 3,
-                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),),
+                  child: Text(
+                    error,
+                    maxLines: 3,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Container(
                   child: Form(
                     key: _formKey,
                     child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 40, 10, 0),
-                        child: SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: TextFormField(
-                            validator: (val)=> val.isEmpty? 'Enter an Email' : null,
-                            onChanged: (val){
-                              setState(() {
-                                email = val;
-                              });
-                            },
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: InputBorder.none,
-                                labelText: 'email'
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                        child: SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: TextFormField(
-                            validator: (val) => val.length <6 ? 'Enter a longer password': null,
-                            onChanged: (val){
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: InputBorder.none,
-                                labelText: 'password',
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obscureText =! _obscureText;
-                                  });
-                                },
-                                child: Icon(
-                                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                                ),
-                              )
-                            ),
-                            obscureText: _obscureText,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(180, 0, 0, 0),
-                        child: GestureDetector(
-                            child: Text("Forgot Password?",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                decoration: TextDecoration.underline)),
-                            onTap: () {
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                              // do what you need to do when the text is gets clicked
-                            }
-                        ),
-                      ),
-                      SizedBox(height: 40,),
-                      RaisedButton(
-                        onPressed: () async{
-                          if(_formKey.currentState.validate()){
-                            //print('valid');
-                            try{
-                              dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                              String uid = result;
-                              Firestore.instance
-                                  .collection('users')
-                                  .document(uid)
-                                  .get()
-                                  .then((DocumentSnapshot ds) {
-                                var role = ds['role'];
-                                if(role == 'buyer'){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => BuyerHome() ));
-                                }
-                                else if(role == 'supplier'){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierHome() ));
-                                }
-                              }
-                              );
-                              if(result == null)
-                              {
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 40, 10, 0),
+                          child: SizedBox(
+                            height: 50,
+                            width: 300,
+                            child: TextFormField(
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter an Email' : null,
+                              onChanged: (val) {
                                 setState(() {
-                                  error = "Please check your email to verify your account before logging in";
+                                  email = val;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: InputBorder.none,
+                                  labelText: 'email'),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                          child: SizedBox(
+                            height: 50,
+                            width: 300,
+                            child: TextFormField(
+                              validator: (val) => val.length < 6
+                                  ? 'Enter a longer password'
+                                  : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  password = val;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: InputBorder.none,
+                                  labelText: 'password',
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
+                                  )),
+                              obscureText: _obscureText,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(180, 0, 0, 0),
+                          child: GestureDetector(
+                              child: Text("Forgot Password?",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline)),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgotPassword()));
+                                // do what you need to do when the text is gets clicked
+                              }),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        RaisedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              //print('valid');
+                              try {
+                                dynamic result =
+                                    await _auth.signInWithEmailAndPassword(
+                                        email, password);
+                                String uid = result;
+                                Firestore.instance
+                                    .collection('users')
+                                    .document(uid)
+                                    .get()
+                                    .then((DocumentSnapshot ds) {
+                                  var role = ds['role'];
+                                  if (role == 'buyer') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BuyerHome()));
+                                  } else if (role == 'supplier') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SupplierHome()));
+                                  }
+                                });
+                                if (result == null) {
+                                  setState(() {
+                                    error =
+                                        "Please check your email to verify your account before logging in";
+                                  });
+                                }
+                              } catch (e) {
+                                print(e);
+                                setState(() {
+                                  error = e.message;
                                 });
                               }
                             }
-                            catch(e){
-                              print(e);
-                              setState(() {
-                                error = e.message;
-                              });
-                            }
-                          }
-                        },
-                        color: Colors.green,
-                        child: Text('Login',
-                          style: TextStyle(
-                            color: Colors.white,
+                          },
+                          color: Colors.green,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                            child: Text("New User? Sign Up",
+                                style: TextStyle(color: Colors.black)),
+                            onTap: () {
+                              //widget.toggleView();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UserTypeSelection()));
 
-                      ),
-                      SizedBox(height: 20,),
-                      GestureDetector(
-                          child: Text("New User? Sign Up",
-                              style: TextStyle(
-                                  color: Colors.black)),
-                          onTap: () {
-                            //widget.toggleView();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserTypeSelection()));
-
-                            // do what you need to do when the text is gets clicked
-                          }
-                      ),
-
-                    ],
-                  ),
+                              // do what you need to do when the text is gets clicked
+                            }),
+                      ],
+                    ),
                   ),
                 ),
-
-
-
-
-
-
-
-
-
               ],
             ),
-                ),
-        ),
-
           ),
-
-
+        ),
+      ),
     );
   }
-
 }
 
 // drawing the background shapes
@@ -249,7 +259,6 @@ class ShapesPainter extends CustomPainter {
     // draw the rectangle using the paint
     canvas.drawRect(rect, paint);
 
-
     paint.color = Colors.green;
 
     // create a path
@@ -262,6 +271,7 @@ class ShapesPainter extends CustomPainter {
 
     canvas.drawPath(path, paint);
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

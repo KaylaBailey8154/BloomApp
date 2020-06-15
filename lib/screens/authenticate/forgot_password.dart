@@ -34,7 +34,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 width: 150,
                 height: 150,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 "Forgot Your Password?",
                 style: TextStyle(
@@ -43,13 +45,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               SizedBox(
                 height: 50,
                 width: 300,
                 child: TextFormField(
-                  validator: (val)=> val.isEmpty? 'Type Your Email' : null,
-                  onChanged: (val){
+                  validator: (val) => val.isEmpty ? 'Type Your Email' : null,
+                  onChanged: (val) {
                     setState(() {
                       email = val;
                     });
@@ -58,39 +62,47 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       filled: true,
                       fillColor: Colors.white,
                       border: InputBorder.none,
-                      labelText: 'Type Your Email'
-                  ),
+                      labelText: 'Type Your Email'),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 height: 50,
                 width: 200,
                 child: RaisedButton(
-                  onPressed: () async{
-                    if(_formKey.currentState.validate()){
-
-                      await _auth.forgotpassword(email,);
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      await _auth.forgotpassword(
+                        email,
+                      );
                       showDialog(
                           context: context,
-                          builder: (BuildContext context){
+                          builder: (BuildContext context) {
                             // return object of type Dialog
                             return AlertDialog(
-                              title: Text ("Password Change"),
-                              content: Text("Please check your email to change your password"),
+                              title: Text("Password Change"),
+                              content: Text(
+                                  "Please check your email to change your password"),
                               actions: <Widget>[
                                 FlatButton(
                                   child: Text("OK"),
-                                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignIn()));
+                                  },
                                 )
                               ],
                             );
-                          }
-                      );
+                          });
                     }
                   },
                   color: Colors.deepOrangeAccent[200],
-                  child: Text('Send',
+                  child: Text(
+                    'Send',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,

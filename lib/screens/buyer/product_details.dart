@@ -1,13 +1,13 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ProductDetails extends StatefulWidget{
+class ProductDetails extends StatefulWidget {
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
-  }
-  class _ProductDetailsState extends State<ProductDetails>{
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -21,7 +21,8 @@ class ProductDetails extends StatefulWidget{
             width: 420,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(40),),
+                bottom: Radius.circular(40),
+              ),
               image: new DecorationImage(
                 image: new AssetImage('assets/proteaimage.jpg'),
                 fit: BoxFit.cover,
@@ -33,17 +34,16 @@ class ProductDetails extends StatefulWidget{
             child: Stack(
               children: <Widget>[
                 new Positioned(
-                  left: 0.0,
-                  top: 20.0,
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.black,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    iconSize: 30,
-                  )
-                ),
+                    left: 0.0,
+                    top: 20.0,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      iconSize: 30,
+                    )),
               ],
             ),
           ),
@@ -162,13 +162,12 @@ class ProductDetails extends StatefulWidget{
             height: 50,
             width: 300,
             child: RaisedButton(
-
               onPressed: () async {
-
-               // Navigator.pop(context);
+                // Navigator.pop(context);
               },
               color: Colors.red[300],
-              child: Text('Add to Cart',
+              child: Text(
+                'Add to Cart',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -180,5 +179,4 @@ class ProductDetails extends StatefulWidget{
       ),
     );
   }
-
 }

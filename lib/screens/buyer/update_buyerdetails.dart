@@ -12,8 +12,6 @@ enum PageEnum {
 }
 
 class BuyerDetailsForm extends StatefulWidget {
-
-
   @override
   _BuyerDetailsFormState createState() => _BuyerDetailsFormState();
 }
@@ -22,19 +20,18 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
-
   String _currentFullName;
   String _currentCompanyName;
   String _currentPhoneNumber;
 
-  _onSelect(PageEnum value){
-    switch (value){
+  _onSelect(PageEnum value) {
+    switch (value) {
       case PageEnum.settings:
         Navigator.of(context).pop();
         break;
 
       case PageEnum.signout:
-           _auth.signOut();
+        _auth.signOut();
         break;
     }
   }
@@ -46,7 +43,7 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
       body: StreamBuilder<UserData>(
           stream: DatabaseService(uid: user.uid).userData,
           builder: (context, snapshot) {
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               UserData userData = snapshot.data;
               return CustomPaint(
                 painter: ShapesPainter(),
@@ -54,18 +51,22 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           IconButton(
                             //padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            onPressed: (){
+                            onPressed: () {
                               Navigator.pop(context);
                             },
                             color: Colors.black,
                             iconSize: 30,
-                            icon: Icon(Icons.arrow_back,),
+                            icon: Icon(
+                              Icons.arrow_back,
+                            ),
                           ),
                         ],
                       ),
@@ -84,7 +85,8 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                           ),
                           PopupMenuButton<PageEnum>(
                             onSelected: _onSelect,
-                            itemBuilder: (context) => <PopupMenuEntry<PageEnum>>[
+                            itemBuilder: (context) =>
+                                <PopupMenuEntry<PageEnum>>[
                               PopupMenuItem<PageEnum>(
                                 value: PageEnum.settings,
                                 child: Text("Settings"),
@@ -98,9 +100,9 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                         ],
                       ),
                       IconButton(
-                        icon: Icon(Icons.account_circle) ,
+                        icon: Icon(Icons.account_circle),
                         iconSize: 110,
-                        onPressed: (){
+                        onPressed: () {
                           //uploading profile photo
                         },
                       ),
@@ -110,49 +112,60 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                         width: 350,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                            ),
+                            border: OutlineInputBorder(),
                             labelText: 'Name',
                           ),
                           initialValue: userData.fullName,
                           // decoration: textInputDecoration,
-                          validator: (val) => val.isEmpty ? 'Please Enter a Name': null,
-                          onChanged: (val) => setState(() => _currentFullName = val),
+                          validator: (val) =>
+                              val.isEmpty ? 'Please Enter a Name' : null,
+                          onChanged: (val) =>
+                              setState(() => _currentFullName = val),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         height: 50,
                         width: 350,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                            ),
+                            border: OutlineInputBorder(),
                             labelText: 'Company Name',
                           ),
                           initialValue: userData.companyName,
                           // decoration: textInputDecoration,
-                          validator: (val) => val.isEmpty ? 'Please Enter a Company Name': null,
-                          onChanged: (val) => setState(() =>_currentCompanyName = val),
+                          validator: (val) => val.isEmpty
+                              ? 'Please Enter a Company Name'
+                              : null,
+                          onChanged: (val) =>
+                              setState(() => _currentCompanyName = val),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         height: 50,
                         width: 350,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                            ),
+                            border: OutlineInputBorder(),
                             labelText: 'Phone Number',
                           ),
                           initialValue: userData.phoneNumber,
                           // decoration: textInputDecoration,
-                          validator: (val) => val.isEmpty ? 'Please Enter a Phone Number': null,
-                          onChanged: (val) => setState(() => _currentPhoneNumber = val),
+                          validator: (val) => val.isEmpty
+                              ? 'Please Enter a Phone Number'
+                              : null,
+                          onChanged: (val) =>
+                              setState(() => _currentPhoneNumber = val),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         height: 40,
                         width: 150,
@@ -163,14 +176,14 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () async {
-                            if(_formKey.currentState.validate()){
-                              await DatabaseService(uid: user.uid).updateSupplierUserData(
-
-                                _currentFullName ?? userData.fullName,
-                                _currentCompanyName ?? userData.companyName,
-                                _currentPhoneNumber ?? userData.phoneNumber
-
-                              );
+                            if (_formKey.currentState.validate()) {
+                              await DatabaseService(uid: user.uid)
+                                  .updateSupplierUserData(
+                                      _currentFullName ?? userData.fullName,
+                                      _currentCompanyName ??
+                                          userData.companyName,
+                                      _currentPhoneNumber ??
+                                          userData.phoneNumber);
                               Navigator.pop(context);
                             }
                           },
@@ -180,14 +193,14 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                   ),
                 ),
               );
-
-            }else{
+            } else {
               //return Loading();
-              return Container(height: 0, width: 0,);
+              return Container(
+                height: 0,
+                width: 0,
+              );
             }
-
-          }
-      ),
+          }),
     );
   }
 }
@@ -211,9 +224,8 @@ class ShapesPainter extends CustomPainter {
 
     // Create a rectangle with size and width same as the canvas
     canvas.drawCircle(Offset(10, 650), 90, paint);
-
-
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

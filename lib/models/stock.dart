@@ -1,4 +1,3 @@
-
 class Stock {
   final String uid;
   final String flowerType;
@@ -6,7 +5,10 @@ class Stock {
   final String flowerColour;
   final String dateAdded;
 
-  Stock({this.uid, this.flowerType, this.quantity, this.flowerColour, this.dateAdded});
-
-
+  Stock(
+      {this.uid,
+      this.flowerType,
+      this.quantity,
+      this.flowerColour,
+      this.dateAdded});
 }

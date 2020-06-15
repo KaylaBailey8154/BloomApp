@@ -26,16 +26,17 @@ class FlowerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    void _showDetailsPanel(){
-
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-          child: SupplierDetailsForm(),
-        );
-      });
+    void _showDetailsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+              child: SupplierDetailsForm(),
+            );
+          });
     }
+
     return Scaffold(
       backgroundColor: Colors.green,
       body: Column(
@@ -47,7 +48,7 @@ class FlowerList extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.arrow_back),
                     padding: EdgeInsets.fromLTRB(20, 40, 40, 10),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                     color: Colors.black,
@@ -74,7 +75,7 @@ class FlowerList extends StatelessWidget {
                   width: 350,
                   child: SearchBar<Post>(
                     onSearch: search,
-                    onItemFound: (Post post, int index){
+                    onItemFound: (Post post, int index) {
                       return ListTile(
                         title: Text(post.title),
                         subtitle: Text(post.description),
@@ -86,47 +87,46 @@ class FlowerList extends StatelessWidget {
                   ),
                 ),
               ),
-             Row(
-               children: <Widget>[
-                 Padding(
-                   padding: EdgeInsets.fromLTRB(110, 150, 20, 20),
-                   child: Text(
-                     'Avg. Price:',
-                     style: TextStyle(
-                       color: Colors.white,
-                       fontFamily: 'Archivo',
-                       fontSize: 14,
-                     ),
-                   ),
-                 ),
-                 Padding(
-                   padding: EdgeInsets.fromLTRB(0, 150, 20, 20),
-                   child: Text(
-                     'R14.50',
-                     style: TextStyle(
-                       color: Colors.white,
-                       fontFamily: 'Archivo',
-                       fontSize: 14,
-                     ),
-                   ),
-                 ),
-               ],
-             ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(110, 150, 20, 20),
+                    child: Text(
+                      'Avg. Price:',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Archivo',
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 150, 20, 20),
+                    child: Text(
+                      'R14.50',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Archivo',
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-
 
           //Beginning of where list of stocks matching selected flower type value should be populated
 
           //something like 'mystock_list' containing 'mystock_tiles' which take in data from 'stock.$value'
 
-
           Container(
-            height:495,
+            height: 495,
             width: 400,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(40),),
+                top: Radius.circular(40),
+              ),
               color: Colors.white,
             ),
             child: SingleChildScrollView(
@@ -136,7 +136,10 @@ class FlowerList extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductDetails()));
                       },
                       elevation: 20,
                       shape: RoundedRectangleBorder(
@@ -160,7 +163,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 10, 10, 10),
                                 child: Text(
                                   '70 stems',
                                   style: TextStyle(
@@ -169,7 +173,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 0, 10, 10),
                                 child: Text(
                                   'Pink',
                                   style: TextStyle(
@@ -212,7 +217,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 10, 10),
                                 child: Text(
                                   '120 stems',
                                   style: TextStyle(
@@ -221,7 +227,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 0, 10, 10),
                                 child: Text(
                                   'Red',
                                   style: TextStyle(
@@ -263,7 +270,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 10, 10, 10),
                                 child: Text(
                                   '200 stems',
                                   style: TextStyle(
@@ -272,7 +280,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 0, 10, 10),
                                 child: Text(
                                   'Red',
                                   style: TextStyle(
@@ -314,7 +323,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 10, 10, 10),
                                 child: Text(
                                   '550 stems',
                                   style: TextStyle(
@@ -323,7 +333,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(50, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 0, 10, 10),
                                 child: Text(
                                   'Pink',
                                   style: TextStyle(
@@ -365,7 +376,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(80, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 10, 10, 10),
                                 child: Text(
                                   '500 stems',
                                   style: TextStyle(
@@ -374,7 +386,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(80, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 0, 10, 10),
                                 child: Text(
                                   'Red',
                                   style: TextStyle(
@@ -416,7 +429,8 @@ class FlowerList extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(80, 10, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 10, 10, 10),
                                 child: Text(
                                   '300 stems',
                                   style: TextStyle(
@@ -425,7 +439,8 @@ class FlowerList extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(80, 0, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 0, 10, 10),
                                 child: Text(
                                   'Red',
                                   style: TextStyle(
@@ -439,16 +454,12 @@ class FlowerList extends StatelessWidget {
                       ),
                     ),
                   ),
-                 ],
+                ],
               ),
             ),
           ),
         ],
       ),
     );
-
   }
 }
-
-
-

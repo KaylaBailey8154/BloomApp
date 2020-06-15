@@ -14,15 +14,14 @@ class SupplierHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // void _showDetailsPanel(){
 
-   // void _showDetailsPanel(){
-
-      //showModalBottomSheet(context: context, builder: (context){
-        //return Container(
-         // padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-          //child: SupplierDetailsForm(),
-        //);
-      //});
+    //showModalBottomSheet(context: context, builder: (context){
+    //return Container(
+    // padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
+    //child: SupplierDetailsForm(),
+    //);
+    //});
     //}
 
     return Scaffold(
@@ -44,12 +43,13 @@ class SupplierHome extends StatelessWidget {
           elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),),
+              bottom: Radius.circular(30),
+            ),
           ),
-          ),
+        ),
       ),
       body: Container(
-        height:510 ,
+        height: 510,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -59,7 +59,9 @@ class SupplierHome extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStock()),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddStock()),
                         );
                       },
                       elevation: 5,
@@ -84,34 +86,37 @@ class SupplierHome extends StatelessWidget {
                       ),
                     ),
                   ),
-                   Padding(
-                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                     child: RaisedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMyStock()));
-                        },
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        color: Colors.yellowAccent,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              'My Stock',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Image(
-                              image: AssetImage('assets/edit.png'),
-                              width: 80,
-                              height: 80,
-                            )
-                          ],
-                        ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewMyStock()));
+                      },
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                   ),
+                      color: Colors.yellowAccent,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'My Stock',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage('assets/edit.png'),
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Row(
@@ -129,7 +134,7 @@ class SupplierHome extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             ''' Negotiation
-       Room''' ,
+       Room''',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -176,9 +181,7 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
-                      onPressed: () {
-
-                      },
+                      onPressed: () {},
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -205,9 +208,12 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
-                      onPressed: (){
+                      onPressed: () {
                         //_showDetailsPanel();
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SupplierDetailsForm()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SupplierDetailsForm()));
                       },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -239,7 +245,10 @@ class SupplierHome extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllSuppliers()),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewAllSuppliers()),
                         );
                       },
                       elevation: 5,
@@ -268,7 +277,11 @@ class SupplierHome extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllStock()),);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewAllStock()),
+                        );
                       },
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -304,7 +317,10 @@ class SupplierHome extends StatelessWidget {
         child: const Icon(
           Icons.add_circle,
         ),
-        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddStock()));},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddStock()));
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
@@ -316,9 +332,10 @@ class SupplierHome extends StatelessWidget {
           ],
         ),
         child: ClipRRect(
-              borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
+          ),
           child: BottomAppBar(
             shape: CircularNotchedRectangle(),
             color: Colors.white,
@@ -337,33 +354,31 @@ class SupplierHome extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyStock()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ViewMyStock()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.chat),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
                   child: IconButton(
                     icon: Icon(Icons.equalizer),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.account_circle),
-                  onPressed: (){
-
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
                   icon: Icon(Icons.phonelink_ring),
                   onPressed: () async {
                     Navigator.pop(context);
-                    await _auth.signOut();},
+                    await _auth.signOut();
+                  },
                 ),
               ],
             ),
