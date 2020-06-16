@@ -105,7 +105,7 @@ class _AddStockState extends State<AddStock> {
                     child: DropdownButtonFormField<String>(
                         hint: Text("Select Flower Type"),
                         value: null,
-                        items: ['King Protea', 'Rose', 'Disa', 'Erica']
+                        items: ['King Protea', 'Rose', 'Disa', 'Erica', 'Cape Daisy', 'African Iris']
                             .map((label) => DropdownMenuItem(
                                   child: Text(label),
                                   value: label,

@@ -128,7 +128,7 @@ class FlowerList extends StatelessWidget {
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(40),
               ),
-              color: Colors.white,
+              color: Colors.blue,
             ),
             child: SingleChildScrollView(
               child: Column(

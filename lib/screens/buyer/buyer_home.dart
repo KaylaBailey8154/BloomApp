@@ -55,7 +55,9 @@ class BuyerHome extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(120),
                   ),
-                  color: Colors.green,
+                  gradient: LinearGradient(
+                    colors: [Colors.green, Colors.greenAccent]
+                  )
                 ),
                 width: MediaQuery.of(context).size.width,
                 height: 200.0,
@@ -118,7 +120,8 @@ class BuyerHome extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                'Protea',
+                                '''King 
+Protea''',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -126,7 +129,7 @@ class BuyerHome extends StatelessWidget {
                               ),
                               Image(
                                 image: AssetImage('assets/protea.png'),
-                                width: 110,
+                                width: 105,
                                 height: 100,
                               )
                             ],
@@ -140,7 +143,7 @@ class BuyerHome extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Lily',)));
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Rose',)));
 
                           },
                           elevation: 20,
@@ -151,14 +154,72 @@ class BuyerHome extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                'Lily',
+                                'Rose',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
                               Image(
-                                image: AssetImage('assets/lily.png'),
+                                image: AssetImage('assets/rose.png'),
+                                width: 115,
+                                height: 100,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: RaisedButton(
+                          onPressed: () {},
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          color: Colors.white,
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                'Disa',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Image(
+                                image: AssetImage('assets/disa.png'),
+                                width: 120,
+                                height: 100,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                        child: RaisedButton(
+                          onPressed: () {},
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          color: Colors.white,
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                'Erica',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Image(
+                                image: AssetImage('assets/erica.png'),
                                 width: 120,
                                 height: 100,
                               )
@@ -182,72 +243,15 @@ class BuyerHome extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                'Daisies',
+                                '''Cape 
+Daisy''',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
                               Image(
-                                image: AssetImage('assets/daisies.png'),
-                                width: 105,
-                                height: 100,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                        child: RaisedButton(
-                          onPressed: () {},
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          color: Colors.white,
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                'Tulip',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Image(
-                                image: AssetImage('assets/tulip.png'),
-                                width: 110,
-                                height: 100,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: RaisedButton(
-                          onPressed: () {},
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          color: Colors.white,
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                'Orchid',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Image(
-                                image: AssetImage('assets/orchid.png'),
+                                image: AssetImage('assets/capedaisy.png'),
                                 width: 110,
                                 height: 100,
                               )
@@ -269,15 +273,16 @@ class BuyerHome extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                'Jasmine',
+                                '''African 
+ Iris''',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
                               Image(
-                                image: AssetImage('assets/jasmine.png'),
-                                width: 80,
+                                image: AssetImage('assets/iris.png'),
+                                width: 95,
                                 height: 100,
                               )
                             ],
