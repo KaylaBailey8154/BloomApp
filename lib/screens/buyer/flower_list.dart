@@ -14,6 +14,9 @@ class Post {
 }
 
 class FlowerList extends StatelessWidget {
+  final String flowerType;
+
+  FlowerList({this.flowerType});
   final AuthService _auth = AuthService();
   Future<List<Post>> search(String search) async {
     await Future.delayed(Duration(seconds: 2));
@@ -56,9 +59,10 @@ class FlowerList extends StatelessWidget {
                     iconSize: 30,
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
+                    //TODO sort out the padding so that the name shows up in the middle of the page
+                    padding: EdgeInsets.fromLTRB(60, 40, 20, 10),
                     child: Text(
-                      'Protea/Proteaceae',
+                     flowerType ,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Archivo',
@@ -117,9 +121,7 @@ class FlowerList extends StatelessWidget {
             ],
           ),
 
-          //Beginning of where list of stocks matching selected flower type value should be populated
 
-          //something like 'mystock_list' containing 'mystock_tiles' which take in data from 'stock.$value'
 
           Container(
             height: 495,
@@ -134,10 +136,10 @@ class FlowerList extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: FlowerTypeStockList(),
+                    padding: EdgeInsets.all(10),
+                    child: Container(height: 550, width: 400, child: FlowerTypeStockList()),
+                  ),
 
-            ),
           ]),
     ))],
       ),

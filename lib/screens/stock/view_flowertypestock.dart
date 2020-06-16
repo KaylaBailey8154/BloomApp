@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/screens/buyer/flower_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class ViewFlowerTypeStock extends StatelessWidget {
     return StreamProvider<List<Stock>>.value(
         value: this.flowerTypeStocks,
       child: Container(
-        child:FlowerTypeStockList(),
+        child:FlowerList(flowerType: flowerType),
       ),
 
     );
