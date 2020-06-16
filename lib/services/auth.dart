@@ -1,3 +1,5 @@
+
+
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -93,6 +95,7 @@ class AuthService {
 
   Future signOut() async {
     try {
+
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
