@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:provider/provider.dart';
 
 import '../../services/auth.dart';
@@ -20,9 +24,14 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  String _currenturl;
   String _currentFullName;
   String _currentCompanyName;
   String _currentPhoneNumber;
+
+  File _image;
+  String url;
+  final _picker = ImagePicker();
 
   _onSelect(PageEnum value) {
     switch (value) {
@@ -38,6 +47,30 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    void uploadPic() async{
+      var randomno = Random(25);
+      StorageReference firebaseStorageRef= FirebaseStorage.instance
+          .ref()
+          .child("profile/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
+    }
+
+    Future getImage() async {
+      var image = await _picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+      });
+    }
+
     final user = Provider.of<User>(context);
     return Scaffold(
       body: StreamBuilder<UserData>(
@@ -99,12 +132,40 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                           ),
                         ],
                       ),
-                      IconButton(
-                        icon: Icon(Icons.account_circle),
-                        iconSize: 110,
-                        onPressed: () {
-                          //uploading profile photo
-                        },
+                      Row(
+                        children: <Widget>[
+                          Center(
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 150),
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.white,
+                                  child: ClipOval(
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: (url != null)?Image.network(userData.url, fit: BoxFit.fill,)
+                                          : Image.file(
+                                        _image,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                            child: IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.black,
+                              iconSize: 30,
+                              onPressed: () {
+                                getImage();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 10),
                       SizedBox(
@@ -178,7 +239,8 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               await DatabaseService(uid: user.uid)
-                                  .updateSupplierUserData(
+                                  .updateBuyerUserData(
+                                      _currenturl ?? userData.url,
                                       _currentFullName ?? userData.fullName,
                                       _currentCompanyName ??
                                           userData.companyName,

@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/services/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class BuyerRegister extends StatefulWidget {
   //final Function toggleView;
@@ -14,6 +19,10 @@ class BuyerRegister extends StatefulWidget {
 class _BuyerRegisterState extends State<BuyerRegister> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+
+  File _image;
+  String url;
+  final _picker = ImagePicker();
 
   // Initially password is obscure
   bool _obscureText = true;
@@ -29,6 +38,32 @@ class _BuyerRegisterState extends State<BuyerRegister> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
+    void uploadPic() async{
+      var randomno = Random(25);
+      StorageReference firebaseStorageRef= FirebaseStorage.instance
+          .ref()
+          .child("profile/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
+    }
+
+    Future getImage() async {
+      var image = await _picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+      });
+    }
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomPaint(
@@ -61,15 +96,40 @@ class _BuyerRegisterState extends State<BuyerRegister> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: IconButton(
-                            icon: Icon(Icons.account_circle),
-                            iconSize: 80,
-                            onPressed: () {
-                              //uploading profile photo
-                            },
-                          ),
+                        Row(
+                          children: <Widget>[
+                            Center(
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 150),
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.white,
+                                    child: ClipOval(
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: (_image!= null)?Image.file(_image, fit: BoxFit.fill,)
+                                            : Image.asset(
+                                          'assets/profile.png',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                              child: IconButton(
+                                icon: Icon(Icons.edit),
+                                color: Colors.black,
+                                iconSize: 30,
+                                onPressed: () {
+                                  getImage();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -223,6 +283,7 @@ class _BuyerRegisterState extends State<BuyerRegister> {
                               if (_formKey.currentState.validate()) {
                                 try {
                                   await _auth.registerBuyerWithEmailAndPassword(
+                                      url,
                                       fullName,
                                       companyName,
                                       phoneNumber,

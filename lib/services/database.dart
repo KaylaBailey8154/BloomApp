@@ -37,8 +37,9 @@ class DatabaseService {
   }
 
   Future updateBuyerUserData(
-      String fullName, String companyName, String phoneNumber) async {
+      String url, String fullName, String companyName, String phoneNumber) async {
     return await userCollection.document(uid).setData({
+      'photoUrl': url,
       'fullName': fullName,
       'companyName': companyName,
       'phoneNumber': phoneNumber,
@@ -83,6 +84,7 @@ class DatabaseService {
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
+      url: snapshot.data['url'],
       fullName: snapshot.data['fullName'],
       companyName: snapshot.data['companyName'],
       phoneNumber: snapshot.data['phoneNumber'],
