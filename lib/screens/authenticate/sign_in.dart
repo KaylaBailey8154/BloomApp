@@ -1,6 +1,7 @@
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
+import 'package:bloomflutterapp/screens/rolesplitter.dart';
 import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -170,10 +171,12 @@ class _SignInState extends State<SignIn> {
                             if (_formKey.currentState.validate()) {
                               //print('valid');
                               try {
-                                dynamic result =
+                                User result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
-                                if(result is User){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> RoleSplitter(user: result)));
+
+                               /* if(result is User){
                                 String uid = result.uid;
                                 Firestore.instance
                                     .collection('users')
@@ -199,7 +202,7 @@ class _SignInState extends State<SignIn> {
                                     error =
                                         "Please check your email to verify your account before logging in";
                                   });
-                                }
+                                }*/
                               } catch (e) {
                                 print(e);
                                 setState(() {

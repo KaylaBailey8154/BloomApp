@@ -88,6 +88,7 @@ class DatabaseService {
       fullName: snapshot.data['fullName'],
       companyName: snapshot.data['companyName'],
       phoneNumber: snapshot.data['phoneNumber'],
+      role: snapshot.data['role'],
     );
   }
 

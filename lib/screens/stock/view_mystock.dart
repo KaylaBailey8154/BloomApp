@@ -16,7 +16,7 @@ class ViewMyStock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    print(user.uid);
+
 
 //    void _showSettingsPanel(){
 //      showModalBottomSheet(context: context, builder: (context){
