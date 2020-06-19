@@ -174,7 +174,7 @@ class _SignInState extends State<SignIn> {
                                 User result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> RoleSplitter(user: result)));
+                               // Navigator.push(context, MaterialPageRoute(builder: (context)=> RoleSplitter(user: result)));
 
                                /* if(result is User){
                                 String uid = result.uid;

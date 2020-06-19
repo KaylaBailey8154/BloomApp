@@ -22,7 +22,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     }else{
-      return RoleSplitter(user: user,);
+      return RoleSplitter(user: user);
     }
 
 
