@@ -103,6 +103,9 @@ class FlowerList extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(110, 150, 20, 20),
                       child: Text(
                         'Avg. Price:',
+
+
+
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Archivo',
@@ -113,7 +116,14 @@ class FlowerList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 150, 20, 20),
                       child: Text(
-                        'R14.50',
+                         flowerType == 'King Protea'?'R14.50':
+                         flowerType == 'Rose'?'R12.00':
+                         flowerType == 'Disa'?'R8.50':
+                         flowerType == 'Erica'?'R16.00':
+                         flowerType == 'Cape Daisy'?'R20.00':
+                         flowerType == 'African Iris'?'R13.00':
+                             'Yeet'
+                        ,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Archivo',

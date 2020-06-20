@@ -13,7 +13,7 @@ class _MyStockListState extends State<MyStockList> {
   @override
   Widget build(BuildContext context) {
     final stocks = Provider.of<List<Stock>>(context) ?? [];
-    print(stocks.length);
+
 
     return ListView.builder(
       itemCount: stocks.length,

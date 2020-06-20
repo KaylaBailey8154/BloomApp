@@ -23,7 +23,7 @@ class RoleSplitter extends StatelessWidget {
           if(snapshot.hasData){
 
             UserData userData = snapshot.data;
-            //print(userData.role);
+
             if(userData.role == 'supplier'){
               return SupplierHome();
             }else if(userData.role == 'buyer'){

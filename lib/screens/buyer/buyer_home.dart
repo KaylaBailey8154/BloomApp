@@ -106,7 +106,6 @@ class BuyerHome extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: RaisedButton(
                           onPressed: () {
-
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -176,7 +175,12 @@ Protea''',
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Disa',)));
+                          },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -203,7 +207,12 @@ Protea''',
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Erica',)));
+                          },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -234,7 +243,12 @@ Protea''',
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'Cape Daisy',)));
+                          },
                           elevation: 20,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -263,7 +277,10 @@ Daisy''',
                         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
                         child: RaisedButton(
                           onPressed: () {
-                            _showDetailsPanel();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewFlowerTypeStock(flowerType: 'African Iris',)));
                           },
                           elevation: 20,
                           shape: RoundedRectangleBorder(

@@ -169,7 +169,7 @@ class _SignInState extends State<SignIn> {
                         RaisedButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              //print('valid');
+
                               try {
                                 User result =
                                     await _auth.signInWithEmailAndPassword(
