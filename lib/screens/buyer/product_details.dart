@@ -1,17 +1,23 @@
+import 'package:bloomflutterapp/models/stock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ProductDetails extends StatefulWidget {
-  @override
-  _ProductDetailsState createState() => _ProductDetailsState();
-}
+class ProductDetails extends StatelessWidget {
 
-class _ProductDetailsState extends State<ProductDetails> {
+
+  final Stock stock;
+  ProductDetails({this.stock});
+
+
   @override
   Widget build(BuildContext context) {
+    int flowerQuantity = stock.quantity;
+    String companyName = stock.companyName;
+    String dateAdded = stock.dateAdded;
+    String flowerColour = stock.flowerColour;
+    String flowerType = stock.flowerType;
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -50,7 +56,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
             child: Text(
-              'Protea/Proteaceae',
+              '$flowerType',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -72,14 +78,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 Text(
-                  '80 ',
+                  '$flowerQuantity',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  'in stems',
+                  ' stems',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -103,7 +109,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 Text(
-                  'Pink',
+                  '$flowerColour',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -126,7 +132,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 Text(
-                  '05/07/2020',
+                  '$dateAdded',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -149,7 +155,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 Text(
-                  'Heilfontein Proteas',
+                  '$companyName',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,

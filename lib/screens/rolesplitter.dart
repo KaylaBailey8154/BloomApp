@@ -16,8 +16,7 @@ class RoleSplitter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: StreamBuilder<UserData>(
+    return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context,snapshot){
           if(snapshot.hasData){
@@ -36,5 +35,5 @@ class RoleSplitter extends StatelessWidget {
       return Text('Loading...');
 
   }
-}),
-    );}}
+});
+    }}

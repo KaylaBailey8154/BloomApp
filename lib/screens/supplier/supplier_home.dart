@@ -14,15 +14,6 @@ class SupplierHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // void _showDetailsPanel(){
-
-    //showModalBottomSheet(context: context, builder: (context){
-    //return Container(
-    // padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-    //child: SupplierDetailsForm(),
-    //);
-    //});
-    //}
 
     return Scaffold(
       backgroundColor: Colors.white,

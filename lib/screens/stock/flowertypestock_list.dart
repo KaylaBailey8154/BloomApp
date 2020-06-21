@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/stock/mystock_tile.dart';
 import 'package:bloomflutterapp/screens/stock/stock_tile.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,12 @@ class _FlowerTypeStockList extends State<FlowerTypeStockList> {
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return StockTile(stock: stocks[index]);
+        return GestureDetector(
+
+            child: StockTile(stock: stocks[index]),
+        onTap: ()=> print(index.toString())
+            //Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails())))
+        );
       },
     );
   }

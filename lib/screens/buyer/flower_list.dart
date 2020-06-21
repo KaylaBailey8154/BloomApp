@@ -30,7 +30,7 @@ class FlowerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _showDetailsPanel() {
+    /*void _showDetailsPanel() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
@@ -39,7 +39,7 @@ class FlowerList extends StatelessWidget {
               child: SupplierDetailsForm(),
             );
           });
-    }
+    }*/
 
     return Container(
       decoration: BoxDecoration(

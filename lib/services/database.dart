@@ -16,13 +16,14 @@ class DatabaseService {
       Firestore.instance.collection('stocks');
 
   Future updateStockData(
-      String flowerType, int quantity, String flowerColour) async {
+      String flowerType, int quantity, String flowerColour, String companyName) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'flowerType': flowerType,
       'quantity': quantity,
       'flowerColour': flowerColour,
       'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
+      'companyName': companyName,
     });
   }
 
@@ -76,6 +77,7 @@ class DatabaseService {
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
+        companyName: doc.data['companyName'] ?? '',
       );
     }).toList();
   }
@@ -101,6 +103,7 @@ class DatabaseService {
       quantity: snapshot.data['quantity'],
       flowerColour: snapshot.data['flowerColour'],
       dateAdded: snapshot.data['dateAdded'],
+      companyName: snapshot.data['companyName'],
     );
   }
 

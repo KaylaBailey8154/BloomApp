@@ -10,9 +10,10 @@ class StockTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+
+
     int flowerQuantity = stock.quantity;
-    String flowerType = stock.flowerType;
+    String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
     String flowerColour = stock.flowerColour;
 
@@ -20,14 +21,14 @@ class StockTile extends StatelessWidget {
       padding: EdgeInsets.only(top: 8),
       child: GestureDetector(
         onTap: (){
-          Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails()));
+          Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails(stock: stock,)));
         },
         child: Card(
           elevation: 10,
           margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
           child: ListTile(
             isThreeLine: true,
-            title: Text('Flower Type: $flowerType'),
+            title: Text('Supplier: $companyName'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

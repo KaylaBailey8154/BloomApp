@@ -21,6 +21,7 @@ class ViewFlowerTypeStock extends StatelessWidget {
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
+        companyName: doc.data['companyName'] ?? '',
       );
     }).toList();
   }
