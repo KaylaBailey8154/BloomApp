@@ -1,6 +1,6 @@
 import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
-import 'package:bloomflutterapp/screens/buyer/cart.dart';
+import 'file:///C:/Bloom/lib/screens/cart/view_mycart.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/screens/wrapper.dart';

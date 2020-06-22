@@ -1,4 +1,4 @@
-import 'package:bloomflutterapp/screens/buyer/cart.dart';
+import 'file:///C:/Bloom/lib/screens/cart/view_mycart.dart';
 import 'package:bloomflutterapp/screens/buyer/flower_list.dart';
 import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
@@ -344,7 +344,7 @@ Daisy''',
                   icon: Icon(Icons.shopping_cart),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cart()));
+                        MaterialPageRoute(builder: (context) => ViewMyCart()));
                   },
                 ),
                 IconButton(

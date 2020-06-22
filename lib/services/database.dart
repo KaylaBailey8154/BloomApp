@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/buyer.dart';
+import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
@@ -16,6 +17,8 @@ class DatabaseService {
       Firestore.instance.collection('stocks');
   final CollectionReference cartItemCollection =
   Firestore.instance.collection('cartItems');
+
+
 
   Future updateStockData(
       String flowerType, int quantity, String flowerColour, String companyName) async {
@@ -99,6 +102,22 @@ class DatabaseService {
       );
     }).toList();
   }
+  //Cart Item list from snapshot
+  List<CartItem> _cartItemListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return CartItem(
+        supplierUID: doc.data['supplierUID'] ?? '',
+        buyerUID: doc.data['buyerUID'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? '',
+        quantity: doc.data['quantity'] ?? 0,
+        flowerType: doc.data['flowerType'] ?? '',
+        dateAddedToCart: doc.data['dateAddedToCart'] ?? null,
+        datePicked: doc.data['datePicked'] ?? '',
+        companyName: doc.data['companyName'] ?? '',
+        photoUrl: doc.data['photoUrl']?? '',
+      );
+    }).toList();
+  }
   //userData from snapshot
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -141,6 +160,13 @@ class DatabaseService {
         .where('supplierUID', isEqualTo: uid)
         .snapshots()
         .map(_stockListFromSnapshot);
+  }
+  //get cart stream
+  Stream<List<CartItem>> get myCart {
+    return cartItemCollection
+        .where('buyerUID', isEqualTo: uid)
+        .snapshots()
+        .map(_cartItemListFromSnapshot);
   }
 
   //get stocks stream
