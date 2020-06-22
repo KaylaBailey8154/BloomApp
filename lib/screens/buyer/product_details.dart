@@ -1,7 +1,10 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
 
@@ -12,11 +15,13 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
     String flowerColour = stock.flowerColour;
     String flowerType = stock.flowerType;
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -169,7 +174,8 @@ class ProductDetails extends StatelessWidget {
             width: 300,
             child: RaisedButton(
               onPressed: () async {
-                // Navigator.pop(context);
+                await DatabaseService(uid: user.uid).updateCartStockData(
+                    '', stock.uid, flowerType, flowerQuantity, flowerColour, dateAdded, companyName);
               },
               color: Colors.red[300],
               child: Text(

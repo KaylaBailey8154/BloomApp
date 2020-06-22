@@ -14,6 +14,8 @@ class DatabaseService {
       Firestore.instance.collection('users');
   final CollectionReference stockCollection =
       Firestore.instance.collection('stocks');
+  final CollectionReference cartItemCollection =
+  Firestore.instance.collection('cartItems');
 
   Future updateStockData(
       String flowerType, int quantity, String flowerColour, String companyName) async {
@@ -45,6 +47,22 @@ class DatabaseService {
       'companyName': companyName,
       'phoneNumber': phoneNumber,
       'role': 'buyer',
+    });
+  }
+
+  Future updateCartStockData(
+      String url, String supplierUID, String flowerType,
+      int quantity, String flowerColour, String datePicked, String companyName) async {
+    return await cartItemCollection.document().setData({
+      'photoUrl': url,
+      'buyerUID': uid,
+      'supplierUID':supplierUID,
+      'flowerType':flowerType,
+      'quantity':quantity,
+      'flowerColour':flowerColour,
+      'datePicked': datePicked,
+      'dateAddedToCart': DateFormat.yMMMd().format(DateTime.now()).toString(),
+      'companyName':companyName,
     });
   }
 

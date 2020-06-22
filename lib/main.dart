@@ -26,16 +26,14 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
-        //Whichever screen Widget is defined in next line will be the screen shown when the app is run
-        //home: AddStock(), //this will show the Add Stock screen
-        //home: SignIn(), //this would show the sign in screen
-        //home: Register(), //this would show the register screen
-        //home: ViewAllSuppliers(),  //shows all the suppliers (basic 'contact book')
+      //TODO create cartstock when adding to cart button is pressed
+        //TODO redo stocktile to include supplier photo on left in circle
+        //TODO repopulate stocks with new suppliers with profile pics
+        //TODO cart functionality showing all cartstock items for current user
+        //TODO cart functionality deleting cartstock item from database
+        //TODO product details screen using slider for quantity before adding to cart
         home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
-        //home: SupplierHome(),
-        //home: BuyerHome(),
-        //home: Cart(),
-        //home: BuyerRegister(),
+
       ),
     );
   }
