@@ -31,6 +31,8 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
 
   File _image;
   String url;
+
+
   final _picker = ImagePicker();
 
   _onSelect(PageEnum value) {
@@ -59,6 +61,8 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
       url = ImageUrl.toString();
 
       print("Image Url=" + url);
+
+      _currenturl = url;
     }
 
     Future getImage() async {
@@ -68,6 +72,7 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
         _image = File(image.path);
         print('Image Path $_image');
         uploadPic();
+
       });
     }
 
@@ -144,11 +149,14 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                                     child: SizedBox(
                                       width: 100,
                                       height: 100,
-                                      child: (url != null)?Image.network(userData.url, fit: BoxFit.fill,)
-                                          : Image.file(
-                                        _image,
-                                        fit: BoxFit.fill,
-                                      ),
+
+                                      child:  (_image != null)?Image.file(_image, fit: BoxFit.fill,)
+                                          :
+                                        userData.url != null ? Image.network(
+                                      userData.url,
+                                      fit: BoxFit.fill,
+                                    )
+                                          : Image.asset('assets/profile.png')
                                     ),
                                   ),
                                 )

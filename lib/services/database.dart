@@ -42,7 +42,7 @@ class DatabaseService {
   Future updateBuyerUserData(
       String url, String fullName, String companyName, String phoneNumber) async {
     return await userCollection.document(uid).setData({
-      'photoUrl': url,
+      'url': url,
       'fullName': fullName,
       'companyName': companyName,
       'phoneNumber': phoneNumber,
