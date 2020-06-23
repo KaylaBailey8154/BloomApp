@@ -40,16 +40,16 @@ class _BuyerRegisterState extends State<BuyerRegister> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     void uploadPic() async{
-      var randomno = Random(25);
+      String profilePic = DateTime.now().toString();
       StorageReference firebaseStorageRef= FirebaseStorage.instance
           .ref()
           .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
 
-      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      url = ImageUrl.toString();
+      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = imageUrl.toString();
 
-      print("Image Url=" + url);
+      print("Image Url= " + url);
     }
 
     Future getImage() async {

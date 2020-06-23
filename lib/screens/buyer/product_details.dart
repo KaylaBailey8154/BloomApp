@@ -25,6 +25,7 @@ class ProductDetails extends StatelessWidget {
     String flowerType = stock.flowerType;
 
 
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       backgroundColor: Colors.white,

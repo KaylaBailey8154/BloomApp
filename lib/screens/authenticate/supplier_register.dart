@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'dart:io';
 
 import 'sign_in.dart';
@@ -44,16 +46,16 @@ class _SupplierRegisterState extends State<SupplierRegister> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     void uploadPic() async{
-      var randomno = Random(25);
+      String profilePic = DateTime.now().toString();
       StorageReference firebaseStorageRef= FirebaseStorage.instance
           .ref()
           .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
 
-      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      url = ImageUrl.toString();
+      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = imageUrl.toString();
 
-      print("Image Url=" + url);
+      print("Image Url= " + url);
     }
 
     Future getImage() async {

@@ -19,12 +19,9 @@ class _FlowerTypeStockList extends State<FlowerTypeStockList> {
     return ListView.builder(
       itemCount: stocks.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
-
-            child: StockTile(stock: stocks[index]),
-        onTap: ()=> print(index.toString())
+        return  StockTile(stock: stocks[index])
             //Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails())))
-        );
+        ;
       },
     );
   }

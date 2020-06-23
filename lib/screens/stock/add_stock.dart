@@ -40,16 +40,16 @@ class _AddStockState extends State<AddStock> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     void uploadPic() async{
-      var randomno = Random(25);
+      String profilePic = DateTime.now().toString();
       StorageReference firebaseStorageRef= FirebaseStorage.instance
           .ref()
-          .child("stock/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+          .child("profile/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
 
-      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      url = ImageUrl.toString();
+      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = imageUrl.toString();
 
-      print("Image Url=" + url);
+      print("Image Url= " + url);
     }
 
     Future getImage() async {
@@ -117,16 +117,17 @@ class _AddStockState extends State<AddStock> {
                     ],
                   ),
                  GestureDetector(
-                   child: Text('Uplaod Image',
+                   child: Text('Upload Image',
                        style: TextStyle(
                            color: Colors.blue,
                            decoration: TextDecoration.underline)),
                    onTap: () {
-                     Navigator.push(
+                     /*Navigator.push(
                          context,
                          MaterialPageRoute(
                              builder: (context) =>
-                                 ImageCapture()));
+                                 ImageCapture()));*/
+                     getImage();
                    },
                  ),
                   SizedBox(

@@ -16,11 +16,13 @@ class StockTile extends StatelessWidget {
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
     String flowerColour = stock.flowerColour;
+    String url = stock.url;
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: GestureDetector(
         onTap: (){
+
           Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails(stock: stock,)));
         },
         child: Card(

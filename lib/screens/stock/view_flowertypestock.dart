@@ -17,6 +17,7 @@ class ViewFlowerTypeStock extends StatelessWidget {
     return snapshot.documents.map((doc) {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
+        url: doc.data['url']?? '',
         flowerColour: doc.data['flowerColour'] ?? '',
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
