@@ -1,6 +1,5 @@
 import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
-import 'file:///C:/Bloom/lib/screens/cart/view_mycart.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/screens/wrapper.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'models/user.dart';
 import 'screens/authenticate/buyer_register.dart';
 import 'screens/buyer/buyer_home.dart';
+import 'screens/stock/add_stock.dart';
 import 'screens/supplier/supplier_home.dart';
 
 void main() {
@@ -33,7 +33,6 @@ class MyApp extends StatelessWidget {
         //TODO cart functionality deleting cartstock item from database
         //TODO product details screen using slider for quantity before adding to cart
         home: Wrapper(), //this is the wrapper that defines whether a user is authorised or not and sends them either to the landing page or the sign in screen
-
       ),
     );
   }

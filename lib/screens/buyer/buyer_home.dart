@@ -1,4 +1,3 @@
-import 'file:///C:/Bloom/lib/screens/cart/view_mycart.dart';
 import 'package:bloomflutterapp/screens/buyer/flower_list.dart';
 import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
@@ -10,6 +9,7 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
+import '../cart/view_mycart.dart';
 import '../supplier/update_supplierdetails.dart';
 
 class Post {
@@ -56,7 +56,9 @@ class BuyerHome extends StatelessWidget {
                     bottom: Radius.circular(120),
                   ),
                   gradient: LinearGradient(
-                    colors: [Colors.green, Colors.greenAccent]
+                    colors: [Colors.greenAccent, Colors.green],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
                   )
                 ),
                 width: MediaQuery.of(context).size.width,

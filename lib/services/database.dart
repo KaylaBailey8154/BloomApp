@@ -21,9 +21,10 @@ class DatabaseService {
 
 
   Future updateStockData(
-      String flowerType, int quantity, String flowerColour, String companyName) async {
+      String url, String flowerType, int quantity, String flowerColour, String companyName) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
+      'url' : url,
       'flowerType': flowerType,
       'quantity': quantity,
       'flowerColour': flowerColour,
@@ -33,8 +34,9 @@ class DatabaseService {
   }
 
   Future updateSupplierUserData(
-      String fullName, String companyName, String phoneNumber) async {
+     String url,  String fullName, String companyName, String phoneNumber) async {
     return await userCollection.document(uid).setData({
+      'url': url,
       'fullName': fullName,
       'companyName': companyName,
       'phoneNumber': phoneNumber,
@@ -57,7 +59,7 @@ class DatabaseService {
       String url, String supplierUID, String flowerType,
       int quantity, String flowerColour, String datePicked, String companyName) async {
     return await cartItemCollection.document().setData({
-      'photoUrl': url,
+      'url': url,
       'buyerUID': uid,
       'supplierUID':supplierUID,
       'flowerType':flowerType,
@@ -114,7 +116,7 @@ class DatabaseService {
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
-        photoUrl: doc.data['photoUrl']?? '',
+        photoUrl: doc.data['url']?? '',
       );
     }).toList();
   }
@@ -136,6 +138,7 @@ class DatabaseService {
   Stock _stockDataFromSnapshot(DocumentSnapshot snapshot) {
     return Stock(
       uid: uid,
+      url: snapshot.data['url'],
       flowerType: snapshot.data['flowerType'],
       quantity: snapshot.data['quantity'],
       flowerColour: snapshot.data['flowerColour'],

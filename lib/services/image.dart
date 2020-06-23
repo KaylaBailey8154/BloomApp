@@ -18,6 +18,7 @@ class _ImageCaptureState extends State<ImageCapture> {
 
     setState(() {
       _imageFile = selected;
+      print('Image Path $_imageFile');
     });
   }
 
@@ -89,13 +90,19 @@ class Uploader extends StatefulWidget {
 class _UploaderState extends State<Uploader> {
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://bloom-2fe89.appspot.com/');
+  String url;
 
   StorageUploadTask _uploadTask;
 
   void _startUpload() {
-    String filePath = 'images/${DateTime.now()}.png';
-    setState(() {
+    String filePath = 'stock/${DateTime.now()}.png';
+    setState(() async {
       _uploadTask = _storage.ref().child(filePath).putFile(widget.file);
+
+      var ImageUrl = await (await _uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
     });
   }
 

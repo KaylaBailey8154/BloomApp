@@ -52,6 +52,7 @@ class AuthService {
 
   //register supplier with email and pass
   Future registerSupplierWithEmailAndPassword(
+      String url,
       String fullName,
       String companyName,
       String phoneNumber,
@@ -65,7 +66,7 @@ class AuthService {
       await user.sendEmailVerification();
       //create doc for supplier
       DatabaseService(uid: user.uid)
-          .updateSupplierUserData(fullName, companyName, phoneNumber);
+          .updateSupplierUserData(url, fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print("An error occurred while trying to send email verification");

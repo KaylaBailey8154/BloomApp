@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'sign_in.dart';
@@ -20,6 +23,10 @@ class _SupplierRegisterState extends State<SupplierRegister> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  File _image;
+  String url;
+  final _picker = ImagePicker();
+
   // Initially password is obscure
   bool _obscureText = true;
 
@@ -30,11 +37,35 @@ class _SupplierRegisterState extends State<SupplierRegister> {
   String fullName = '';
   String companyName = '';
   String phoneNumber = '';
-  bool authUploaded = false;
+  //bool authUploaded = false;
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
+    void uploadPic() async{
+      var randomno = Random(25);
+      StorageReference firebaseStorageRef= FirebaseStorage.instance
+          .ref()
+          .child("profile/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
+    }
+
+    Future getImage() async {
+      var image = await _picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomPaint(
@@ -67,15 +98,40 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: IconButton(
-                            icon: Icon(Icons.account_circle),
-                            iconSize: 80,
-                            onPressed: () {
-                              //uploading profile photo
-                            },
-                          ),
+                        Row(
+                          children: <Widget>[
+                            Center(
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 150),
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.white,
+                                    child: ClipOval(
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: (_image!= null)?Image.file(_image, fit: BoxFit.fill,)
+                                            : Image.asset(
+                                          'assets/profile.png',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                              child: IconButton(
+                                icon: Icon(Icons.edit),
+                                color: Colors.black,
+                                iconSize: 30,
+                                onPressed: () {
+                                  getImage();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -233,7 +289,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                               width: 100,
                               child: FlatButton(
                                 onPressed: () {
-                                  authUploaded = true;
+                                  //authUploaded = true;
                                 },
                                 color: Colors.red[200],
                                 child: Text('Browse'),
@@ -254,20 +310,21 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 try {
-                                  if (authUploaded == false) {
+                                  /*if (authUploaded == false) {
                                     setState(() {
                                       error =
                                           'Please upload supporting documentation';
                                     });
-                                  }
+                                  }*/
 
                                   dynamic result = await _auth
                                       .registerSupplierWithEmailAndPassword(
-                                          email,
-                                          password,
+                                          url,
                                           fullName,
                                           companyName,
-                                          phoneNumber);
+                                          phoneNumber,
+                                          email,
+                                          password,);
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {

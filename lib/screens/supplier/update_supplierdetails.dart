@@ -1,6 +1,10 @@
+import 'dart:math';
+import 'dart:io';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:provider/provider.dart';
 
@@ -22,10 +26,17 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
 
   bool authUploaded = false;
 
+  String _currentUrl;
   String _currentFullName;
   String _currentCompanyName;
   String _currentPhoneNumber;
   String _currentEmail;
+
+  File _image;
+  String url;
+
+
+  final _picker = ImagePicker();
 
   _onSelect(PageEnum value) {
     switch (value) {
@@ -41,6 +52,33 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    void uploadPic() async{
+      var randomno = Random(25);
+      StorageReference firebaseStorageRef= FirebaseStorage.instance
+          .ref()
+          .child("profile/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
+
+      _currentUrl = url;
+    }
+
+    Future getImage() async {
+      var image = await _picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+
+      });
+    }
+
     final user = Provider.of<User>(context);
     return Scaffold(
       body: StreamBuilder<UserData>(
@@ -102,12 +140,43 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                           ),
                         ],
                       ),
-                      IconButton(
-                        icon: Icon(Icons.account_circle),
-                        iconSize: 110,
-                        onPressed: () {
-                          //uploading profile photo
-                        },
+                      Row(
+                        children: <Widget>[
+                          Center(
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 150),
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.white,
+                                  child: ClipOval(
+                                    child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+
+                                        child:  (_image != null)?Image.file(_image, fit: BoxFit.fill,)
+                                            :
+                                        userData.url != null ? Image.network(
+                                          userData.url,
+                                          fit: BoxFit.fill,
+                                        )
+                                            : Image.asset('assets/profile.png')
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                            child: IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.black,
+                              iconSize: 30,
+                              onPressed: () {
+                                getImage();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 10),
                       SizedBox(
@@ -207,6 +276,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                             if (_formKey.currentState.validate()) {
                               await DatabaseService(uid: user.uid)
                                   .updateSupplierUserData(
+                                _currentUrl ?? userData.url,
                                 _currentFullName ?? userData.fullName,
                                 _currentCompanyName ?? userData.companyName,
                                 _currentPhoneNumber ?? userData.phoneNumber,

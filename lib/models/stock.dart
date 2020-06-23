@@ -1,5 +1,6 @@
 class Stock {
   final String uid;
+  final String url;
   final String flowerType;
   final int quantity;
   final String flowerColour;
@@ -8,6 +9,7 @@ class Stock {
 
   Stock(
       {this.uid,
+        this.url,
       this.flowerType,
       this.quantity,
       this.flowerColour,

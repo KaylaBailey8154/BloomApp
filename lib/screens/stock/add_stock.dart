@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:bloomflutterapp/services/image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 class AddStock extends StatefulWidget {
   @override
@@ -14,6 +19,10 @@ class AddStock extends StatefulWidget {
 
 class _AddStockState extends State<AddStock> {
   final _formKey = GlobalKey<FormState>();
+
+  File _image;
+  String url;
+  final _picker = ImagePicker();
 
   int _itemCount = 0;
 
@@ -29,6 +38,40 @@ class _AddStockState extends State<AddStock> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
+    void uploadPic() async{
+      var randomno = Random(25);
+      StorageReference firebaseStorageRef= FirebaseStorage.instance
+          .ref()
+          .child("stock/");
+      StorageUploadTask uploadTask=firebaseStorageRef.child(randomno.toString() + ".jpg").putFile(_image);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = ImageUrl.toString();
+
+      print("Image Url=" + url);
+    }
+
+    Future getImage() async {
+      var image = await _picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+      });
+    }
+
+    Future getImageCamera() async {
+      var image = await _picker.getImage(source: ImageSource.camera);
+
+      setState(() {
+        _image = File(image.path);
+        print('Image Path $_image');
+        uploadPic();
+      });
+    }
+
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
@@ -40,54 +83,52 @@ class _AddStockState extends State<AddStock> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: 350,
-                    width: 420,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(40),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        height: 350,
+                        width: 420,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(40),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black, spreadRadius: 0, blurRadius: 20),
+                          ],
+                        ),
+                        child: (_image != null)?Image.file(_image, fit: BoxFit.cover,)
+                            : Image.asset(
+                          'assets/imageplaceholder.jpg',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      image: new DecorationImage(
-                        image: new AssetImage('assets/imageplaceholder.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black, spreadRadius: 0, blurRadius: 20),
-                      ],
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        new Positioned(
-                            left: 0.0,
-                            top: 20.0,
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              color: Colors.black,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              iconSize: 30,
-                            )),
-                      ],
-                    ),
+                      Positioned(
+                          left: 0.0,
+                          top: 20.0,
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            color: Colors.black,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            iconSize: 30,
+                          )),
+                    ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                      child: Text("Upload Photo",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueAccent)),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ImageCapture()));
-                        // do what you need to do when the text is gets clicked
-                      }),
+                 GestureDetector(
+                   child: Text('Uplaod Image',
+                       style: TextStyle(
+                           color: Colors.blue,
+                           decoration: TextDecoration.underline)),
+                   onTap: () {
+                     Navigator.push(
+                         context,
+                         MaterialPageRoute(
+                             builder: (context) =>
+                                 ImageCapture()));
+                   },
+                 ),
                   SizedBox(
                     height: 10,
                   ),
@@ -212,7 +253,7 @@ class _AddStockState extends State<AddStock> {
                     child: RaisedButton(
                       onPressed: () async {
                         await DatabaseService(uid: user.uid)
-                            .updateStockData(flowerType, _itemCount, flowerColour, snapshot.data.companyName);
+                            .updateStockData(url, flowerType, _itemCount, flowerColour, snapshot.data.companyName);
 
                         Navigator.pop(context);
                       },

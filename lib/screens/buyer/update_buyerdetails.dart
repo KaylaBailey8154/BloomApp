@@ -24,7 +24,7 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
-  String _currenturl;
+  String _currentUrl;
   String _currentFullName;
   String _currentCompanyName;
   String _currentPhoneNumber;
@@ -62,7 +62,7 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
 
       print("Image Url=" + url);
 
-      _currenturl = url;
+      _currentUrl = url;
     }
 
     Future getImage() async {
@@ -248,7 +248,7 @@ class _BuyerDetailsFormState extends State<BuyerDetailsForm> {
                             if (_formKey.currentState.validate()) {
                               await DatabaseService(uid: user.uid)
                                   .updateBuyerUserData(
-                                      _currenturl ?? userData.url,
+                                      _currentUrl ?? userData.url,
                                       _currentFullName ?? userData.fullName,
                                       _currentCompanyName ??
                                           userData.companyName,
