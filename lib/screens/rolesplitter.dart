@@ -4,6 +4,7 @@ import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class RoleSplitter extends StatelessWidget {
@@ -32,7 +33,29 @@ class RoleSplitter extends StatelessWidget {
             }
 
         }else{
-      return Text('Loading...');
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              SpinKitFadingCube(
+                color: Colors.redAccent[200],
+                size: 80,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Archivo',
+                  color: Colors.white,
+                ),
+              )
+            ],
+          )
+
+        ),
+      );
 
   }
 });
