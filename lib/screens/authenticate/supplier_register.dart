@@ -280,7 +280,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                         SizedBox(
                           height: 12,
                         ),
-                        Row(
+                      /*  Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
@@ -301,7 +301,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                               ),
                             ),
                           ],
-                        ),
+                        ),*/
                         SizedBox(
                           height: 20,
                         ),
@@ -319,7 +319,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                     });
                                   }*/
 
-                                  dynamic result = await _auth
+                                  dynamic result =  await _auth
                                       .registerSupplierWithEmailAndPassword(
                                           url,
                                           fullName,
@@ -345,11 +345,14 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                             FlatButton(
                                               child: Text("OK"),
                                               onPressed: () {
-                                                Navigator.push(
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
+                                                /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            SignIn()));
+                                                            SignIn()));*/
                                               },
                                             )
                                           ],

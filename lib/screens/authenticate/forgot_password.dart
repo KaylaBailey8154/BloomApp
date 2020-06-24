@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
+import 'package:bloomflutterapp/screens/wrapper.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,10 +90,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 FlatButton(
                                   child: Text("OK"),
                                   onPressed: () {
-                                    Navigator.push(
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                   /* Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => SignIn()));
+                                            builder: (context) => SignIn()));*/
                                   },
                                 )
                               ],
