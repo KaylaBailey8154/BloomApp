@@ -37,6 +37,8 @@ class RoleSplitter extends StatelessWidget {
         backgroundColor: Colors.black,
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SpinKitFadingCube(
                 color: Colors.redAccent[200],

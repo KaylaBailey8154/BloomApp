@@ -123,6 +123,9 @@ class _AddStockState extends State<AddStock> {
                             )),
                       ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                       child: Text('Upload Image',
                           style: TextStyle(

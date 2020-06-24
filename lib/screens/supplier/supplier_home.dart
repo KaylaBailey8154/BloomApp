@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'update_supplierdetails.dart';
 import 'update_supplierdetails.dart';
+import 'update_supplierdetails.dart';
 
 class SupplierHome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -362,7 +363,10 @@ class SupplierHome extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.account_circle),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SupplierDetailsForm()));
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.phonelink_ring),
