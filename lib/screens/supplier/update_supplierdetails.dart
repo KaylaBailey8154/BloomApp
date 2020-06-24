@@ -45,6 +45,8 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
         break;
 
       case PageEnum.signout:
+        Navigator.pop(context);
+        sleep(const Duration(seconds: 1));
         _auth.signOut();
         break;
     }

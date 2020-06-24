@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class ProductDetails extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Text(
                   '$flowerType',
                   style: TextStyle(
@@ -79,8 +80,29 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
               ),
+SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    child:
+                    Text(
+                      flowerType != '' ?
+                      'Learn more about the $flowerType' : '',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    onTap: () {
+                      launchURL(flowerType: flowerType);
+
+                    },
+                  ),
+                ],
+              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(110, 25, 0, 0),
+                padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[

@@ -93,7 +93,7 @@ class AuthService {
   }
 
   //forgot password
-  Future forgotpassword(String email) async {
+  Future <void> forgotpassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
