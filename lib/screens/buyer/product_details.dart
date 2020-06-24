@@ -161,7 +161,7 @@ SizedBox(height: 10,),
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Date: ',
+                      'Date Picked: ',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

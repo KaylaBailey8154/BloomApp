@@ -348,6 +348,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                                 Navigator.pop(context);
                                                 Navigator.pop(context);
                                                 Navigator.pop(context);
+                                                _auth.signOut();
                                                 /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
