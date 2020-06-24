@@ -27,7 +27,7 @@ class _ViewMyCartState extends State<ViewMyCart> {
     return StreamProvider<List<CartItem>>.value(
       value: DatabaseService(uid: user.uid).myCart,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green[500],
         body: Column(
           children: <Widget>[
             Row(

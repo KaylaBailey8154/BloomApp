@@ -27,7 +27,7 @@ class MyCartItemTile extends StatelessWidget {
             children: <Widget>[
               Text('Number of stems: $quantity'),
               Text('Supplier: $supplier'),
-              Text('Date Flowers Were Picked: $datePicked'),
+              Text('Date Picked: $datePicked'),
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: ()  async{

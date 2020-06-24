@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:bloomflutterapp/services/image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +32,7 @@ class _AddStockState extends State<AddStock> {
 
   String flowerType = '';
   String flowerColour = '';
+
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
   //List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
@@ -39,12 +42,13 @@ class _AddStockState extends State<AddStock> {
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    void uploadPic() async{
+    void uploadPic() async {
       String profilePic = DateTime.now().toString();
-      StorageReference firebaseStorageRef= FirebaseStorage.instance
+      StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
           .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
+      StorageUploadTask uploadTask = firebaseStorageRef.child(
+          profilePic + ".jpg").putFile(_image);
 
       var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       url = imageUrl.toString();
@@ -73,207 +77,250 @@ class _AddStockState extends State<AddStock> {
     }
 
     return StreamBuilder<UserData>(
-      stream: DatabaseService(uid: user.uid).userData,
-      builder: (context, snapshot) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: Container(
-            height: 700,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      Container(
-                        height: 350,
-                        width: 420,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(40),
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Container(
+              height: 700,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          height: 350,
+                          width: 420,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(40),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black,
+                                  spreadRadius: 0,
+                                  blurRadius: 20),
+                            ],
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black, spreadRadius: 0, blurRadius: 20),
-                          ],
+                          child: (_image != null) ? Image.file(
+                            _image, fit: BoxFit.cover,)
+                              : Image.asset(
+                            'assets/imageplaceholder.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        child: (_image != null)?Image.file(_image, fit: BoxFit.cover,)
-                            : Image.asset(
-                          'assets/imageplaceholder.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Positioned(
-                          left: 0.0,
-                          top: 20.0,
-                          child: IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            iconSize: 30,
-                          )),
-                    ],
-                  ),
-                 GestureDetector(
-                   child: Text('Upload Image',
-                       style: TextStyle(
-                           color: Colors.blue,
-                           decoration: TextDecoration.underline)),
-                   onTap: () {
-                     /*Navigator.push(
+                        Positioned(
+                            left: 0.0,
+                            top: 20.0,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              color: Colors.black,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              iconSize: 30,
+                            )),
+                      ],
+                    ),
+                    GestureDetector(
+                      child: Text('Upload Image',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline)),
+                      onTap: () {
+                        /*Navigator.push(
                          context,
                          MaterialPageRoute(
                              builder: (context) =>
                                  ImageCapture()));*/
-                     getImage();
-                   },
-                 ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Flower Type:   ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Container(
-                        width: 158,
-                        height: 45,
-                        child: DropdownButtonFormField<String>(
-                            hint: Text("Select Flower Type"),
-                            value: null,
-                            items: ['King Protea', 'Rose', 'Disa', 'Erica', 'Cape Daisy', 'African Iris']
-                                .map((label) => DropdownMenuItem(
-                                      child: Text(label),
-                                      value: label,
-                                    ))
-                                .toList(),
-                            onChanged: (value) {
-                              setState(() => flowerType = value);
-                            }),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Quantity:    ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      _itemCount != 0
-                          ? new IconButton(
-                              icon: new Icon(Icons.remove),
-                              onPressed: () =>
-                                  setState(() => _itemCount = _itemCount - 10),
-                            )
-                          : new Container(),
-                      new Text(_itemCount.toString()),
-                      new IconButton(
-                          icon: new Icon(Icons.add),
-                          onPressed: () =>
-                              setState(() => _itemCount = _itemCount + 10)),
-                      Text(
-                        'in stems',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Colour:   ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Container(
-                        width: 171,
-                        height: 45,
-                        child: DropdownButtonFormField<String>(
-                            hint: Text("Select Flower Colour"),
-                            value: null,
-                            items: ['Red', 'White', 'Yellow', 'Green', 'Pink']
-                                .map((label) => DropdownMenuItem(
-                                      child: Text(label),
-                                      value: label,
-                                    ))
-                                .toList(),
-                            onChanged: (value) {
-                              setState(() => flowerColour = value);
-                            }),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Date:   ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        date.format(DateTime.now()),
-                        style:
-                            new TextStyle(color: Colors.grey[850], fontSize: 14.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 150,
-                    child: RaisedButton(
-                      onPressed: () async {
-                        await DatabaseService(uid: user.uid)
-                            .updateStockData(url, flowerType, _itemCount, flowerColour, snapshot.data.companyName);
-
-                        Navigator.pop(context);
+                        getImage();
                       },
-                      color: Colors.red[200],
-                      child: Text(
-                        'Save',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Flower Type:   ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Container(
+                          width: 158,
+                          height: 45,
+                          child: DropdownButtonFormField<String>(
+                              hint: Text("Select Flower Type"),
+                              value: null,
+                              items: [
+                                'King Protea',
+                                'Rose',
+                                'Disa',
+                                'Erica',
+                                'Cape Daisy',
+                                'African Iris'
+                              ]
+                                  .map((label) =>
+                                  DropdownMenuItem(
+                                    child: Text(label),
+                                    value: label,
+                                  ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() => flowerType = value);
+                              }),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            GestureDetector(
+                              child:
+                              Text(
+                                  flowerType != '' ?
+                                  'More information about the $flowerType' : '',
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                  ),
+                              ),
+                              onTap: () {
+                                launchURL(flowerType: flowerType);
+
+                              },
+                            ),
+                          ],
+                        ),
+
+
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Quantity:    ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        _itemCount != 0
+                            ? new IconButton(
+                          icon: new Icon(Icons.remove),
+                          onPressed: () =>
+                              setState(() => _itemCount = _itemCount - 10),
+                        )
+                            : new Container(),
+                        new Text(_itemCount.toString()),
+                        new IconButton(
+                            icon: new Icon(Icons.add),
+                            onPressed: () =>
+                                setState(() => _itemCount = _itemCount + 10)),
+                        Text(
+                          'in stems',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Colour:   ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Container(
+                          width: 171,
+                          height: 45,
+                          child: DropdownButtonFormField<String>(
+                              hint: Text("Select Flower Colour"),
+                              value: null,
+                              items: ['Red', 'White', 'Yellow', 'Green', 'Pink']
+                                  .map((label) =>
+                                  DropdownMenuItem(
+                                    child: Text(label),
+                                    value: label,
+                                  ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() => flowerColour = value);
+                              }),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Date:   ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          date.format(DateTime.now()),
+                          style:
+                          new TextStyle(color: Colors.grey[850],
+                              fontSize: 14.0),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 150,
+                      child: RaisedButton(
+                        onPressed: () async {
+                          await DatabaseService(uid: user.uid)
+                              .updateStockData(url, flowerType, _itemCount,
+                              flowerColour, snapshot.data.companyName);
+
+                          Navigator.pop(context);
+                        },
+                        color: Colors.red[200],
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }
+          );
+        }
     );
   }
+
 }
