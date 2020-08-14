@@ -18,283 +18,374 @@ class SupplierHome extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          centerTitle: true,
-          title: Text(
-            'HOME',
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Archivo',
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
-        ),
-      ),
       body: Container(
-        height: 510,
+        height: 700,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(60),
+                        ),
+                        gradient: LinearGradient(
+                          colors: [Colors.greenAccent, Colors.green],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        )
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 150.0,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(80, 40, 20, 0),
+                      child: Text(
+                        "Welcome Back,",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Archivo',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(40, 100, 20, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AddStock()),
+                            );
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 150,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              color: Colors.white,
+                              elevation: 5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.black54,
+                                    size: 70,
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    'Add Stock',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 100, 10, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ViewMyStock()),
+                            );
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 150,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              color: Colors.white,
+                              elevation: 5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.edit,
+                                    color: Colors.black54,
+                                    size: 70,
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    'My Stock',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: RaisedButton(
-                      onPressed: () {
+                    padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
+                    child: GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => AddStock()),
                         );
                       },
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.purpleAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'Add Stock',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
                           ),
-                          Image(
-                            image: AssetImage('assets/stock.png'),
-                            width: 80,
-                            height: 80,
-                          )
-                        ],
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.chat,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Negotiation Room',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewMyStock()));
-                      },
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.yellowAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'My Stock',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Image(
-                            image: AssetImage('assets/edit.png'),
-                            width: 80,
-                            height: 80,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: RaisedButton(
-                      onPressed: () {},
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.orangeAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            ''' Negotiation
-       Room''',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Image(
-                            image: AssetImage('assets/chat.png'),
-                            width: 70,
-                            height: 80,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                    child: RaisedButton(
-                      onPressed: () {},
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.lightGreenAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'Analytics',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Image(
-                            image: AssetImage('assets/analytics.png'),
-                            width: 80,
-                            height: 80,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: RaisedButton(
-                      onPressed: () {},
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.blueAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            ''''Transaction 
-        History''',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Image(
-                            image: AssetImage('assets/invoices.png'),
-                            width: 70,
-                            height: 80,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                    child: RaisedButton(
-                      onPressed: () {
-                        //_showDetailsPanel();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SupplierDetailsForm()));
-                      },
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.grey,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'Account',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Image(
-                            image: AssetImage('assets/account.png'),
-                            width: 80,
-                            height: 80,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: RaisedButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      /*onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewAllSuppliers()),
+                          MaterialPageRoute(builder: (context) => AddStock()),
                         );
-                      },
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.redAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '''Contacts Book''',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                      },*/
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
                           ),
-                          Image(
-                            image: AssetImage('assets/contacts.png'),
-                            width: 60,
-                            height: 80,
-                          )
-                        ],
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.equalizer,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Analysis',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
+                    child: GestureDetector(
+                      /*onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddStock()),
+                        );
+                      },*/
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.access_time,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Transaction History',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
-                    child: RaisedButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewAllStock()),
+                          MaterialPageRoute(builder: (context) => SupplierDetailsForm()),
                         );
                       },
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.tealAccent,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            ''''Marketplace 
-        Stock''',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
                           ),
-                          Image(
-                            image: AssetImage('assets/marketplace.png'),
-                            width: 50,
-                            height: 80,
-                          )
-                        ],
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.account_circle,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Account',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ViewAllSuppliers()),
+                        );
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.contact_phone,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Contacts Book',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ViewAllStock()),
+                        );
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.monetization_on,
+                                color: Colors.black54,
+                                size: 70,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'Marketplace Stock',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -305,7 +396,7 @@ class SupplierHome extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.redAccent[700],
         child: const Icon(
           Icons.add_circle,
         ),
@@ -383,3 +474,4 @@ class SupplierHome extends StatelessWidget {
     );
   }
 }
+
