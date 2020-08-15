@@ -75,6 +75,7 @@ class DatabaseService {
   List<Supplier> _supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Supplier(
+          url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');

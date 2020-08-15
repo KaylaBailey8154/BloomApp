@@ -27,7 +27,7 @@ class ViewAllStock extends StatelessWidget {
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService().allStocks,
       child: Scaffold(
-        backgroundColor: Colors.pink[200],
+        backgroundColor: Colors.green,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
@@ -66,7 +66,7 @@ class ViewAllStock extends StatelessWidget {
           child: Container(height: 550, width: 400, child: StockList()),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: Colors.redAccent[700],
           child: const Icon(
             Icons.add_circle,
           ),

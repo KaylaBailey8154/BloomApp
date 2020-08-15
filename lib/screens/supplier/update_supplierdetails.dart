@@ -269,7 +269,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                         height: 40,
                         width: 150,
                         child: RaisedButton(
-                          color: Colors.pink[400],
+                          color: Colors.redAccent[700],
                           child: Text(
                             'Update',
                             style: TextStyle(color: Colors.white),

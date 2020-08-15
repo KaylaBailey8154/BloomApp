@@ -1,7 +1,10 @@
 import 'package:bloomflutterapp/models/supplier.dart';
+import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
 import 'package:bloomflutterapp/screens/supplier/supplier_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flappy_search_bar/search_bar_style.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +16,16 @@ import 'update_supplierdetails.dart';
 
 class ViewAllSuppliers extends StatelessWidget {
   final AuthService _auth = AuthService();
+  Future<List<Post>> search(String search) async {
+    await Future.delayed(Duration(seconds: 2));
+    return List.generate(search.length, (int index) {
+      return Post(
+        "Title : $search $index",
+        "Description :$search $index",
+      );
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,46 +43,60 @@ class ViewAllSuppliers extends StatelessWidget {
     return StreamProvider<List<Supplier>>.value(
       value: DatabaseService().suppliers,
       child: Scaffold(
-        backgroundColor: Colors.brown,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: AppBar(
-            centerTitle: true,
-            title: Text(
-              'CONTACTS BOOK',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Archivo',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+        backgroundColor: Colors.green,
+        body: Column(
+          children: [
+            Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(140, 40, 20, 0),
+                  child: Text(
+                    "CONTACTS",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Archivo',
+                    ),
+                  ),
+                ),
+                Positioned(
+                    left: 10.0,
+                    top: 25.0,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      iconSize: 30,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 60, 20, 0),
+                  child: Container(
+                    height: 80,
+                    width: 350,
+                    child: SearchBar<Post>(
+                      onSearch: search,
+                      onItemFound: (Post post, int index) {
+                        return ListTile(
+                          title: Text(post.title),
+                          subtitle: Text(post.description),
+                        );
+                      },
+                      searchBarStyle: SearchBarStyle(
+                        backgroundColor: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            backgroundColor: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-            ),
-            leading: IconButton(
-              padding: EdgeInsets.fromLTRB(30, 0, 100, 0),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.black,
-              iconSize: 30,
-              icon: Icon(
-                Icons.arrow_back,
-              ),
-            ),
-          ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(10),
-          child: Container(height: 550, width: 400, child: SupplierList()),
+             Container(height: 480, width: 400, child: SupplierList()),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.brown[900],
+          backgroundColor: Colors.redAccent[700],
           child: const Icon(
             Icons.add_circle,
           ),

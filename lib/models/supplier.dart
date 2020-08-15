@@ -6,4 +6,5 @@ class Supplier {
   final String phoneNumber;
 
   Supplier({this.uid, this.url, this.fullName, this.companyName, this.phoneNumber});
+
 }

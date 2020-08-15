@@ -31,7 +31,7 @@ class ViewMyStock extends StatelessWidget {
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService(uid: user.uid).myStocks,
       child: Scaffold(
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.green,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
@@ -53,7 +53,7 @@ class ViewMyStock extends StatelessWidget {
               ),
             ),
             leading: IconButton(
-              padding: EdgeInsets.fromLTRB(50, 0, 100, 0),
+              padding: EdgeInsets.fromLTRB(20, 0, 100, 0),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -70,7 +70,7 @@ class ViewMyStock extends StatelessWidget {
           child: Container(height: 550, width: 400, child: MyStockList()),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.redAccent[700],
           child: const Icon(
             Icons.add_circle,
           ),
