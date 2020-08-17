@@ -43,6 +43,7 @@ class ViewAllSuppliers extends StatelessWidget {
     return StreamProvider<List<Supplier>>.value(
       value: DatabaseService().suppliers,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.green,
         body: Column(
           children: [

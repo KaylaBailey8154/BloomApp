@@ -48,6 +48,7 @@ class FlowerList extends StatelessWidget {
           )
           ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         body: Column(
           children: <Widget>[

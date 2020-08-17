@@ -48,6 +48,7 @@ class BuyerHome extends StatelessWidget {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[

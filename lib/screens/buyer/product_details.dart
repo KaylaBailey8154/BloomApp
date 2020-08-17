@@ -69,38 +69,36 @@ class ProductDetails extends StatelessWidget {
                       )),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Text(
-                  '$flowerType',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GestureDetector(
-                    child:
-                    Text(
-                      flowerType != '' ?
-                      'Learn more about the $flowerType' : '',
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Text(
+                      '$flowerType',
                       style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                    onTap: () {
-                      launchURL(flowerType: flowerType);
-
-                    },
                   ),
+                  IconButton(
+                    tooltip: "Click here to learn more about $flowerType",
+                    padding: EdgeInsets.only(top: 10),
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 25,
+                      color: Colors.blue,
+                    ),
+                    onPressed: () {
+                      launchURL(flowerType: flowerType);
+                    },
+                  )
                 ],
               ),
+SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
                 child: Row(
