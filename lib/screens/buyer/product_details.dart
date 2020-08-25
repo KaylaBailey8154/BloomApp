@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
-    String flowerColour = stock.flowerColour;
+    int flowerColour = stock.flowerColour;
     String flowerType = stock.flowerType;
 
 
@@ -143,11 +143,11 @@ SizedBox(height: 10,),
                         fontSize: 18,
                       ),
                     ),
-                    Text(
-                      '$flowerColour',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
+                    ClipOval(
+                      child: Container(
+                        color: Color(flowerColour),
+                        width: 40,
+                        height: 40,
                       ),
                     ),
                   ],

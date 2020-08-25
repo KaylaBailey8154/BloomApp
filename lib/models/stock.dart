@@ -3,7 +3,7 @@ class Stock {
   final String url;
   final String flowerType;
   final int quantity;
-  final String flowerColour;
+  final int flowerColour;
   final String dateAdded;
   final String companyName;
 

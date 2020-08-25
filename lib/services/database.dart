@@ -21,7 +21,7 @@ class DatabaseService {
 
 
   Future updateStockData(
-      String url, String flowerType, int quantity, String flowerColour, String companyName) async {
+      String url, String flowerType, int quantity, int flowerColour, String companyName) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'url' : url,
@@ -57,7 +57,7 @@ class DatabaseService {
 
   Future updateCartStockData(
       String url, String supplierUID, String flowerType,
-      int quantity, String flowerColour, String datePicked, String companyName) async {
+      int quantity, int flowerColour, String datePicked, String companyName) async {
     return await cartItemCollection.document().setData({
       'url': url,
       'buyerUID': uid,
@@ -98,7 +98,7 @@ class DatabaseService {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
         url: doc.data['url']?? '',
-        flowerColour: doc.data['flowerColour'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? null,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
@@ -112,7 +112,7 @@ class DatabaseService {
       return CartItem(
         supplierUID: doc.data['supplierUID'] ?? '',
         buyerUID: doc.data['buyerUID'] ?? '',
-        flowerColour: doc.data['flowerColour'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? null,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,

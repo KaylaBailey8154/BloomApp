@@ -15,7 +15,7 @@ class StockTile extends StatelessWidget {
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
-    String flowerColour = stock.flowerColour;
+    int flowerColour = stock.flowerColour;
     String url = stock.url;
 
     return Padding(
@@ -76,12 +76,24 @@ class StockTile extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    Text(
-                      'Flower Colour: $flowerColour',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 12,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Flower Colour: ',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: 12,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Color(flowerColour),
+                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                            width: 25,
+                            height: 10,
+                          ),
+                      ],
                     ),
                     Text(
                       'Date Added: $dateAdded',

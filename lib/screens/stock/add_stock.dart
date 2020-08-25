@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,12 @@ class AddStock extends StatefulWidget {
 }
 
 class _AddStockState extends State<AddStock> {
+
+  Color currentColor = Colors.redAccent;
+  Color pickerColor = Colors.redAccent;
+
+  void changeColor(Color color) => setState(() => pickerColor = color);
+
   final _formKey = GlobalKey<FormState>();
 
   File _image;
@@ -39,6 +46,9 @@ class _AddStockState extends State<AddStock> {
 
   @override
   Widget build(BuildContext context) {
+
+    int flowerColour = pickerColor.value;
+
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
@@ -252,23 +262,51 @@ class _AddStockState extends State<AddStock> {
                             fontSize: 16,
                           ),
                         ),
-                        Container(
-                          width: 171,
-                          height: 45,
-                          child: DropdownButtonFormField<String>(
-                              hint: Text("Select Flower Colour"),
-                              value: null,
-                              items: ['Red', 'White', 'Yellow', 'Green', 'Pink']
-                                  .map((label) =>
-                                  DropdownMenuItem(
-                                    child: Text(label),
-                                    value: label,
-                                  ))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() => flowerColour = value);
-                              }),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    titlePadding: const EdgeInsets.all(0),
+                                    contentPadding: const EdgeInsets.all(0),
+                                    content: SingleChildScrollView(
+                                      child: ColorPicker(
+                                        pickerColor: pickerColor,
+                                        onColorChanged: changeColor,
+                                        colorPickerWidth: 300,
+                                        pickerAreaHeightPercent: 0.7,
+                                        enableAlpha: true,
+                                        displayThumbColor: true,
+                                        showLabel: true,
+                                        paletteType: PaletteType.hsl,
+                                        pickerAreaBorderRadius: const BorderRadius.only(
+                                          topLeft: const Radius.circular(2),
+                                          topRight: const Radius.circular(2),
+                                        ),
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: const Text('OK'),
+                                        onPressed: () {
+                                          setState(() => currentColor = pickerColor);
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              color: currentColor,
+                              width: 40,
+                              height: 40,
+                            ),
+                          ),
                         ),
+
                       ],
                     ),
                     SizedBox(

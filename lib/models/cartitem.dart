@@ -2,7 +2,7 @@ class CartItem{
   final String buyerUID;
   final String flowerType;
   final int quantity;
-  final String flowerColour;
+  final int flowerColour;
   final String datePicked;
   final String dateAddedToCart;
   final String companyName;
