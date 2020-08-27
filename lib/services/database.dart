@@ -21,7 +21,7 @@ class DatabaseService {
 
 
   Future updateStockData(
-      String url, String flowerType, int quantity, int flowerColour, String companyName) async {
+      List<String> url, String flowerType, int quantity, int flowerColour, String companyName) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'url' : url,

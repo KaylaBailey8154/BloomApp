@@ -5,6 +5,8 @@ import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:bloomflutterapp/services/image.dart';
+import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +14,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
 class AddStock extends StatefulWidget {
+  final GlobalKey<ScaffoldState> globalKey;
+  const AddStock({Key key, this.globalKey}) : super(key: key);
   @override
   _AddStockState createState() => _AddStockState();
 }
 
 class _AddStockState extends State<AddStock> {
+
 
   Color currentColor = Colors.redAccent;
   Color pickerColor = Colors.redAccent;
@@ -29,16 +35,17 @@ class _AddStockState extends State<AddStock> {
 
   final _formKey = GlobalKey<FormState>();
 
-  File _image;
-  String url;
-  final _picker = ImagePicker();
+  List<Asset> _image = List<Asset>();
+  List<String> url = <String>[];
+  List<NetworkImage> _listOfImages = <NetworkImage>[];
+  String _error = 'No Error Dectected';
 
   int _itemCount = 0;
 
   final date = new DateFormat('dd-MM-yyyy');
 
   String flowerType = '';
-
+  String flowerColour = '';
 
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
@@ -52,37 +59,68 @@ class _AddStockState extends State<AddStock> {
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    void uploadPic() async {
-      String profilePic = DateTime.now().toString();
+
+    Future<dynamic> postImage(Asset imageFile) async{
+      String stockImages = DateTime.now().millisecondsSinceEpoch.toString();
       StorageReference firebaseStorageRef = FirebaseStorage.instance
           .ref()
-          .child("profile/");
-      StorageUploadTask uploadTask = firebaseStorageRef.child(
-          profilePic + ".jpg").putFile(_image);
-
-      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      url = imageUrl.toString();
-
-      print("Image Url= " + url);
+          .child(stockImages);
+      StorageUploadTask uploadTask = firebaseStorageRef.putData((await imageFile.getByteData()).buffer.asUint8List());
+      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+      print(storageTaskSnapshot.ref.getDownloadURL());
+      return storageTaskSnapshot.ref.getDownloadURL();
     }
 
-    Future getImage() async {
-      var image = await _picker.getImage(source: ImageSource.gallery);
-
-      setState(() {
-        _image = File(image.path);
-        print('Image Path $_image');
-        uploadPic();
-      });
+    void uploadImages(){
+      for(var imageFile in _image){
+        postImage(imageFile).then((downloadUrl){
+          url.add(downloadUrl.toString());
+          if(url.length==_image.length){
+            String documentID = DateTime.now().millisecondsSinceEpoch.toString();
+            Firestore.instance.collection('stockimages').document(documentID).setData({
+              'urls':url});
+            setState(() {
+              _image=[];
+              url =[];
+            });
+          }
+        }).catchError((err) {
+          print(err);
+        });
+      }
     }
 
-    Future getImageCamera() async {
-      var image = await _picker.getImage(source: ImageSource.camera);
+    Future <void>getImage() async {
+      List<Asset> resultList = List<Asset>();
+      String error = 'No Error Dectected';
+      try {
+        resultList = await MultiImagePicker.pickImages(
+          maxImages: 10,
+          enableCamera: true,
+          selectedAssets: _image,
+          cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+          materialOptions: MaterialOptions(
+            actionBarColor: "#abcdef",
+            actionBarTitle: "Upload Image",
+            allViewTitle: "All Photos",
+            useDetailsView: false,
+            selectCircleStrokeColor: "#000000",
+          ),
+        );
+        print(resultList.length);
+        print((await resultList[0].getThumbByteData(122, 100)));
+        print((await resultList[0].getByteData()));
+        print((await resultList[0].metadata));
 
+      } on Exception catch (e) {
+        error = e.toString();
+      }
+
+      if (!mounted) return;
       setState(() {
-        _image = File(image.path);
-        print('Image Path $_image');
-        uploadPic();
+        _image = resultList;
+        _error = error;
+        uploadImages();
       });
     }
 
@@ -101,8 +139,13 @@ class _AddStockState extends State<AddStock> {
                       children: <Widget>[
                         Container(
                           height: 350,
-                          width: 420,
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/imageplaceholder.jpg'),
+                              fit: BoxFit.cover,
+                            ),
                             borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(40),
                             ),
@@ -113,12 +156,15 @@ class _AddStockState extends State<AddStock> {
                                   blurRadius: 20),
                             ],
                           ),
-                          child: (_image != null) ? Image.file(
-                            _image, fit: BoxFit.cover,)
-                              : Image.asset(
-                            'assets/imageplaceholder.jpg',
-                            fit: BoxFit.cover,
-                          ),
+                          child: Carousel(
+                              boxFit: BoxFit.cover,
+                              images: _listOfImages,
+                              autoplay: false,
+                              indicatorBgPadding: 5.0,
+                              dotPosition: DotPosition.bottomCenter,
+                              animationCurve: Curves.fastOutSlowIn,
+                              animationDuration:
+                              Duration(milliseconds: 2000)),
                         ),
                         Positioned(
                             left: 0.0,
@@ -194,26 +240,26 @@ class _AddStockState extends State<AddStock> {
                       height: 10,
                     ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            GestureDetector(
-                              child:
-                              Text(
-                                  flowerType != '' ?
-                                  'More information about the $flowerType' : '',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      decoration: TextDecoration.underline,
-                                  ),
-                              ),
-                              onTap: () {
-                                launchURL(flowerType: flowerType);
-
-                              },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        GestureDetector(
+                          child:
+                          Text(
+                            flowerType != '' ?
+                            'More information about the $flowerType' : '',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
                             ),
-                          ],
+                          ),
+                          onTap: () {
+                            launchURL(flowerType: flowerType);
+
+                          },
                         ),
+                      ],
+                    ),
 
 
 
@@ -365,3 +411,4 @@ class _AddStockState extends State<AddStock> {
   }
 
 }
+
