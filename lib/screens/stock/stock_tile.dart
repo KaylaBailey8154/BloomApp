@@ -69,7 +69,7 @@ class StockTile extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                            fontSize: 14,
                           ),
                         ),
                         GestureDetector(
@@ -84,7 +84,7 @@ class StockTile extends StatelessWidget {
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline,
-                              fontSize: 15,
+                              fontSize: 14,
                           ),
                         )
                         ),

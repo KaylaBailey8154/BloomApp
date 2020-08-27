@@ -121,12 +121,12 @@ class SupplierDetails extends StatelessWidget { //TODO: extract supplier details
                     ),
                   ),
                 ),
-                TabBarView(
+                /*TabBarView(
                   children: <Widget>[
                     //FlowerTypeStockList(),
                     //Reviews(),
                   ],
-                )
+                )*/
               ],
             ),
           ),

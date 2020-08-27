@@ -20,7 +20,7 @@ class MyStockTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: Container(
-        height: 250,
+        height: 290,
         width: 100,
         child: Card(
           margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
@@ -33,7 +33,7 @@ class MyStockTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 150,
+                height: 160,
                 width: 250,
                   child: '$url' != null ? Image.network(
                     '$url',
@@ -43,6 +43,7 @@ class MyStockTile extends StatelessWidget {
                     'assets/proteaimage.jpg',
                     fit: BoxFit.cover,)
               ),
+              SizedBox(height: 5,),
               Text(
                 'Flower Type: $flowerType',
                 style: TextStyle(
@@ -59,6 +60,8 @@ class MyStockTile extends StatelessWidget {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Flower Colour: ',
@@ -102,7 +105,6 @@ class MyStockTile extends StatelessWidget {
 
 
                   });
-                 
 
                 },
 
