@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'flowertypestock_list.dart';
 
 class ViewFlowerTypeStock extends StatelessWidget {
 
@@ -18,7 +17,7 @@ class ViewFlowerTypeStock extends StatelessWidget {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
         url: doc.data['url']?? '',
-        flowerColour: doc.data['flowerColour'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,

@@ -98,7 +98,7 @@ class DatabaseService {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
         url: doc.data['url']?? '',
-        flowerColour: doc.data['flowerColour'] ?? null,
+        flowerColour: doc.data['flowerColour'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
@@ -112,7 +112,7 @@ class DatabaseService {
       return CartItem(
         supplierUID: doc.data['supplierUID'] ?? '',
         buyerUID: doc.data['buyerUID'] ?? '',
-        flowerColour: doc.data['flowerColour'] ?? null,
+        flowerColour: doc.data['flowerColour'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,

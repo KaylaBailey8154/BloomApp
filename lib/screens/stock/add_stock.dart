@@ -38,7 +38,7 @@ class _AddStockState extends State<AddStock> {
   final date = new DateFormat('dd-MM-yyyy');
 
   String flowerType = '';
-  String flowerColour = '';
+
 
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
