@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -83,6 +84,30 @@ class MyStockTile extends StatelessWidget {
                   fontSize: 12,
                 ),
               ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: ()  async{
+                  var result=  await Firestore.instance.collection('stocks')
+                      .where('supplierUID',isEqualTo: stock.uid)
+                      .where('companyName',isEqualTo: stock.companyName)
+                      .where('dateAdded',isEqualTo: stock.dateAdded)
+                      .where('quantity',isEqualTo: stock.quantity)
+                      .where('flowerType',isEqualTo: stock.flowerType)
+
+                      .getDocuments()
+                      .then((snapshot){
+                    for(DocumentSnapshot ds in snapshot.documents){
+                      ds.reference.delete();
+                    }
+
+
+                  });
+                 
+
+                },
+
+              ),
+
             ],
           ),
         ),
