@@ -9,7 +9,7 @@ class SupplierTile extends StatelessWidget {
   final Supplier supplier;
   SupplierTile({this.supplier});
 
-  void launchCaller(String number) async{
+  void launchCaller(String number) async {
     var url = "tel: $number";
     if (await canLaunch(url)) {
       await launch(url);
@@ -17,7 +17,6 @@ class SupplierTile extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +27,14 @@ class SupplierTile extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Padding(
       padding: EdgeInsets.only(top: 5),
-        child: Container(
-          height: 100,
-          width: 50,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)
-            ),
+      child: Container(
+        height: 100,
+        width: 50,
+        child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,13 +48,14 @@ class SupplierTile extends StatelessWidget {
                       child: SizedBox(
                           width: 80,
                           height: 80,
-
-                          child: '$url' != null ? Image.network(
-                            '$url',
-                            fit: BoxFit.fill,
-                          )
-                              : Image.asset('assets/profile.png',)
-                      ),
+                          child: '$url' != null
+                              ? Image.network(
+                                  '$url',
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.asset(
+                                  'assets/profile.png',
+                                )),
                     ),
                   ),
                 ),
@@ -81,7 +79,9 @@ class SupplierTile extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     GestureDetector(
                       child: Text(
                         '$number',
@@ -97,9 +97,8 @@ class SupplierTile extends StatelessWidget {
                   ],
                 )
               ],
-            )
-          ),
-        ),
+            )),
+      ),
     );
   }
 }

@@ -39,7 +39,6 @@ class BuyerHome extends StatelessWidget {
           });
     }
 
-
     return Flexible(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -50,15 +49,14 @@ class BuyerHome extends StatelessWidget {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(120),
-                    ),
-                    gradient: LinearGradient(
-                      colors: [Colors.greenAccent, Colors.green],
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(120),
+                      ),
+                      gradient: LinearGradient(
+                        colors: [Colors.greenAccent, Colors.green],
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
-                    )
-                  ),
+                      )),
                   width: MediaQuery.of(context).size.width,
                   height: 200.0,
                   child: Padding(
@@ -109,7 +107,9 @@ class BuyerHome extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'King Protea',)));
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'King Protea',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -142,8 +142,9 @@ Protea''',
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'Rose',)));
-
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'Rose',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -179,7 +180,9 @@ Protea''',
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'Disa',)));
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'Disa',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -211,7 +214,9 @@ Protea''',
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'Erica',)));
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'Erica',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -247,7 +252,9 @@ Protea''',
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'Cape Daisy',)));
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'Cape Daisy',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -280,7 +287,9 @@ Daisy''',
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewFlowerTypeStock(flowerType: 'African Iris',)));
+                                      builder: (context) => ViewFlowerTypeStock(
+                                            flowerType: 'African Iris',
+                                          )));
                             },
                             elevation: 20,
                             shape: RoundedRectangleBorder(
@@ -343,8 +352,10 @@ Daisy''',
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ViewMyCart()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewMyCart()));
                     },
                   ),
                   IconButton(
@@ -379,5 +390,3 @@ Daisy''',
     );
   }
 }
-
-

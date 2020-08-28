@@ -7,17 +7,14 @@ class SupplierDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //String url = supplier.url;
     //String companyName = supplier.companyName;
 
     return Flexible(
       child: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.green, Colors.greenAccent]
-            )
-        ),
+            gradient:
+                LinearGradient(colors: [Colors.green, Colors.greenAccent])),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -28,7 +25,7 @@ class SupplierDetails extends StatelessWidget {
                 Stack(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 20, 300,0),
+                      padding: const EdgeInsets.fromLTRB(10, 20, 300, 0),
                       child: IconButton(
                         icon: Icon(Icons.arrow_back),
                         onPressed: () {
@@ -39,21 +36,18 @@ class SupplierDetails extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top:30),
+                      padding: const EdgeInsets.only(top: 30),
                       child: Center(
                         child: CircleAvatar(
                           radius: 40,
                           backgroundColor: Colors.white,
-                          child: ClipOval(
-
-                          ),
+                          child: ClipOval(),
                         ),
                       ),
                     ),
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 40,0,0),
-
+                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       ),
                     ),
                     Row(
@@ -62,9 +56,6 @@ class SupplierDetails extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(110, 165, 20, 20),
                           child: Text(
                             'Rating:',
-
-
-
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Archivo',
@@ -72,12 +63,10 @@ class SupplierDetails extends StatelessWidget {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ],
                 ),
-
                 Container(
                   height: 482,
                   decoration: BoxDecoration(
@@ -90,8 +79,12 @@ class SupplierDetails extends StatelessWidget {
                     child: TabBar(
                       labelColor: Colors.black,
                       tabs: [
-                        Tab(text: "Stock",),
-                        Tab(text: "Reviews",)
+                        Tab(
+                          text: "Stock",
+                        ),
+                        Tab(
+                          text: "Reviews",
+                        )
                       ],
                       indicatorColor: Colors.red,
                       indicatorWeight: 5.0,
@@ -112,5 +105,3 @@ class SupplierDetails extends StatelessWidget {
     );
   }
 }
-
-

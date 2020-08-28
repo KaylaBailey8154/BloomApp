@@ -14,19 +14,13 @@ import 'supplier/supplier_home.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     final user = Provider.of<User>(context);
-
 
     //return either home or Auth widget
     if (user == null) {
       return Authenticate();
-    }else{
+    } else {
       return RoleSplitter(user: user);
     }
-
-
-
   }
 }

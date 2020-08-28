@@ -7,12 +7,13 @@ class Stock {
   final String dateAdded;
   final String companyName;
 
-  Stock(
-      {this.uid,
-        this.url,
-      this.flowerType,
-      this.quantity,
-      this.flowerColour,
-      this.dateAdded,
-      this.companyName,});
+  Stock({
+    this.uid,
+    this.url,
+    this.flowerType,
+    this.quantity,
+    this.flowerColour,
+    this.dateAdded,
+    this.companyName,
+  });
 }

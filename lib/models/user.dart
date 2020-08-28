@@ -13,5 +13,10 @@ class UserData {
   final String role;
 
   UserData(
-      {this.uid, this.url, this.fullName, this.companyName, this.phoneNumber, this.role});
+      {this.uid,
+      this.url,
+      this.fullName,
+      this.companyName,
+      this.phoneNumber,
+      this.role});
 }

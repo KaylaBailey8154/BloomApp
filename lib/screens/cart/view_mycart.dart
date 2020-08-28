@@ -18,10 +18,8 @@ class ViewMyCart extends StatefulWidget {
 class _ViewMyCartState extends State<ViewMyCart> {
   final AuthService _auth = AuthService();
 
-
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     final user = Provider.of<User>(context);
     return StreamProvider<List<CartItem>>.value(
@@ -55,7 +53,11 @@ class _ViewMyCartState extends State<ViewMyCart> {
                 ),
               ],
             ),
-Container(height: 550,width: 400, child: MyCartList(),)
+            Container(
+              height: 550,
+              width: 400,
+              child: MyCartList(),
+            )
           ],
         ),
         bottomNavigationBar: Container(
@@ -87,8 +89,10 @@ Container(height: 550,width: 400, child: MyCartList(),)
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ViewMyCart()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewMyCart()));
                     },
                   ),
                   IconButton(

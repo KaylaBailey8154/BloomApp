@@ -13,8 +13,6 @@ class ViewAllStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService().allStocks,
       child: Scaffold(

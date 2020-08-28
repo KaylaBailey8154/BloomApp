@@ -16,7 +16,6 @@ class ViewMyStock extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService(uid: user.uid).myStocks,
       child: Scaffold(

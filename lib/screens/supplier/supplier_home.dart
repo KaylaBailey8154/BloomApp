@@ -13,7 +13,6 @@ class SupplierHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -32,8 +31,7 @@ class SupplierHome extends StatelessWidget {
                           colors: [Colors.greenAccent, Colors.green],
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
-                        )
-                    ),
+                        )),
                     width: MediaQuery.of(context).size.width,
                     height: 150.0,
                     child: Padding(
@@ -57,7 +55,8 @@ class SupplierHome extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => AddStock()),
+                              MaterialPageRoute(
+                                  builder: (context) => AddStock()),
                             );
                           },
                           child: Container(
@@ -65,8 +64,7 @@ class SupplierHome extends StatelessWidget {
                             height: 150,
                             child: Card(
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)
-                              ),
+                                  borderRadius: BorderRadius.circular(20)),
                               color: Colors.white,
                               elevation: 5,
                               child: Column(
@@ -77,7 +75,9 @@ class SupplierHome extends StatelessWidget {
                                     color: Colors.black54,
                                     size: 70,
                                   ),
-                                  SizedBox(height: 5,),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   Text(
                                     'Add Stock',
                                     style: TextStyle(
@@ -98,7 +98,8 @@ class SupplierHome extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ViewMyStock()),
+                              MaterialPageRoute(
+                                  builder: (context) => ViewMyStock()),
                             );
                           },
                           child: Container(
@@ -106,8 +107,7 @@ class SupplierHome extends StatelessWidget {
                             height: 150,
                             child: Card(
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)
-                              ),
+                                  borderRadius: BorderRadius.circular(20)),
                               color: Colors.white,
                               elevation: 5,
                               child: Column(
@@ -118,7 +118,9 @@ class SupplierHome extends StatelessWidget {
                                     color: Colors.black54,
                                     size: 70,
                                   ),
-                                  SizedBox(height: 5,),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   Text(
                                     'My Stock',
                                     style: TextStyle(
@@ -136,7 +138,6 @@ class SupplierHome extends StatelessWidget {
                   ),
                 ],
               ),
-
               Row(
                 children: <Widget>[
                   Padding(
@@ -153,8 +154,7 @@ class SupplierHome extends StatelessWidget {
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -165,7 +165,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Negotiation Room',
                                 style: TextStyle(
@@ -182,14 +184,12 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: GestureDetector(
-
                       child: Container(
                         width: 150,
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -200,7 +200,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Analysis',
                                 style: TextStyle(
@@ -221,14 +223,12 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
                     child: GestureDetector(
-
                       child: Container(
                         width: 150,
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -239,7 +239,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Transaction History',
                                 style: TextStyle(
@@ -259,7 +261,8 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SupplierDetailsForm()),
+                          MaterialPageRoute(
+                              builder: (context) => SupplierDetailsForm()),
                         );
                       },
                       child: Container(
@@ -267,8 +270,7 @@ class SupplierHome extends StatelessWidget {
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -279,7 +281,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Account',
                                 style: TextStyle(
@@ -303,7 +307,8 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ViewAllSuppliers()),
+                          MaterialPageRoute(
+                              builder: (context) => ViewAllSuppliers()),
                         );
                       },
                       child: Container(
@@ -311,8 +316,7 @@ class SupplierHome extends StatelessWidget {
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -323,7 +327,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Contacts Book',
                                 style: TextStyle(
@@ -343,7 +349,8 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ViewAllStock()),
+                          MaterialPageRoute(
+                              builder: (context) => ViewAllStock()),
                         );
                       },
                       child: Container(
@@ -351,8 +358,7 @@ class SupplierHome extends StatelessWidget {
                         height: 150,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              borderRadius: BorderRadius.circular(20)),
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
@@ -363,7 +369,9 @@ class SupplierHome extends StatelessWidget {
                                 color: Colors.black54,
                                 size: 70,
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Text(
                                 'Marketplace Stock',
                                 style: TextStyle(
@@ -443,14 +451,15 @@ class SupplierHome extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.account_circle),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SupplierDetailsForm()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SupplierDetailsForm()));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.phonelink_ring),
                   onPressed: () async {
-
                     await _auth.signOut();
                   },
                 ),
@@ -462,4 +471,3 @@ class SupplierHome extends StatelessWidget {
     );
   }
 }
-

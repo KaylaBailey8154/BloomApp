@@ -9,8 +9,6 @@ class StockTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
@@ -20,17 +18,20 @@ class StockTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: GestureDetector(
-        onTap: (){
-
-          Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails(stock: stock,)));
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductDetails(
+                        stock: stock,
+                      )));
         },
         child: Container(
           height: 100,
           width: 50,
           child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
             child: Row(
@@ -46,13 +47,14 @@ class StockTile extends StatelessWidget {
                       child: SizedBox(
                           width: 80,
                           height: 80,
-
-                          child: '$url' != null ? Image.network(
-                            '$url',
-                            fit: BoxFit.fill,
-                          )
-                              : Image.asset('assets/profile.png',)
-                      ),
+                          child: '$url' != null
+                              ? Image.network(
+                                  '$url',
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.asset(
+                                  'assets/profile.png',
+                                )),
                     ),
                   ),
                 ),
@@ -71,22 +73,22 @@ class StockTile extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SupplierDetails()));
-                          },
-                          child: Text(
-                            '$companyName',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              fontSize: 14,
-                          ),
-                        )
-                        ),
-                        ],
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SupplierDetails()));
+                            },
+                            child: Text(
+                              '$companyName',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                fontSize: 14,
+                              ),
+                            )),
+                      ],
                     ),
                     Text(
                       'Number of stems: $flowerQuantity',
@@ -107,11 +109,12 @@ class StockTile extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             color: Color(flowerColour),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
                           ),
-                            width: 25,
-                            height: 10,
-                          ),
+                          width: 25,
+                          height: 10,
+                        ),
                       ],
                     ),
                     Text(

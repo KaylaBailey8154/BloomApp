@@ -7,8 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class BuyerRegister extends StatefulWidget {
-
-
   @override
   _BuyerRegisterState createState() => _BuyerRegisterState();
 }
@@ -36,12 +34,12 @@ class _BuyerRegisterState extends State<BuyerRegister> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    void uploadPic() async{
+    void uploadPic() async {
       String profilePic = DateTime.now().toString();
-      StorageReference firebaseStorageRef= FirebaseStorage.instance
-          .ref()
-          .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child("profile/");
+      StorageUploadTask uploadTask =
+          firebaseStorageRef.child(profilePic + ".jpg").putFile(_image);
 
       var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       url = imageUrl.toString();
@@ -58,8 +56,6 @@ class _BuyerRegisterState extends State<BuyerRegister> {
         uploadPic();
       });
     }
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -105,18 +101,21 @@ class _BuyerRegisterState extends State<BuyerRegister> {
                                       child: SizedBox(
                                         width: 100,
                                         height: 100,
-                                        child: (_image!= null)?Image.file(_image, fit: BoxFit.fill,)
+                                        child: (_image != null)
+                                            ? Image.file(
+                                                _image,
+                                                fit: BoxFit.fill,
+                                              )
                                             : Image.asset(
-                                          'assets/profile.png',
-                                          fit: BoxFit.fill,
-                                        ),
+                                                'assets/profile.png',
+                                                fit: BoxFit.fill,
+                                              ),
                                       ),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                               child: IconButton(
                                 icon: Icon(Icons.edit),
                                 color: Colors.black,

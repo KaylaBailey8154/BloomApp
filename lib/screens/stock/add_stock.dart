@@ -1,4 +1,3 @@
-
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -21,8 +20,6 @@ class AddStock extends StatefulWidget {
 }
 
 class _AddStockState extends State<AddStock> {
-
-
   Color currentColor = Colors.redAccent;
   Color pickerColor = Colors.redAccent;
 
@@ -48,35 +45,36 @@ class _AddStockState extends State<AddStock> {
 
   @override
   Widget build(BuildContext context) {
-
     int flowerColour = pickerColor.value;
 
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-
-    Future<dynamic> postImage(Asset imageFile) async{
+    Future<dynamic> postImage(Asset imageFile) async {
       String stockImages = DateTime.now().millisecondsSinceEpoch.toString();
-      StorageReference firebaseStorageRef = FirebaseStorage.instance
-          .ref()
-          .child(stockImages);
-      StorageUploadTask uploadTask = firebaseStorageRef.putData((await imageFile.getByteData()).buffer.asUint8List());
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(stockImages);
+      StorageUploadTask uploadTask = firebaseStorageRef
+          .putData((await imageFile.getByteData()).buffer.asUint8List());
       StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
       print(storageTaskSnapshot.ref.getDownloadURL());
       return storageTaskSnapshot.ref.getDownloadURL();
     }
 
-    void uploadImages(){
-      for(var imageFile in _image){
-        postImage(imageFile).then((downloadUrl){
+    void uploadImages() {
+      for (var imageFile in _image) {
+        postImage(imageFile).then((downloadUrl) {
           url.add(downloadUrl.toString());
-          if(url.length==_image.length){
-            String documentID = DateTime.now().millisecondsSinceEpoch.toString();
-            Firestore.instance.collection('stockimages').document(documentID).setData({
-              'urls':url});
+          if (url.length == _image.length) {
+            String documentID =
+                DateTime.now().millisecondsSinceEpoch.toString();
+            Firestore.instance
+                .collection('stockimages')
+                .document(documentID)
+                .setData({'urls': url});
             setState(() {
-              _image=[];
-              url =[];
+              _image = [];
+              url = [];
             });
           }
         }).catchError((err) {
@@ -85,7 +83,7 @@ class _AddStockState extends State<AddStock> {
       }
     }
 
-    Future <void>getImage() async {
+    Future<void> getImage() async {
       List<Asset> resultList = List<Asset>();
       String error = 'No Error Dectected';
       try {
@@ -106,7 +104,6 @@ class _AddStockState extends State<AddStock> {
         print((await resultList[0].getThumbByteData(122, 100)));
         print((await resultList[0].getByteData()));
         print((await resultList[0].metadata));
-
       } on Exception catch (e) {
         error = e.toString();
       }
@@ -137,8 +134,7 @@ class _AddStockState extends State<AddStock> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/imageplaceholder.jpg'),
+                              image: AssetImage('assets/imageplaceholder.jpg'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.vertical(
@@ -158,8 +154,7 @@ class _AddStockState extends State<AddStock> {
                               indicatorBgPadding: 5.0,
                               dotPosition: DotPosition.bottomCenter,
                               animationCurve: Curves.fastOutSlowIn,
-                              animationDuration:
-                              Duration(milliseconds: 2000)),
+                              animationDuration: Duration(milliseconds: 2000)),
                         ),
                         Positioned(
                             left: 0.0,
@@ -219,11 +214,10 @@ class _AddStockState extends State<AddStock> {
                                 'Cape Daisy',
                                 'African Iris'
                               ]
-                                  .map((label) =>
-                                  DropdownMenuItem(
-                                    child: Text(label),
-                                    value: label,
-                                  ))
+                                  .map((label) => DropdownMenuItem(
+                                        child: Text(label),
+                                        value: label,
+                                      ))
                                   .toList(),
                               onChanged: (value) {
                                 setState(() => flowerType = value);
@@ -234,15 +228,14 @@ class _AddStockState extends State<AddStock> {
                     SizedBox(
                       height: 10,
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         GestureDetector(
-                          child:
-                          Text(
-                            flowerType != '' ?
-                            'More information about the $flowerType' : '',
+                          child: Text(
+                            flowerType != ''
+                                ? 'More information about the $flowerType'
+                                : '',
                             style: TextStyle(
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
@@ -250,14 +243,10 @@ class _AddStockState extends State<AddStock> {
                           ),
                           onTap: () {
                             launchURL(flowerType: flowerType);
-
                           },
                         ),
                       ],
                     ),
-
-
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -272,10 +261,10 @@ class _AddStockState extends State<AddStock> {
                         ),
                         _itemCount != 0
                             ? new IconButton(
-                          icon: new Icon(Icons.remove),
-                          onPressed: () =>
-                              setState(() => _itemCount = _itemCount - 10),
-                        )
+                                icon: new Icon(Icons.remove),
+                                onPressed: () => setState(
+                                    () => _itemCount = _itemCount - 10),
+                              )
                             : new Container(),
                         new Text(_itemCount.toString()),
                         new IconButton(
@@ -321,7 +310,8 @@ class _AddStockState extends State<AddStock> {
                                         displayThumbColor: true,
                                         showLabel: true,
                                         paletteType: PaletteType.hsl,
-                                        pickerAreaBorderRadius: const BorderRadius.only(
+                                        pickerAreaBorderRadius:
+                                            const BorderRadius.only(
                                           topLeft: const Radius.circular(2),
                                           topRight: const Radius.circular(2),
                                         ),
@@ -331,7 +321,8 @@ class _AddStockState extends State<AddStock> {
                                       FlatButton(
                                         child: const Text('OK'),
                                         onPressed: () {
-                                          setState(() => currentColor = pickerColor);
+                                          setState(
+                                              () => currentColor = pickerColor);
                                           Navigator.of(context).pop();
                                         },
                                       )
@@ -347,7 +338,6 @@ class _AddStockState extends State<AddStock> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                     SizedBox(
@@ -366,9 +356,8 @@ class _AddStockState extends State<AddStock> {
                         ),
                         Text(
                           date.format(DateTime.now()),
-                          style:
-                          new TextStyle(color: Colors.grey[850],
-                              fontSize: 14.0),
+                          style: new TextStyle(
+                              color: Colors.grey[850], fontSize: 14.0),
                         ),
                       ],
                     ),
@@ -380,9 +369,12 @@ class _AddStockState extends State<AddStock> {
                       width: 150,
                       child: RaisedButton(
                         onPressed: () async {
-                          await DatabaseService(uid: user.uid)
-                              .updateStockData(url, flowerType, _itemCount,
-                              flowerColour, snapshot.data.companyName);
+                          await DatabaseService(uid: user.uid).updateStockData(
+                              url,
+                              flowerType,
+                              _itemCount,
+                              flowerColour,
+                              snapshot.data.companyName);
 
                           Navigator.pop(context);
                         },
@@ -401,9 +393,6 @@ class _AddStockState extends State<AddStock> {
               ),
             ),
           );
-        }
-    );
+        });
   }
-
 }
-

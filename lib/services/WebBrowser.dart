@@ -2,22 +2,22 @@ import 'package:url_launcher/url_launcher.dart';
 
 launchURL({String flowerType}) async {
   String url = 'https://flutter.dev';
-  if(flowerType == 'King Protea'){
+  if (flowerType == 'King Protea') {
     url = 'http://pza.sanbi.org/protea-cynaroides';
   }
-  if(flowerType == 'Rose'){
+  if (flowerType == 'Rose') {
     url = 'https://www.britannica.com/plant/rose-plant';
   }
-  if(flowerType == 'Disa'){
+  if (flowerType == 'Disa') {
     url = 'http://pza.sanbi.org/disa-uniflora';
   }
-  if(flowerType == 'Erica'){
+  if (flowerType == 'Erica') {
     url = '';
   }
-  if(flowerType == 'Cape Daisy'){
+  if (flowerType == 'Cape Daisy') {
     url = 'http://pza.sanbi.org/erica-shannonii';
   }
-  if(flowerType == 'African Iris'){
+  if (flowerType == 'African Iris') {
     url = 'http://pza.sanbi.org/dietes-grandiflora';
   }
 

@@ -5,5 +5,6 @@ class Buyer {
   final String companyName;
   final String phoneNumber;
 
-  Buyer({this.uid, this.url, this.fullName, this.companyName, this.phoneNumber});
+  Buyer(
+      {this.uid, this.url, this.fullName, this.companyName, this.phoneNumber});
 }

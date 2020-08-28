@@ -13,7 +13,6 @@ class Post {
   Post(this.title, this.description);
 }
 
-
 class FlowerList extends StatefulWidget {
   final String flowerType;
 
@@ -25,15 +24,12 @@ class FlowerList extends StatefulWidget {
 
 class _FlowerListState extends State<FlowerList> {
   final AuthService _auth = AuthService();
-String supplier;
+  String supplier;
   @override
   Widget build(BuildContext context) {
-      return Container(
+    return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.green, Colors.greenAccent]
-          )
-          ),
+          gradient: LinearGradient(colors: [Colors.green, Colors.greenAccent])),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -42,7 +38,7 @@ String supplier;
             Stack(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 300,0),
+                  padding: const EdgeInsets.fromLTRB(10, 20, 300, 0),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
@@ -54,9 +50,9 @@ String supplier;
                 ),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 40,0,0),
+                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                     child: Text(
-                      widget.flowerType ,
+                      widget.flowerType,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Archivo',
@@ -72,7 +68,7 @@ String supplier;
                     height: 80,
                     width: 350,
                     child: TextField(
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           supplier = value;
                         });
@@ -86,9 +82,6 @@ String supplier;
                       padding: EdgeInsets.fromLTRB(110, 150, 20, 20),
                       child: Text(
                         'Avg. Price:',
-
-
-
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Archivo',
@@ -99,14 +92,20 @@ String supplier;
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 150, 20, 20),
                       child: Text(
-                         widget.flowerType == 'King Protea'?'R14.50':
-                         widget.flowerType == 'Rose'?'R12.00':
-                         widget.flowerType == 'Disa'?'R8.50':
-                         widget.flowerType == 'Erica'?'R16.00':
-                         widget.flowerType == 'Cape Daisy'?'R20.00':
-                         widget.flowerType == 'African Iris'?'R13.00':
-                             'Yeet'
-                        ,
+                        widget.flowerType == 'King Protea'
+                            ? 'R14.50'
+                            : widget.flowerType == 'Rose'
+                                ? 'R12.00'
+                                : widget.flowerType == 'Disa'
+                                    ? 'R8.50'
+                                    : widget.flowerType == 'Erica'
+                                        ? 'R16.00'
+                                        : widget.flowerType == 'Cape Daisy'
+                                            ? 'R20.00'
+                                            : widget.flowerType ==
+                                                    'African Iris'
+                                                ? 'R13.00'
+                                                : 'Yeet',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Archivo',
@@ -118,34 +117,31 @@ String supplier;
                 ),
               ],
             ),
-
-
-
             Container(
-              height: 495,
-              width: 400,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40),
+                height: 495,
+                width: 400,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(40),
+                  ),
+                  color: Colors.white,
                 ),
-                color: Colors.white,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
+                child: SingleChildScrollView(
+                  child: Column(children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Container(
                           height: 550,
                           width: 400,
-                          child: FlowerTypeStockList(supplier: supplier,)),
+                          child: FlowerTypeStockList(
+                            supplier: supplier,
+                          )),
                     ),
-
-            ]),
-      ))],
+                  ]),
+                ))
+          ],
         ),
       ),
     );
   }
 }
-

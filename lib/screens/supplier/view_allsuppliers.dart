@@ -26,7 +26,6 @@ class ViewAllSuppliers extends StatelessWidget {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     void _showSettingsPanel() {
@@ -93,7 +92,7 @@ class ViewAllSuppliers extends StatelessWidget {
                 ),
               ],
             ),
-             Container(height: 480, width: 400, child: SupplierList()),
+            Container(height: 480, width: 400, child: SupplierList()),
           ],
         ),
         floatingActionButton: FloatingActionButton(

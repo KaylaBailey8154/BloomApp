@@ -1,11 +1,8 @@
-
-
 import 'dart:io';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
-
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -70,8 +67,13 @@ class AuthService {
   }
 
   //register buyer with email and pass
-  Future registerBuyerWithEmailAndPassword(String url, String fullName, String companyName,
-      String phoneNumber, String email, String password) async {
+  Future registerBuyerWithEmailAndPassword(
+      String url,
+      String fullName,
+      String companyName,
+      String phoneNumber,
+      String email,
+      String password) async {
     AuthResult result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result.user;
@@ -79,7 +81,7 @@ class AuthService {
       await user.sendEmailVerification();
       //create doc for supplier
       DatabaseService(uid: user.uid)
-          .updateBuyerUserData(url,fullName, companyName, phoneNumber);
+          .updateBuyerUserData(url, fullName, companyName, phoneNumber);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print("An error occurred while trying to send email verification");
@@ -88,7 +90,7 @@ class AuthService {
   }
 
   //forgot password
-  Future <void> forgotpassword(String email) async {
+  Future<void> forgotpassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
@@ -96,7 +98,6 @@ class AuthService {
 
   Future signOut() async {
     try {
-
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

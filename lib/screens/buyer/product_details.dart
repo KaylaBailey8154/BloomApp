@@ -8,11 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
-
-
   final Stock stock;
   ProductDetails({this.stock});
-
 
   @override
   Widget build(BuildContext context) {
@@ -24,206 +21,213 @@ class ProductDetails extends StatelessWidget {
     int flowerColour = stock.flowerColour;
     String flowerType = stock.flowerType;
 
-
-
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Builder(
-        builder: (BuildContext context){
-          return Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                      height: 350,
-                      width: 420,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.vertical(
-                          bottom: Radius.circular(40),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black, spreadRadius: 0, blurRadius: 20),
-                        ],
+      body: Builder(builder: (BuildContext context) {
+        return Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                    height: 350,
+                    width: 420,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(40),
                       ),
-                      child: '$url' != null ? Image.network(
-                        '$url',
-                        fit: BoxFit.cover,
-                      )
-                          : Image.asset(
-                        'assets/proteaimage.jpg',
-                        fit: BoxFit.cover,)
-                  ),
-                  Positioned(
-                      left: 0.0,
-                      top: 20.0,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.black,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        iconSize: 30,
-                      )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Text(
-                      '$flowerType',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black,
+                            spreadRadius: 0,
+                            blurRadius: 20),
+                      ],
                     ),
-                  ),
-                  IconButton(
-                    tooltip: "Click here to learn more about $flowerType",
-                    padding: EdgeInsets.only(top: 10),
-                    icon: Icon(
-                      Icons.info_outline,
-                      size: 25,
-                      color: Colors.blue,
-                    ),
-                    onPressed: () {
-                      launchURL(flowerType: flowerType);
-                    },
-                  )
-                ],
-              ),
-SizedBox(height: 10,),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Quantity: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      '$flowerQuantity',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      ' stems',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Colour: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    ClipOval(
-                      child: Container(
-                        color: Color(flowerColour),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Date Picked: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      '$dateAdded',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 15, 0, 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Supplier: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      '$companyName',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                width: 300,
-                child: RaisedButton(
-                  onPressed: () async {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text("Item Added to Cart"),
-                    ));
-
-                    await DatabaseService(uid: user.uid).updateCartStockData(
-                        url, stock.uid, flowerType, flowerQuantity, flowerColour, dateAdded, companyName);
-                  },
-                  color: Colors.red[300],
+                    child: '$url' != null
+                        ? Image.network(
+                            '$url',
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/proteaimage.jpg',
+                            fit: BoxFit.cover,
+                          )),
+                Positioned(
+                    left: 0.0,
+                    top: 20.0,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      iconSize: 30,
+                    )),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Text(
-                    'Add to Cart',
+                    '$flowerType',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  tooltip: "Click here to learn more about $flowerType",
+                  padding: EdgeInsets.only(top: 10),
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 25,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () {
+                    launchURL(flowerType: flowerType);
+                  },
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Quantity: ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
+                  Text(
+                    '$flowerQuantity',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    ' stems',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Colour: ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  ClipOval(
+                    child: Container(
+                      color: Color(flowerColour),
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(110, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Date Picked: ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    '$dateAdded',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(110, 15, 0, 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Supplier: ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    '$companyName',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 50,
+              width: 300,
+              child: RaisedButton(
+                onPressed: () async {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Item Added to Cart"),
+                  ));
+
+                  await DatabaseService(uid: user.uid).updateCartStockData(
+                      url,
+                      stock.uid,
+                      flowerType,
+                      flowerQuantity,
+                      flowerColour,
+                      dateAdded,
+                      companyName);
+                },
+                color: Colors.red[300],
+                child: Text(
+                  'Add to Cart',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ],
-          );
-        }
-      ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

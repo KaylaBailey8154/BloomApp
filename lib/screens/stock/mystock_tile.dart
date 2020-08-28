@@ -23,26 +23,28 @@ class MyStockTile extends StatelessWidget {
         width: 100,
         child: Card(
           margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: Colors.white,
           elevation: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 160,
-                width: 250,
-                  child: '$url' != null ? Image.network(
-                    '$url',
-                    fit: BoxFit.cover,
-                  )
+                  height: 160,
+                  width: 250,
+                  child: '$url' != null
+                      ? Image.network(
+                          '$url',
+                          fit: BoxFit.cover,
+                        )
                       : Image.asset(
-                    'assets/proteaimage.jpg',
-                    fit: BoxFit.cover,)
+                          'assets/proteaimage.jpg',
+                          fit: BoxFit.cover,
+                        )),
+              SizedBox(
+                height: 5,
               ),
-              SizedBox(height: 5,),
               Text(
                 'Flower Type: $flowerType',
                 style: TextStyle(
@@ -88,27 +90,22 @@ class MyStockTile extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: ()  async{
-                  var result=  await Firestore.instance.collection('stocks')
-                      .where('supplierUID',isEqualTo: stock.uid)
-                      .where('companyName',isEqualTo: stock.companyName)
-                      .where('dateAdded',isEqualTo: stock.dateAdded)
-                      .where('quantity',isEqualTo: stock.quantity)
-                      .where('flowerType',isEqualTo: stock.flowerType)
-
+                onPressed: () async {
+                  var result = await Firestore.instance
+                      .collection('stocks')
+                      .where('supplierUID', isEqualTo: stock.uid)
+                      .where('companyName', isEqualTo: stock.companyName)
+                      .where('dateAdded', isEqualTo: stock.dateAdded)
+                      .where('quantity', isEqualTo: stock.quantity)
+                      .where('flowerType', isEqualTo: stock.flowerType)
                       .getDocuments()
-                      .then((snapshot){
-                    for(DocumentSnapshot ds in snapshot.documents){
+                      .then((snapshot) {
+                    for (DocumentSnapshot ds in snapshot.documents) {
                       ds.reference.delete();
                     }
-
-
                   });
-
                 },
-
               ),
-
             ],
           ),
         ),

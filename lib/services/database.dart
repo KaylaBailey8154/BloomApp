@@ -16,15 +16,13 @@ class DatabaseService {
   final CollectionReference stockCollection =
       Firestore.instance.collection('stocks');
   final CollectionReference cartItemCollection =
-  Firestore.instance.collection('cartItems');
+      Firestore.instance.collection('cartItems');
 
-
-
-  Future updateStockData(
-      List<String> url, String flowerType, int quantity, int flowerColour, String companyName) async {
+  Future updateStockData(List<String> url, String flowerType, int quantity,
+      int flowerColour, String companyName) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
-      'url' : url,
+      'url': url,
       'flowerType': flowerType,
       'quantity': quantity,
       'flowerColour': flowerColour,
@@ -33,8 +31,8 @@ class DatabaseService {
     });
   }
 
-  Future updateSupplierUserData(
-     String url,  String fullName, String companyName, String phoneNumber) async {
+  Future updateSupplierUserData(String url, String fullName, String companyName,
+      String phoneNumber) async {
     return await userCollection.document(uid).setData({
       'url': url,
       'fullName': fullName,
@@ -44,8 +42,8 @@ class DatabaseService {
     });
   }
 
-  Future updateBuyerUserData(
-      String url, String fullName, String companyName, String phoneNumber) async {
+  Future updateBuyerUserData(String url, String fullName, String companyName,
+      String phoneNumber) async {
     return await userCollection.document(uid).setData({
       'url': url,
       'fullName': fullName,
@@ -56,18 +54,23 @@ class DatabaseService {
   }
 
   Future updateCartStockData(
-      String url, String supplierUID, String flowerType,
-      int quantity, int flowerColour, String datePicked, String companyName) async {
+      String url,
+      String supplierUID,
+      String flowerType,
+      int quantity,
+      int flowerColour,
+      String datePicked,
+      String companyName) async {
     return await cartItemCollection.document().setData({
       'url': url,
       'buyerUID': uid,
-      'supplierUID':supplierUID,
-      'flowerType':flowerType,
-      'quantity':quantity,
-      'flowerColour':flowerColour,
+      'supplierUID': supplierUID,
+      'flowerType': flowerType,
+      'quantity': quantity,
+      'flowerColour': flowerColour,
       'datePicked': datePicked,
       'dateAddedToCart': DateFormat.yMMMd().format(DateTime.now()).toString(),
-      'companyName':companyName,
+      'companyName': companyName,
     });
   }
 
@@ -97,7 +100,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
-        url: doc.data['url']?? '',
+        url: doc.data['url'] ?? '',
         flowerColour: doc.data['flowerColour'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
@@ -106,6 +109,7 @@ class DatabaseService {
       );
     }).toList();
   }
+
   //Cart Item list from snapshot
   List<CartItem> _cartItemListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -118,7 +122,7 @@ class DatabaseService {
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
-        photoUrl: doc.data['url']?? '',
+        photoUrl: doc.data['url'] ?? '',
       );
     }).toList();
   }
@@ -166,6 +170,7 @@ class DatabaseService {
         .snapshots()
         .map(_stockListFromSnapshot);
   }
+
   //get cart stream
   Stream<List<CartItem>> get myCart {
     return cartItemCollection

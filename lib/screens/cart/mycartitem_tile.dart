@@ -8,10 +8,10 @@ class MyCartItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   int quantity = cartItem.quantity;
-   String flowerType = cartItem.flowerType;
-   String datePicked = cartItem.datePicked;
-   String supplier = cartItem.companyName;
+    int quantity = cartItem.quantity;
+    String flowerType = cartItem.flowerType;
+    String datePicked = cartItem.datePicked;
+    String supplier = cartItem.companyName;
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
@@ -28,23 +28,22 @@ class MyCartItemTile extends StatelessWidget {
               Text('Date Picked: $datePicked'),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: ()  async{
-                  var deletedItem = await Firestore.instance.collection('cartItems')
-                      .where('supplierUID',isEqualTo: cartItem.supplierUID)
-                      .where('buyerUID',isEqualTo: cartItem.buyerUID)
-                      .where('dateAddedToCart',isEqualTo: cartItem.dateAddedToCart)
-                      .where('quantity',isEqualTo: cartItem.quantity)
-                      .where('flowerType',isEqualTo: cartItem.flowerType)
+                onPressed: () async {
+                  var deletedItem = await Firestore.instance
+                      .collection('cartItems')
+                      .where('supplierUID', isEqualTo: cartItem.supplierUID)
+                      .where('buyerUID', isEqualTo: cartItem.buyerUID)
+                      .where('dateAddedToCart',
+                          isEqualTo: cartItem.dateAddedToCart)
+                      .where('quantity', isEqualTo: cartItem.quantity)
+                      .where('flowerType', isEqualTo: cartItem.flowerType)
                       .getDocuments()
-                  .then((snapshot){
-                    for(DocumentSnapshot ds in snapshot.documents){
+                      .then((snapshot) {
+                    for (DocumentSnapshot ds in snapshot.documents) {
                       ds.reference.delete();
                     }
                   });
-
-
                 },
-
               )
             ],
           ),

@@ -13,7 +13,6 @@ class _MyCartListState extends State<MyCartList> {
   Widget build(BuildContext context) {
     final cartItems = Provider.of<List<CartItem>>(context) ?? [];
 
-
     return ListView.builder(
       itemCount: cartItems.length,
       itemBuilder: (context, index) {

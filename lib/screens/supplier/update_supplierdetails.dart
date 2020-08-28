@@ -34,7 +34,6 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
   File _image;
   String url;
 
-
   final _picker = ImagePicker();
 
   _onSelect(PageEnum value) {
@@ -53,13 +52,12 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-
-    void uploadPic() async{
+    void uploadPic() async {
       String profilePic = DateTime.now().toString();
-      StorageReference firebaseStorageRef= FirebaseStorage.instance
-          .ref()
-          .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child("profile/");
+      StorageUploadTask uploadTask =
+          firebaseStorageRef.child(profilePic + ".jpg").putFile(_image);
 
       var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       url = imageUrl.toString();
@@ -76,7 +74,6 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
         _image = File(image.path);
         print('Image Path $_image');
         uploadPic();
-
       });
     }
 
@@ -153,21 +150,23 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                                     child: SizedBox(
                                         width: 100,
                                         height: 100,
-
-                                        child:  (_image != null)?Image.file(_image, fit: BoxFit.fill,)
-                                            :
-                                        userData.url != null ? Image.network(
-                                          userData.url,
-                                          fit: BoxFit.fill,
-                                        )
-                                            : Image.asset('assets/profile.png')
-                                    ),
+                                        child: (_image != null)
+                                            ? Image.file(
+                                                _image,
+                                                fit: BoxFit.fill,
+                                              )
+                                            : userData.url != null
+                                                ? Image.network(
+                                                    userData.url,
+                                                    fit: BoxFit.fill,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/profile.png')),
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                             child: IconButton(
                               icon: Icon(Icons.edit),
                               color: Colors.black,

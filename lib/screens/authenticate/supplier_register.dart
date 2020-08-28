@@ -1,4 +1,3 @@
-
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 
 class SupplierRegister extends StatefulWidget {
   final Function toggleView;
@@ -40,12 +38,12 @@ class _SupplierRegisterState extends State<SupplierRegister> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    void uploadPic() async{
+    void uploadPic() async {
       String profilePic = DateTime.now().toString();
-      StorageReference firebaseStorageRef= FirebaseStorage.instance
-          .ref()
-          .child("profile/");
-      StorageUploadTask uploadTask=firebaseStorageRef.child(profilePic+ ".jpg").putFile(_image);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child("profile/");
+      StorageUploadTask uploadTask =
+          firebaseStorageRef.child(profilePic + ".jpg").putFile(_image);
 
       var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       url = imageUrl.toString();
@@ -107,18 +105,21 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                       child: SizedBox(
                                         width: 100,
                                         height: 100,
-                                        child: (_image!= null)?Image.file(_image, fit: BoxFit.fill,)
+                                        child: (_image != null)
+                                            ? Image.file(
+                                                _image,
+                                                fit: BoxFit.fill,
+                                              )
                                             : Image.asset(
-                                          'assets/profile.png',
-                                          fit: BoxFit.fill,
-                                        ),
+                                                'assets/profile.png',
+                                                fit: BoxFit.fill,
+                                              ),
                                       ),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                               child: IconButton(
                                 icon: Icon(Icons.edit),
                                 color: Colors.black,
@@ -275,7 +276,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                         SizedBox(
                           height: 12,
                         ),
-
                         SizedBox(
                           height: 20,
                         ),
@@ -293,14 +293,15 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                     });
                                   }*/
 
-                                  dynamic result =  await _auth
+                                  dynamic result = await _auth
                                       .registerSupplierWithEmailAndPassword(
-                                          url,
-                                          fullName,
-                                          companyName,
-                                          phoneNumber,
-                                          email,
-                                          password,);
+                                    url,
+                                    fullName,
+                                    companyName,
+                                    phoneNumber,
+                                    email,
+                                    password,
+                                  );
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {

@@ -13,22 +13,21 @@ class FlowerTypeStockList extends StatefulWidget {
 class _FlowerTypeStockList extends State<FlowerTypeStockList> {
   @override
   Widget build(BuildContext context) {
-
     final stocks = Provider.of<List<Stock>>(context) ?? [];
     List<Stock> filteredStocks = stocks.where((Stock s) {
-      if(widget.supplier==null){
+      if (widget.supplier == null) {
         return s.uid != null;
-      }else{
-      return s.companyName.contains(widget.supplier);
-    }}).toList();
-
+      } else {
+        return s.companyName.contains(widget.supplier);
+      }
+    }).toList();
 
     return ListView.builder(
       itemCount: filteredStocks.length,
       itemBuilder: (context, index) {
-        return  StockTile(stock: filteredStocks[index])
+        return StockTile(stock: filteredStocks[index])
             //Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails())))
-        ;
+            ;
       },
     );
   }

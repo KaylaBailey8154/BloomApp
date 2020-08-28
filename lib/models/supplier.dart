@@ -5,6 +5,6 @@ class Supplier {
   final String companyName;
   final String phoneNumber;
 
-  Supplier({this.uid, this.url, this.fullName, this.companyName, this.phoneNumber});
-
+  Supplier(
+      {this.uid, this.url, this.fullName, this.companyName, this.phoneNumber});
 }
