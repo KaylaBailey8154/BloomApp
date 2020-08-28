@@ -12,7 +12,9 @@ class MyCartItemTile extends StatelessWidget {
     String flowerType = cartItem.flowerType;
     String datePicked = cartItem.datePicked;
     String supplier = cartItem.companyName;
-
+//TODO Add negotiation button to the tile that takes you to chat
+    //TODO Possibly clickable to bring up details?
+    //TODO Add image of stock to tile?
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: Card(

@@ -1,6 +1,9 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/buyer/supplier_details.dart';
+import 'package:bloomflutterapp/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class StockTile extends StatelessWidget {
@@ -73,11 +76,28 @@ class StockTile extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                            onTap: () {
+                            onTap: () async{
+
+
+                                QuerySnapshot query = await Firestore.instance.collection(
+                                    'users')
+                                    .where(
+                                    'companyName', isEqualTo: companyName)
+                                    .getDocuments();
+                            Supplier supplier = DatabaseService().supplierListFromSnapshot(query).first;
+
+
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SupplierDetails()));
+                                      builder: (context) => SupplierDetails(
+                                        supplier: supplier,
+                                        // need to get document name where companyName in users
+                                        //collection is the same as companyName here
+                                        //then map that into a supplier object
+                                        // then feed it into supplierDetails parameter
+                                      )));
                             },
                             child: Text(
                               '$companyName',

@@ -7,8 +7,8 @@ class SupplierDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //String url = supplier.url;
-    //String companyName = supplier.companyName;
+    String url = supplier.url;
+    String companyName = supplier.companyName;
 
     return Flexible(
       child: Container(
@@ -41,7 +41,17 @@ class SupplierDetails extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 40,
                           backgroundColor: Colors.white,
-                          child: ClipOval(),
+                          child: ClipOval(child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: '$url' != null
+                                  ? Image.network(
+                                '$url',
+                                fit: BoxFit.fill,
+                              )
+                                  : Image.asset(
+                                'assets/profile.png',
+                              )),),
                         ),
                       ),
                     ),

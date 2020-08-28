@@ -75,7 +75,7 @@ class DatabaseService {
   }
 
   //Supplier list from snapshot
-  List<Supplier> _supplierListFromSnapshot(QuerySnapshot snapshot) {
+  List<Supplier> supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Supplier(
           url: doc.data['url'] ?? '',
@@ -155,7 +155,7 @@ class DatabaseService {
 
   //get suppliers stream
   Stream<List<Supplier>> get suppliers {
-    return userCollection.snapshots().map(_supplierListFromSnapshot);
+    return userCollection.snapshots().map(supplierListFromSnapshot);
   }
 
   //get buyers stream
