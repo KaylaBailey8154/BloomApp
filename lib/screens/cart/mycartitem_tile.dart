@@ -1,8 +1,6 @@
 import 'package:bloomflutterapp/models/cartitem.dart';
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class MyCartItemTile extends StatelessWidget {
   final CartItem cartItem;

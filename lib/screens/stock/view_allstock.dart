@@ -1,5 +1,4 @@
 import 'package:bloomflutterapp/models/stock.dart';
-import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -14,15 +13,7 @@ class ViewAllStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    void _showSettingsPanel(){
-//      showModalBottomSheet(context: context, builder: (context){
-//        return Container(
-//          padding: EdgeInsets.symmetric(vertical: 20,horizontal: 60),
-//          child: SupplierDetailsForm(
-//          ),
-//        );
-//      });
-//    }
+
 
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService().allStocks,

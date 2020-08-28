@@ -1,4 +1,3 @@
-import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class _AuthenticateState extends State<Authenticate> {
       return SignIn(toggleView: toggleView);
     } else {
       return UserTypeSelection();
-      //return SupplierRegister(toggleView: toggleView);
+
     }
   }
 }

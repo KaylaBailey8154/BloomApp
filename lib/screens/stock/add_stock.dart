@@ -1,10 +1,7 @@
-import 'dart:math';
 
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
-import 'package:bloomflutterapp/services/image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,11 +9,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
 
 class AddStock extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;

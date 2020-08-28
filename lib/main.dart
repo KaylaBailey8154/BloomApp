@@ -1,16 +1,8 @@
-import 'package:bloomflutterapp/screens/authenticate/supplier_register.dart';
-import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
-import 'package:bloomflutterapp/screens/stock/add_stock.dart';
-import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/screens/wrapper.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/user.dart';
-import 'screens/authenticate/buyer_register.dart';
-import 'screens/buyer/buyer_home.dart';
-import 'screens/stock/add_stock.dart';
-import 'screens/supplier/supplier_home.dart';
 
 void main() {
   runApp(

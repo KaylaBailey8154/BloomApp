@@ -1,13 +1,8 @@
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
-import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
-import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-import 'package:bloomflutterapp/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import 'forgot_password.dart';
 
@@ -160,6 +155,7 @@ class _SignInState extends State<SignIn> {
                                         builder: (context) =>
                                             ForgotPassword()));
                                 // do what you need to do when the text is gets clicked
+                                // ^ Still the worst grammar Ammaarah has ever used
                               }),
                         ),
                         SizedBox(
@@ -173,35 +169,6 @@ class _SignInState extends State<SignIn> {
                                 User result =
                                     await _auth.signInWithEmailAndPassword(
                                         email, password);
-                               // Navigator.push(context, MaterialPageRoute(builder: (context)=> RoleSplitter(user: result)));
-
-                               /* if(result is User){
-                                String uid = result.uid;
-                                Firestore.instance
-                                    .collection('users')
-                                    .document(uid)
-                                    .get()
-                                    .then((DocumentSnapshot ds) {
-                                  var role = ds['role'];
-                                  if (role == 'buyer') {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => BuyerHome()));
-                                  } else if (role == 'supplier') {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SupplierHome()));
-                                  }
-                                });}
-                                if (result is !User) {
-                                  setState(() {
-                                    error =
-                                        "Please check your email to verify your account before logging in";
-                                  });
-                                }*/
                               } catch (e) {
                                 print(e);
                                 setState(() {

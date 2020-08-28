@@ -1,17 +1,12 @@
-import 'dart:math';
 
-import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
-import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'dart:io';
 
-import 'sign_in.dart';
 
 class SupplierRegister extends StatefulWidget {
   final Function toggleView;
@@ -280,28 +275,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                         SizedBox(
                           height: 12,
                         ),
-                      /*  Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Upload accreditation document:   ',
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 100,
-                              child: FlatButton(
-                                onPressed: () {
-                                  //authUploaded = true;
-                                },
-                                color: Colors.red[200],
-                                child: Text('Browse'),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),*/
+
                         SizedBox(
                           height: 20,
                         ),

@@ -13,7 +13,7 @@ class Post {
   Post(this.title, this.description);
 }
 
-// ignore: must_be_immutable
+
 class FlowerList extends StatefulWidget {
   final String flowerType;
 

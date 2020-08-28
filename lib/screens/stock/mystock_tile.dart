@@ -2,7 +2,6 @@ import 'package:bloomflutterapp/models/stock.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class MyStockTile extends StatelessWidget {
   final Stock stock;

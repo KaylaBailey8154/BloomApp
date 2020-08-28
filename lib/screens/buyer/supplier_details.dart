@@ -1,13 +1,7 @@
-import 'package:bloomflutterapp/screens/buyer/product_details.dart';
-import 'package:bloomflutterapp/screens/stock/flowertypestock_list.dart';
-import 'package:bloomflutterapp/services/auth.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import '../../models/supplier.dart';
-import '../supplier/update_supplierdetails.dart';
 
-class SupplierDetails extends StatelessWidget { //TODO: extract supplier details from company name in stock
+class SupplierDetails extends StatelessWidget {
   final Supplier supplier;
   SupplierDetails({this.supplier});
 
@@ -51,16 +45,7 @@ class SupplierDetails extends StatelessWidget { //TODO: extract supplier details
                           radius: 40,
                           backgroundColor: Colors.white,
                           child: ClipOval(
-                            /*child: SizedBox(
-                                width: 80,
-                                height: 80,
 
-                                child: '$url' != null ? Image.network(
-                                  '$url',
-                                  fit: BoxFit.fill,
-                                )
-                                    : Image.asset('assets/profile.png',)
-                            ),*/
                           ),
                         ),
                       ),
@@ -68,15 +53,7 @@ class SupplierDetails extends StatelessWidget { //TODO: extract supplier details
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 40,0,0),
-                        /*child: Text(
-                          companyName ,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Archivo',
-                            //fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),*/
+
                       ),
                     ),
                     Row(

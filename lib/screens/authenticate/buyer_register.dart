@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloomflutterapp/screens/authenticate/sign_in.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,8 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class BuyerRegister extends StatefulWidget {
-  //final Function toggleView;
-  //Register({this.toggleView});
+
 
   @override
   _BuyerRegisterState createState() => _BuyerRegisterState();

@@ -7,8 +7,6 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 
 import 'update_supplierdetails.dart';
-import 'update_supplierdetails.dart';
-import 'update_supplierdetails.dart';
 
 class SupplierHome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -184,12 +182,7 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: GestureDetector(
-                      /*onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AddStock()),
-                        );
-                      },*/
+
                       child: Container(
                         width: 150,
                         height: 150,
@@ -228,12 +221,7 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
                     child: GestureDetector(
-                      /*onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AddStock()),
-                        );
-                      },*/
+
                       child: Container(
                         width: 150,
                         height: 150,

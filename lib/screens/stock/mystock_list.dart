@@ -1,6 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/screens/stock/mystock_tile.dart';
-import 'package:bloomflutterapp/screens/stock/stock_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
