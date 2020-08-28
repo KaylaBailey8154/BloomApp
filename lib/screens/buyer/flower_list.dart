@@ -13,35 +13,22 @@ class Post {
   Post(this.title, this.description);
 }
 
-class FlowerList extends StatelessWidget {
+// ignore: must_be_immutable
+class FlowerList extends StatefulWidget {
   final String flowerType;
 
   FlowerList({this.flowerType});
-  final AuthService _auth = AuthService();
-  Future<List<Post>> search(String search) async {
-    await Future.delayed(Duration(seconds: 2));
-    return List.generate(search.length, (int index) {
-      return Post(
-        "Title : $search $index",
-        "Description :$search $index",
-      );
-    });
-  }
 
   @override
-  Widget build(BuildContext context) {
-    /*void _showDetailsPanel() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-              child: SupplierDetailsForm(),
-            );
-          });
-    }*/
+  _FlowerListState createState() => _FlowerListState();
+}
 
-    return Container(
+class _FlowerListState extends State<FlowerList> {
+  final AuthService _auth = AuthService();
+String supplier;
+  @override
+  Widget build(BuildContext context) {
+      return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.green, Colors.greenAccent]
@@ -69,7 +56,7 @@ class FlowerList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 40,0,0),
                     child: Text(
-                      flowerType ,
+                      widget.flowerType ,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Archivo',
@@ -84,17 +71,12 @@ class FlowerList extends StatelessWidget {
                   child: Container(
                     height: 80,
                     width: 350,
-                    child: SearchBar<Post>(
-                      onSearch: search,
-                      onItemFound: (Post post, int index) {
-                        return ListTile(
-                          title: Text(post.title),
-                          subtitle: Text(post.description),
-                        );
+                    child: TextField(
+                      onChanged: (value){
+                        setState(() {
+                          supplier = value;
+                        });
                       },
-                      searchBarStyle: SearchBarStyle(
-                        backgroundColor: Colors.white,
-                      ),
                     ),
                   ),
                 ),
@@ -117,12 +99,12 @@ class FlowerList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 150, 20, 20),
                       child: Text(
-                         flowerType == 'King Protea'?'R14.50':
-                         flowerType == 'Rose'?'R12.00':
-                         flowerType == 'Disa'?'R8.50':
-                         flowerType == 'Erica'?'R16.00':
-                         flowerType == 'Cape Daisy'?'R20.00':
-                         flowerType == 'African Iris'?'R13.00':
+                         widget.flowerType == 'King Protea'?'R14.50':
+                         widget.flowerType == 'Rose'?'R12.00':
+                         widget.flowerType == 'Disa'?'R8.50':
+                         widget.flowerType == 'Erica'?'R16.00':
+                         widget.flowerType == 'Cape Daisy'?'R20.00':
+                         widget.flowerType == 'African Iris'?'R13.00':
                              'Yeet'
                         ,
                         style: TextStyle(
@@ -156,7 +138,7 @@ class FlowerList extends StatelessWidget {
                       child: Container(
                           height: 550,
                           width: 400,
-                          child: FlowerTypeStockList()),
+                          child: FlowerTypeStockList(supplier: supplier,)),
                     ),
 
             ]),
