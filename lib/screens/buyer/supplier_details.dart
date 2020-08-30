@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,39 +10,18 @@ class SupplierDetails extends StatelessWidget {
   final Supplier supplier;
   SupplierDetails({this.supplier});
 
-  //Stock list from snapshot
-  List<Stock> _stockListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
-      return Stock(
-        uid: doc.data['supplierUID'] ?? '',
-        url: doc.data['url'] ?? '',
-        flowerColour: doc.data['flowerColour'] ?? 0,
-        quantity: doc.data['quantity'] ?? 0,
-        flowerType: doc.data['flowerType'] ?? '',
-        dateAdded: doc.data['dateAdded'] ?? null,
-        companyName: doc.data['companyName'] ?? '',
-      );
-    }).toList();
-  }
 
-  //get stocks stream
-  Stream<List<Stock>> get supplierStocks {
-    return Firestore.instance
-        .collection('stocks')
-        .where('supplierUID', isEqualTo: supplier.uid)
-        .snapshots()
-        .map(_stockListFromSnapshot);
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
     String url = supplier.url;
-    String uid = supplier.uid;
-    String companyName = supplier.companyName;
+
 
 
     return StreamProvider<List<Stock>>.value(
-      value: this.supplierStocks,
+      value: DatabaseService(filterValue: supplier.uid).supplierStocks,
       child: Flexible(
         child: Container(
           decoration: BoxDecoration(

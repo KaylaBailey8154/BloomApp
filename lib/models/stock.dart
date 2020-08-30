@@ -6,6 +6,7 @@ class Stock {
   final int flowerColour;
   final String dateAdded;
   final String companyName;
+  final int stemLength;
 
   Stock({
     this.uid,
@@ -15,5 +16,6 @@ class Stock {
     this.flowerColour,
     this.dateAdded,
     this.companyName,
+    this.stemLength,
   });
 }

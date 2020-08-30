@@ -213,7 +213,10 @@ class ProductDetails extends StatelessWidget {
                       flowerQuantity,
                       flowerColour,
                       dateAdded,
-                      companyName);
+                      companyName,
+                    10
+                      //the 10 is a placeholder for stemlength, we need to insert it into the screen
+                  );
                 },
                 color: Colors.red[300],
                 child: Text(
