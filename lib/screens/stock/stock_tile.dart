@@ -88,6 +88,7 @@ class StockTile extends StatelessWidget {
 
 
 
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

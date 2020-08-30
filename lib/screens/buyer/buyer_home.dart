@@ -104,6 +104,7 @@ class BuyerHome extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: RaisedButton(
                             onPressed: () {
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

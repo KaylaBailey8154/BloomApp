@@ -1,113 +1,153 @@
+import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/screens/stock/stock_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../models/supplier.dart';
 
 class SupplierDetails extends StatelessWidget {
   final Supplier supplier;
   SupplierDetails({this.supplier});
 
+  //Stock list from snapshot
+  List<Stock> _stockListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Stock(
+        uid: doc.data['supplierUID'] ?? '',
+        url: doc.data['url'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? 0,
+        quantity: doc.data['quantity'] ?? 0,
+        flowerType: doc.data['flowerType'] ?? '',
+        dateAdded: doc.data['dateAdded'] ?? null,
+        companyName: doc.data['companyName'] ?? '',
+      );
+    }).toList();
+  }
+
+  //get stocks stream
+  Stream<List<Stock>> get supplierStocks {
+    return Firestore.instance
+        .collection('stocks')
+        .where('supplierUID', isEqualTo: supplier.uid)
+        .snapshots()
+        .map(_stockListFromSnapshot);
+  }
+
   @override
   Widget build(BuildContext context) {
     String url = supplier.url;
+    String uid = supplier.uid;
     String companyName = supplier.companyName;
 
-    return Flexible(
-      child: Container(
-        decoration: BoxDecoration(
-            gradient:
-                LinearGradient(colors: [Colors.green, Colors.greenAccent])),
-        child: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
-            body: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 20, 300, 0),
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        color: Colors.black,
-                        iconSize: 30,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Center(
-                        child: CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.white,
-                          child: ClipOval(child: SizedBox(
-                              width: 80,
-                              height: 80,
-                              child: '$url' != null
-                                  ? Image.network(
-                                '$url',
-                                fit: BoxFit.fill,
-                              )
-                                  : Image.asset(
-                                'assets/profile.png',
-                              )),),
+
+    return StreamProvider<List<Stock>>.value(
+      value: this.supplierStocks,
+      child: Flexible(
+        child: Container(
+          decoration: BoxDecoration(
+              gradient:
+                  LinearGradient(colors: [Colors.green, Colors.greenAccent])),
+          child: DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.transparent,
+              body: Column(
+                children: <Widget>[
+
+                  Stack(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 20, 300, 0),
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: () {
+
+                            Navigator.pop(context);
+                          },
+                          color: Colors.black,
+                          iconSize: 30,
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(110, 165, 20, 20),
-                          child: Text(
-                            'Rating:',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Archivo',
-                              fontSize: 14,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Center(
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.white,
+                            child: ClipOval(child: SizedBox(
+                                width: 80,
+                                height: 80,
+                                child: '$url' != null
+                                    ? Image.network(
+                                  '$url',
+                                  fit: BoxFit.fill,
+                                )
+                                    : Image.asset(
+                                  'assets/profile.png',
+                                )),),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 482,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(40),
-                    ),
-                    color: Colors.white,
-                  ),
-                  child: SingleChildScrollView(
-                    child: TabBar(
-                      labelColor: Colors.black,
-                      tabs: [
-                        Tab(
-                          text: "Stock",
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                         ),
-                        Tab(
-                          text: "Reviews",
-                        )
-                      ],
-                      indicatorColor: Colors.red,
-                      indicatorWeight: 5.0,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(110, 165, 20, 20),
+                            child: Text(
+                              'Rating: 4.68',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Archivo',
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 482,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(40),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: SingleChildScrollView(
+
+                      child: StockList(),
+                      //TODO stocklist is being populated with the correct stocks
+                      //for the supplier selected, but I don't know how to make it
+                      //come up under the tab, or even at all
+                      /*TabBar(
+                        labelColor: Colors.black,
+                        tabs: [
+                          Tab(
+                            text: "Stock",
+                          ),
+                          Tab(
+                            text: "Reviews",
+                          )
+                        ],
+                        indicatorColor: Colors.red,
+                        indicatorWeight: 5.0,
+                      ),*/
                     ),
                   ),
-                ),
-                /*TabBarView(
-                  children: <Widget>[
-                    //FlowerTypeStockList(),
-                    //Reviews(),
-                  ],
-                )*/
-              ],
+                  /*TabBarView(
+                    children: <Widget>[
+                      //FlowerTypeStockList(),
+                      //Reviews(),
+                    ],
+                  )*/
+                ],
+              ),
             ),
           ),
         ),

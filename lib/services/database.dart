@@ -78,10 +78,12 @@ class DatabaseService {
   List<Supplier> supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Supplier(
+          uid: doc.documentID ?? '',
           url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');
+
     }).toList();
   }
 
