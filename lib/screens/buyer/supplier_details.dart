@@ -19,7 +19,6 @@ class SupplierDetails extends StatelessWidget {
     String url = supplier.url;
 
 
-
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService(filterValue: supplier.uid).supplierStocks,
       child: Flexible(
@@ -100,12 +99,7 @@ class SupplierDetails extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: SingleChildScrollView(
-
-                      child: StockList(),
-                      //TODO stocklist is being populated with the correct stocks
-                      //for the supplier selected, but I don't know how to make it
-                      //come up under the tab, or even at all
-                      /*TabBar(
+                    child:  TabBar(
                         labelColor: Colors.black,
                         tabs: [
                           Tab(
@@ -117,15 +111,15 @@ class SupplierDetails extends StatelessWidget {
                         ],
                         indicatorColor: Colors.red,
                         indicatorWeight: 5.0,
-                      ),*/
+                      ),
                     ),
                   ),
-                  /*TabBarView(
+                  TabBarView(
                     children: <Widget>[
-                      //FlowerTypeStockList(),
+                      StockList(),
                       //Reviews(),
                     ],
-                  )*/
+                  )
                 ],
               ),
             ),

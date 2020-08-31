@@ -8,6 +8,7 @@ class CartItem {
   final String companyName;
   final String supplierUID;
   final String photoUrl;
+  final int stemLength;
 
   CartItem(
       {this.companyName,
@@ -18,5 +19,6 @@ class CartItem {
       this.supplierUID,
       this.buyerUID,
       this.dateAddedToCart,
-      this.photoUrl});
+      this.photoUrl,
+      this.stemLength});
 }

@@ -130,6 +130,7 @@ class DatabaseService {
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
         photoUrl: doc.data['url'] ?? '',
+        stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();
   }
