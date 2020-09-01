@@ -1,5 +1,7 @@
+import 'package:bloomflutterapp/screens/buyer/reviews.dart';
 import 'package:flutter/material.dart';
 import '../../models/supplier.dart';
+import '../stock/flowertypestock_list.dart';
 
 class SupplierDetails extends StatelessWidget {
   final Supplier supplier;
@@ -10,8 +12,8 @@ class SupplierDetails extends StatelessWidget {
     String url = supplier.url;
     String companyName = supplier.companyName;
 
-    return Flexible(
-      child: Container(
+    return Scaffold(
+      body: Container(
         decoration: BoxDecoration(
             gradient:
                 LinearGradient(colors: [Colors.green, Colors.greenAccent])),
@@ -57,7 +59,15 @@ class SupplierDetails extends StatelessWidget {
                     ),
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
+                        child: Text(
+                          '$companyName',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Archivo',
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
                     Row(
@@ -101,7 +111,7 @@ class SupplierDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                /*TabBarView(
+               /* TabBarView(
                   children: <Widget>[
                     //FlowerTypeStockList(),
                     //Reviews(),
