@@ -1,4 +1,3 @@
-import 'package:bloomflutterapp/screens/authenticate/helperFunction.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/screens/chat/constants.dart';
 import 'package:bloomflutterapp/services/auth.dart';
@@ -19,14 +18,14 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   void initState() {
-    getUserInfo();
+    //getUserInfo();
     super.initState();
 
   }
-  getUserInfo () async{
+  /*getUserInfo () async{
     Constants.myName = await HelperFunctions.getUserFullNameLoggedInSharedPreference("");
 
-  }
+  }*/
 
 
   @override
