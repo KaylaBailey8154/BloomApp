@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/screens/buyer/view_allreviews.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,17 +12,13 @@ class SupplierDetails extends StatelessWidget {
   SupplierDetails({this.supplier});
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
     String url = supplier.url;
-
+    String companyName = supplier.companyName;
 
     return StreamProvider<List<Stock>>.value(
       value: DatabaseService(filterValue: supplier.uid).supplierStocks,
-      child: Flexible(
         child: Container(
           decoration: BoxDecoration(
               gradient:
@@ -70,7 +67,15 @@ class SupplierDetails extends StatelessWidget {
                       ),
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
+                          child: Text(
+                            '$companyName',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Archivo',
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                       Row(
@@ -99,7 +104,7 @@ class SupplierDetails extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: SingleChildScrollView(
-                    child:  TabBar(
+                      child:  TabBar(
                         labelColor: Colors.black,
                         tabs: [
                           Tab(
@@ -117,7 +122,7 @@ class SupplierDetails extends StatelessWidget {
                   TabBarView(
                     children: <Widget>[
                       StockList(),
-                      //Reviews(),
+                      //ViewAllReviews(),
                     ],
                   )
                 ],
@@ -125,7 +130,6 @@ class SupplierDetails extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

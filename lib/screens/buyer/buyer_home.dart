@@ -16,15 +16,6 @@ class Post {
 
 class BuyerHome extends StatelessWidget {
   final AuthService _auth = AuthService();
-  Future<List<Post>> search(String search) async {
-    await Future.delayed(Duration(seconds: 2));
-    return List.generate(search.length, (int index) {
-      return Post(
-        "Title : $search $index",
-        "Description :$search $index",
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,25 +57,6 @@ class BuyerHome extends StatelessWidget {
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Archivo',
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 70, 20, 0),
-                child: Container(
-                  height: 80,
-                  width: 350,
-                  child: SearchBar<Post>(
-                    onSearch: search,
-                    onItemFound: (Post post, int index) {
-                      return ListTile(
-                        title: Text(post.title),
-                        subtitle: Text(post.description),
-                      );
-                    },
-                    searchBarStyle: SearchBarStyle(
-                      backgroundColor: Colors.white,
                     ),
                   ),
                 ),

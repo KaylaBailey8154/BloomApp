@@ -1,10 +1,12 @@
 class Review{
-  String fullName;
-  String review;
-  int rating;
+  final String uid;
+  final String fullName;
+  final String dateAdded;
+  final int rating;
+  final String reviews;
   
   Review(
-  {this.fullName, this.review, this.rating}
+  {this.uid, this.fullName, this.dateAdded, this.rating, this.reviews}
   );
 }
 

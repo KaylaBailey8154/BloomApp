@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
+import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
@@ -18,6 +19,20 @@ class DatabaseService {
       Firestore.instance.collection('stocks');
   final CollectionReference cartItemCollection =
       Firestore.instance.collection('cartItems');
+  final CollectionReference reviewsCollection =
+      Firestore.instance.collection('reviews');
+
+
+  Future updateReviewData(String fullName, int rating, String reviews) async {
+    return await reviewsCollection.document().setData({
+      'buyerUID': uid,
+      'fullName': fullName,
+      'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
+      'rating': rating,
+      'review': reviews
+    });
+  }
+
 
   Future updateStockData(List<String> url, String flowerType, int quantity,
       int flowerColour, String companyName, int stemLength) async {
@@ -117,6 +132,19 @@ class DatabaseService {
     }).toList();
   }
 
+  //Review list from snapshot
+  List<Review> reviewListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Review(
+        uid: doc.data['buyerUID'] ?? '',
+        fullName: doc.data['fullName'] ?? '',
+        dateAdded: doc.data['dateAdded'] ?? null,
+        rating: doc.data['rating'] ?? 0,
+        reviews: doc.data['review'] ?? '',
+      );
+    }).toList();
+  }
+
   //Cart Item list from snapshot
   List<CartItem> _cartItemListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -191,6 +219,12 @@ class DatabaseService {
   Stream<List<Stock>> get allStocks {
     return stockCollection.snapshots().map(stockListFromSnapshot);
   }
+
+  //get reviews stream
+  Stream<List<Review>> get allReviews {
+    return reviewsCollection.snapshots().map(reviewListFromSnapshot);
+  }
+
   //get flower type stocks stream
   Stream<List<Stock>> get flowerTypeStocks {
     return Firestore.instance
