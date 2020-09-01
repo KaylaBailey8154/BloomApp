@@ -6,7 +6,7 @@ class Stock {
   final int flowerColour;
   final String dateAdded;
   final String companyName;
-  final int stemLength;
+  final double stemLength;
 
   Stock({
     this.uid,

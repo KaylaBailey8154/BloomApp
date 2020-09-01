@@ -28,43 +28,49 @@ class ReviewTile extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$fullName',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                        fontSize: 14,
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$fullName',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      fontSize: 14,
                     ),
-                    Text(
-                      '$dateAdded',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 12,
-                      ),
+                  ),
+                  Text(
+                    '$dateAdded',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 12,
                     ),
-                    Text(
-                      '$review',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 12,
-                      ),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    '$rating',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 12,
                     ),
-                  ],
-                )
-              ],
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    '$reviews',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            )
             ),
           ),
-        ),
-      );
+        );
   }
 }

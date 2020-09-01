@@ -39,7 +39,7 @@ class BuyerHome extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(120),
+                      bottom: Radius.circular(100),
                     ),
                     gradient: LinearGradient(
                       colors: [Colors.greenAccent, Colors.green],
@@ -47,7 +47,7 @@ class BuyerHome extends StatelessWidget {
                       end: Alignment.topCenter,
                     )),
                 width: MediaQuery.of(context).size.width,
-                height: 200.0,
+                height: 100.0,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(160, 40, 20, 0),
                   child: Text(

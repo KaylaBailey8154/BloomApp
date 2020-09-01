@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 
 import '../../models/user.dart';
 import '../../services/database.dart';
+import 'view_allreviews.dart';
 
 class AddReview extends StatefulWidget {
   @override
@@ -45,70 +47,102 @@ class _AddReviewState extends State<AddReview>{
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
-      return Column(
-        children: [
-          Container(
-            child: Positioned(
-              right: 10,
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(300, 10, 2, 0),
               child: GestureDetector(
-                onTap: () {
-                  AlertDialog(
-                    title: Center(
-                      child: Text(
-                        'Review'
-                      ),
-                    ),
-                    content: Column(
-                      children: [
-                        Text(
-                          date.format(DateTime.now()),
-                          style: new TextStyle(
-                              color: Colors.grey[850], fontSize: 14.0),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            _buildStar(1),
-                            _buildStar(2),
-                            _buildStar(3),
-                            _buildStar(4),
-                            _buildStar(5),
-                          ],
-                        ),
-                        SizedBox(height: 5,),
-                        Text(
-                          'Review:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 14,
+                onTap: ()  {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(20.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Container(
+                              height: 272,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'We Would Love to Hear from You!',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20,),
+                                  Text(
+                                    date.format(DateTime.now()),
+                                    style: new TextStyle(
+                                        color: Colors.grey[850], fontSize: 14.0),
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      _buildStar(1),
+                                      _buildStar(2),
+                                      _buildStar(3),
+                                      _buildStar(4),
+                                      _buildStar(5),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    'Review:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  TextField(
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: 5,
+                                    onChanged: (value) {
+                                      setState(() => review = value);
+                                    },
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      FlatButton(
+                                        child: Text(
+                                          'CANCEL',
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        onPressed: Navigator.of(context).pop,
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          'OK',
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        onPressed: () async {
+                                          await DatabaseService(uid: user.uid).updateReviewData(
+                                              snapshot.data.fullName,
+                                              rating,
+                                              review);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                        TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          onChanged: (value) {
-                            setState(() => review = value);
-                          },
-                        ),
-                      ],
-                    ),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text('CANCEL'),
-                        onPressed: Navigator.of(context).pop,
-                      ),
-                      FlatButton(
-                        child: Text('OK'),
-                        onPressed: () async {
-                          await DatabaseService(uid: user.uid).updateReviewData(
-                              snapshot.data.fullName,
-                              rating,
-                              review);
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
+
+                        );
+                      }
                   );
                 },
                 child: Text(
@@ -120,13 +154,15 @@ class _AddReviewState extends State<AddReview>{
                 ),
               ),
             ),
-          ),
-          Container(
-              height: 200, width: 400,
-              child: ReviewList()
-          )
-        ],
+            Container(
+              height: 380,
+              child: ViewAllReviews(),
+            )
+          ],
+        ),
+
       );
+
     });
       }
   }

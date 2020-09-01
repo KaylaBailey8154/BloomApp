@@ -33,6 +33,7 @@ class _AddStockState extends State<AddStock> {
   String _error = 'No Error Dectected';
 
   int _itemCount = 0;
+  double _currentSliderValue = 0;
 
   final date = new DateFormat('dd-MM-yyyy');
 
@@ -227,20 +228,37 @@ class _AddStockState extends State<AddStock> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        GestureDetector(
-                          child: Text(
-                            flowerType != ''
-                                ? 'More information about the $flowerType'
-                                : '',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),
+                        Text(
+                          'Stem Length:',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                          onTap: () {
-                            launchURL(flowerType: flowerType);
+                        ),
+                        Slider(
+                          value: _currentSliderValue,
+                          min: 0,
+                          max: 100,
+                          divisions: 10,
+                          activeColor: Colors.green,
+                          inactiveColor: Colors.lightGreen,
+                          label: _currentSliderValue.round().toString(),
+                          onChanged: (double value) {
+                            setState(() {
+                              _currentSliderValue = value;
+                            });
                           },
+                        ),
+                        Text(
+                          'in cm',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     ),
@@ -369,14 +387,13 @@ class _AddStockState extends State<AddStock> {
                           await DatabaseService(uid: user.uid).updateStockData(
                               url,
                               flowerType,
+                              _currentSliderValue,
                               _itemCount,
                               flowerColour,
-                              snapshot.data.companyName,
-                          10);
-                          //10 is a placeholder for stem length, it needs to be created as a parameter of the form
+                              snapshot.data.companyName,);
                           Navigator.pop(context);
                         },
-                        color: Colors.red[200],
+                        color: Colors.red,
                         child: Text(
                           'Save',
                           style: TextStyle(
