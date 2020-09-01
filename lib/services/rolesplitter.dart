@@ -16,6 +16,7 @@ class RoleSplitter extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
+
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserData userData = snapshot.data;
@@ -35,8 +36,8 @@ class RoleSplitter extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SpinKitFadingCube(
-                    color: Colors.redAccent[200],
+                  SpinKitFoldingCube(
+                    color: Colors.green[200],
                     size: 80,
                   ),
                   SizedBox(height: 20),

@@ -39,9 +39,6 @@ class _AddStockState extends State<AddStock> {
   String flowerType = '';
   String flowerColour = '';
 
-  // DateTime dateAdded = DateTime.now();
-  // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
-  //List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
 
   @override
   Widget build(BuildContext context) {
@@ -374,8 +371,9 @@ class _AddStockState extends State<AddStock> {
                               flowerType,
                               _itemCount,
                               flowerColour,
-                              snapshot.data.companyName);
-
+                              snapshot.data.companyName,
+                          10);
+                          //10 is a placeholder for stem length, it needs to be created as a parameter of the form
                           Navigator.pop(context);
                         },
                         color: Colors.red[200],

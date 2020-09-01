@@ -8,7 +8,8 @@ import 'package:intl/intl.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  final String filterValue;
+  DatabaseService({this.uid, this.filterValue});
 
   //collection reference
   final CollectionReference userCollection =
@@ -19,7 +20,7 @@ class DatabaseService {
       Firestore.instance.collection('cartItems');
 
   Future updateStockData(List<String> url, String flowerType, int quantity,
-      int flowerColour, String companyName) async {
+      int flowerColour, String companyName, int stemLength) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'url': url,
@@ -28,6 +29,7 @@ class DatabaseService {
       'flowerColour': flowerColour,
       'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'companyName': companyName,
+      'stemLength': stemLength
     });
   }
 
@@ -60,7 +62,8 @@ class DatabaseService {
       int quantity,
       int flowerColour,
       String datePicked,
-      String companyName) async {
+      String companyName,
+      int stemLength) async {
     return await cartItemCollection.document().setData({
       'url': url,
       'buyerUID': uid,
@@ -71,6 +74,7 @@ class DatabaseService {
       'datePicked': datePicked,
       'dateAddedToCart': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'companyName': companyName,
+      'stemLength': stemLength,
     });
   }
 
@@ -78,10 +82,12 @@ class DatabaseService {
   List<Supplier> supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Supplier(
+          uid: doc.documentID ?? '',
           url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');
+
     }).toList();
   }
 
@@ -96,7 +102,7 @@ class DatabaseService {
   }
 
   //Stock list from snapshot
-  List<Stock> _stockListFromSnapshot(QuerySnapshot snapshot) {
+  List<Stock> stockListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
@@ -106,6 +112,7 @@ class DatabaseService {
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
         companyName: doc.data['companyName'] ?? '',
+        stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();
   }
@@ -123,6 +130,7 @@ class DatabaseService {
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
         photoUrl: doc.data['url'] ?? '',
+        stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();
   }
@@ -168,7 +176,7 @@ class DatabaseService {
     return stockCollection
         .where('supplierUID', isEqualTo: uid)
         .snapshots()
-        .map(_stockListFromSnapshot);
+        .map(stockListFromSnapshot);
   }
 
   //get cart stream
@@ -181,7 +189,24 @@ class DatabaseService {
 
   //get stocks stream
   Stream<List<Stock>> get allStocks {
-    return stockCollection.snapshots().map(_stockListFromSnapshot);
+    return stockCollection.snapshots().map(stockListFromSnapshot);
+  }
+  //get flower type stocks stream
+  Stream<List<Stock>> get flowerTypeStocks {
+    return Firestore.instance
+        .collection('stocks')
+        .where('flowerType', isEqualTo: filterValue)
+        .snapshots()
+        .map(stockListFromSnapshot);
+  }
+
+  //get supplier stocks stream
+  Stream<List<Stock>> get supplierStocks {
+    return Firestore.instance
+        .collection('stocks')
+        .where('supplierUID', isEqualTo: filterValue)
+        .snapshots()
+        .map(stockListFromSnapshot);
   }
 
   //get stocks doc stream
@@ -195,4 +220,5 @@ class DatabaseService {
   Stream<UserData> get userData {
     return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
   }
+  
 }

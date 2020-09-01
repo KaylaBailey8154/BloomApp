@@ -165,9 +165,7 @@ class _SignInState extends State<SignIn> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               try {
-                                User result =
-                                    await _auth.signInWithEmailAndPassword(
-                                        email, password);
+                                    await _auth.signInWithEmailAndPassword(email, password);
                               } catch (e) {
                                 print(e);
                                 setState(() {
@@ -191,12 +189,12 @@ class _SignInState extends State<SignIn> {
                             child: Text("New User? Sign Up",
                                 style: TextStyle(color: Colors.black)),
                             onTap: () {
-                              //widget.toggleView();
-                              Navigator.push(
+                              widget.toggleView();
+                             /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          UserTypeSelection()));
+                                          UserTypeSelection()));*/
 
                               // do what you need to do when the text is gets clicked
                             }),
