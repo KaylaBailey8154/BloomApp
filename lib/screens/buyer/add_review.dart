@@ -1,5 +1,6 @@
 
 import 'package:bloomflutterapp/screens/buyer/review_list.dart';
+import 'package:bloomflutterapp/screens/buyer/reviewtype_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,10 +13,16 @@ import '../../services/database.dart';
 import 'view_allreviews.dart';
 
 class AddReview extends StatefulWidget {
+
+  final String supplierUID;
+
+  AddReview({this.supplierUID});
+
   @override
   _AddReviewState createState() => _AddReviewState();
 }
 class _AddReviewState extends State<AddReview>{
+
 
   int rating = 0;
   final date = new DateFormat('dd-MM-yyyy');
@@ -40,6 +47,7 @@ class _AddReviewState extends State<AddReview>{
 
   @override
   Widget build(BuildContext context) {
+
 
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -128,6 +136,7 @@ class _AddReviewState extends State<AddReview>{
                                         ),
                                         onPressed: () async {
                                           await DatabaseService(uid: user.uid).updateReviewData(
+                                              widget.supplierUID,
                                               snapshot.data.fullName,
                                               rating,
                                               review);
@@ -156,7 +165,7 @@ class _AddReviewState extends State<AddReview>{
             ),
             Container(
               height: 380,
-              child: ViewAllReviews(),
+              child: ReviewList(),
             )
           ],
         ),

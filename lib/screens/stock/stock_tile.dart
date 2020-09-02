@@ -16,6 +16,7 @@ class StockTile extends StatelessWidget {
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
     int flowerColour = stock.flowerColour;
+    int stemLength = stock.stemLength;
     String url = stock.url;
 
     return Padding(
@@ -113,6 +114,13 @@ class StockTile extends StatelessWidget {
                     ),
                     Text(
                       'Number of stems: $flowerQuantity',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      'Stem Length: $stemLength',
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 12,

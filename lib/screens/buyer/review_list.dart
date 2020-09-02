@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ReviewList extends StatefulWidget {
+  final String supplier;
+  ReviewList({this.supplier});
+
   @override
   _ReviewListState createState() => _ReviewListState();
 }

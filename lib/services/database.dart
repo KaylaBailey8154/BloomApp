@@ -23,9 +23,10 @@ class DatabaseService {
       Firestore.instance.collection('reviews');
 
 
-  Future updateReviewData(String fullName, int rating, String reviews) async {
+  Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
     return await reviewsCollection.document().setData({
       'buyerUID': uid,
+      'supplierUID':supplieruid,
       'fullName': fullName,
       'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'rating': rating,
@@ -34,17 +35,17 @@ class DatabaseService {
   }
 
 
-  Future updateStockData(List<String> url, String flowerType, double stemLength, int quantity,
+  Future updateStockData(List<String> url, String flowerType,  int quantity, int stemLength,
       int flowerColour, String companyName, ) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'url': url,
       'flowerType': flowerType,
+      'stemLength': stemLength,
       'quantity': quantity,
       'flowerColour': flowerColour,
       'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'companyName': companyName,
-      'stemLength': stemLength
     });
   }
 
@@ -84,12 +85,12 @@ class DatabaseService {
       'buyerUID': uid,
       'supplierUID': supplierUID,
       'flowerType': flowerType,
+      'stemLength': stemLength,
       'quantity': quantity,
       'flowerColour': flowerColour,
       'datePicked': datePicked,
       'dateAddedToCart': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'companyName': companyName,
-      'stemLength': stemLength,
     });
   }
 
@@ -123,11 +124,11 @@ class DatabaseService {
         uid: doc.data['supplierUID'] ?? '',
         url: doc.data['url'] ?? '',
         flowerColour: doc.data['flowerColour'] ?? 0,
+        stemLength: doc.data['stemLength'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
         companyName: doc.data['companyName'] ?? '',
-        stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();
   }
@@ -137,6 +138,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return Review(
         uid: doc.data['buyerUID'] ?? '',
+        supplieruid: doc.data['supplierUID'] ?? '',
         fullName: doc.data['fullName'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
         rating: doc.data['rating'] ?? 0,
@@ -182,6 +184,7 @@ class DatabaseService {
       uid: uid,
       url: snapshot.data['url'],
       flowerType: snapshot.data['flowerType'],
+      stemLength: snapshot.data['stemLength'],
       quantity: snapshot.data['quantity'],
       flowerColour: snapshot.data['flowerColour'],
       dateAdded: snapshot.data['dateAdded'],
@@ -223,6 +226,15 @@ class DatabaseService {
   //get reviews stream
   Stream<List<Review>> get allReviews {
     return reviewsCollection.snapshots().map(reviewListFromSnapshot);
+  }
+
+  //get review for specific supplier steam
+  Stream<List<Review>> get reviewType {
+    return Firestore.instance
+        .collection('reviews')
+        .where('supplierUID', isEqualTo: filterValue)
+        .snapshots()
+        .map(reviewListFromSnapshot);
   }
 
   //get flower type stocks stream

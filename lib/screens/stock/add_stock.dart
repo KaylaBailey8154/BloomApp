@@ -44,6 +44,7 @@ class _AddStockState extends State<AddStock> {
   @override
   Widget build(BuildContext context) {
     int flowerColour = pickerColor.value;
+    int stemLength = _currentSliderValue.toInt();
 
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -231,6 +232,40 @@ class _AddStockState extends State<AddStock> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
+                          'Quantity:    ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        _itemCount != 0
+                            ? new IconButton(
+                                icon: new Icon(Icons.remove),
+                                onPressed: () => setState(
+                                    () => _itemCount = _itemCount - 10),
+                              )
+                            : new Container(),
+                        new Text(_itemCount.toString()),
+                        new IconButton(
+                            icon: new Icon(Icons.add),
+                            onPressed: () =>
+                                setState(() => _itemCount = _itemCount + 10)),
+                        Text(
+                          'in stems',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
                           'Stem Length:',
                           style: TextStyle(
                             color: Colors.black,
@@ -254,40 +289,6 @@ class _AddStockState extends State<AddStock> {
                         ),
                         Text(
                           'in cm',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Quantity:    ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        _itemCount != 0
-                            ? new IconButton(
-                                icon: new Icon(Icons.remove),
-                                onPressed: () => setState(
-                                    () => _itemCount = _itemCount - 10),
-                              )
-                            : new Container(),
-                        new Text(_itemCount.toString()),
-                        new IconButton(
-                            icon: new Icon(Icons.add),
-                            onPressed: () =>
-                                setState(() => _itemCount = _itemCount + 10)),
-                        Text(
-                          'in stems',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -387,8 +388,8 @@ class _AddStockState extends State<AddStock> {
                           await DatabaseService(uid: user.uid).updateStockData(
                               url,
                               flowerType,
-                              _currentSliderValue,
                               _itemCount,
+                              stemLength,
                               flowerColour,
                               snapshot.data.companyName,);
                           Navigator.pop(context);
