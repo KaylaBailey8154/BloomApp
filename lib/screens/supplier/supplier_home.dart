@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
+import 'package:bloomflutterapp/screens/stock/add_stock_legacy.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
@@ -56,7 +57,7 @@ class SupplierHome extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddStock()),
+                                  builder: (context) => AddStockMultiplePhotos()),
                             );
                           },
                           child: Container(

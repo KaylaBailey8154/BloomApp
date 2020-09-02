@@ -5,6 +5,7 @@ import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:bloomflutterapp/services/image.dart';
+import 'package:firebase_picture_uploader/firebase_picture_uploader.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +15,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'dart:async';
+import 'package:carousel_pro/carousel_pro.dart';
 
-class AddStock extends StatefulWidget {
+class AddStockMultiplePhotos extends StatefulWidget {
   @override
-  _AddStockState createState() => _AddStockState();
+  _AddStockMultiplePhotosState createState() => _AddStockMultiplePhotosState();
 }
 
-class _AddStockState extends State<AddStock> {
-
+class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
+  List<Asset> images = List<Asset>();
+  List<String> imageUrls = <String>[];
+  String _error;
   Color currentColor = Colors.redAccent;
   Color pickerColor = Colors.redAccent;
 
@@ -40,6 +46,66 @@ class _AddStockState extends State<AddStock> {
   String flowerType = '';
 
 
+
+
+  Widget buildCarousel() {
+    if (images.length != 0){
+List<ExactAssetImage> imgs = List<ExactAssetImage>();
+for(final Asset asset in images){
+  imgs.add(ExactAssetImage(asset.getByteData().toString()));
+}
+
+      return Carousel(
+          boxFit: BoxFit.cover,
+          images: [],
+          autoplay: false,
+          indicatorBgPadding: 5.0,
+          dotPosition: DotPosition.bottomCenter,
+          animationCurve: Curves.fastOutSlowIn,
+          animationDuration: Duration(milliseconds: 2000));}
+    else{
+      return Container(color: Colors.white);
+    }
+    }
+
+
+  Future<void> loadAssets() async {
+    setState(() {
+      images = List<Asset>();
+    });
+
+    List<Asset> resultList;
+    String error;
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 10,
+        enableCamera: false,
+
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      if (error == null) _error = 'No Error Dectected';
+    });
+  }
+  Future saveImage(Asset asset) async {
+    ByteData byteData = await asset.getByteData();
+    List<int> imageData = byteData.buffer.asUint8List();
+    StorageReference ref = FirebaseStorage.instance.ref().child("StockPhotos/"+ asset.name+DateTime.now().toIso8601String());
+    StorageUploadTask uploadTask = ref.putData(imageData);
+
+    return await (await uploadTask.onComplete).ref.getDownloadURL();
+  }
+
+
+
+
+
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
   //List<String> colours = ['Red', 'Green', 'Flour coloured (off-white)'];
@@ -47,9 +113,11 @@ class _AddStockState extends State<AddStock> {
   @override
   Widget build(BuildContext context) {
 
+
     int flowerColour = pickerColor.value;
 
     final user = Provider.of<User>(context);
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     void uploadPic() async {
@@ -86,6 +154,19 @@ class _AddStockState extends State<AddStock> {
       });
     }
 
+    void saveImages(String companyName) async{
+      for (final Asset asset in images){
+        var url = await saveImage(asset);
+        imageUrls.add(url);
+
+      }
+      
+      await DatabaseService(uid: user.uid)
+          .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
+          flowerColour, companyName);
+    }
+
+
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
@@ -97,58 +178,18 @@ class _AddStockState extends State<AddStock> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Container(
-                          height: 350,
-                          width: 420,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(40),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black,
-                                  spreadRadius: 0,
-                                  blurRadius: 20),
-                            ],
-                          ),
-                          child: (_image != null) ? Image.file(
-                            _image, fit: BoxFit.cover,)
-                              : Image.asset(
-                            'assets/imageplaceholder.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                            left: 0.0,
-                            top: 20.0,
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              color: Colors.black,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              iconSize: 30,
-                            )),
-                      ],
-                    ),
+
                     SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      child: Text('Upload Image',
-                          style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline)),
-                      onTap: () {
-                        /*Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                             builder: (context) =>
-                                 ImageCapture()));*/
-                        getImage();
-                      },
+                      height: 150,
+                      width: 300,
+                      child: /*Carousel(
+                        images: images,
+                      )*/
+                      buildCarousel ()
+                      ,),
+                    RaisedButton(
+                      child: Text('Pick Images'),
+                      onPressed: loadAssets,
                     ),
                     SizedBox(
                       height: 10,
@@ -339,9 +380,12 @@ class _AddStockState extends State<AddStock> {
                       width: 150,
                       child: RaisedButton(
                         onPressed: () async {
+
+                          saveImages(snapshot.data.companyName);
                           /*await DatabaseService(uid: user.uid)
-                              .updateStockData(url, flowerType, _itemCount,
+                              .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
                               flowerColour, snapshot.data.companyName);*/
+
 
                           Navigator.pop(context);
                         },
