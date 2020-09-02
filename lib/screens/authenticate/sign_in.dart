@@ -3,6 +3,7 @@ import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'forgot_password.dart';
 
@@ -42,14 +43,21 @@ class _SignInState extends State<SignIn> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
-                      child: Text(
-                        'BLOOM',
-                        style: TextStyle(
+                      child: ColorizeAnimatedTextKit(
+                        text:['BLOOM'],
+                        textStyle: TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red[200],
+                          //color: Colors.red[200],
                           fontFamily: 'Archivo',
                         ),
+                        colors: [
+                          Colors.red[200],
+                          Colors.green,
+                          Colors.blue,
+                          Colors.greenAccent,
+
+                        ],
                       ),
                     ),
                   ],
