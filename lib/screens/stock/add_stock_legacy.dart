@@ -48,25 +48,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
 
 
-  Widget buildCarousel() {
-    if (images.length != 0){
-List<ExactAssetImage> imgs = List<ExactAssetImage>();
-for(final Asset asset in images){
-  imgs.add(ExactAssetImage(asset.getByteData().toString()));
-}
 
-      return Carousel(
-          boxFit: BoxFit.cover,
-          images: [],
-          autoplay: false,
-          indicatorBgPadding: 5.0,
-          dotPosition: DotPosition.bottomCenter,
-          animationCurve: Curves.fastOutSlowIn,
-          animationDuration: Duration(milliseconds: 2000));}
-    else{
-      return Container(color: Colors.white);
-    }
-    }
+
 
 
   Future<void> loadAssets() async {
@@ -102,7 +85,13 @@ for(final Asset asset in images){
     return await (await uploadTask.onComplete).ref.getDownloadURL();
   }
 
+  Future<Image> assetThumbToImage(Asset asset) async {
+    final ByteData byteData = await asset.getByteData();
 
+    final Image image = Image.memory(byteData.buffer.asUint8List());
+
+    return image;
+  }
 
 
 
@@ -113,6 +102,25 @@ for(final Asset asset in images){
   @override
   Widget build(BuildContext context) {
 
+    Future<Widget> buildCarousel() async{
+      if (images.length != 0){
+
+        for(final Asset asset in images){
+          Image thumbImg = await assetThumbToImage(asset);
+          return Image(image: thumbImg.image,);
+        }
+        /* return Carousel(
+          boxFit: BoxFit.cover,
+          images: [],
+          autoplay: false,
+          indicatorBgPadding: 5.0,
+          dotPosition: DotPosition.bottomCenter,
+          animationCurve: Curves.fastOutSlowIn,
+          animationDuration: Duration(milliseconds: 2000));*/}
+      else
+        return Container(color: Colors.white);
+
+    }
 
     int flowerColour = pickerColor.value;
 
@@ -160,7 +168,7 @@ for(final Asset asset in images){
         imageUrls.add(url);
 
       }
-      
+
       await DatabaseService(uid: user.uid)
           .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
           flowerColour, companyName);
@@ -178,14 +186,17 @@ for(final Asset asset in images){
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-
                     SizedBox(
                       height: 150,
                       width: 300,
-                      child: /*Carousel(
-                        images: images,
-                      )*/
-                      buildCarousel ()
+                      child: /*Carousel(images: images,
+                      )*/ FutureBuilder<Widget>(
+                        future: buildCarousel(),
+                        initialData: const SizedBox.shrink(),
+                        builder: (context, snapshot){
+                          return snapshot.data;
+                        },
+                      )
                       ,),
                     RaisedButton(
                       child: Text('Pick Images'),
