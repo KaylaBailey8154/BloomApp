@@ -4,9 +4,9 @@ import 'package:bloomflutterapp/screens/buyer/reviewtype_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:rating_dialog/rating_dialog.dart';
 
 import '../../models/user.dart';
 import '../../services/database.dart';
@@ -24,30 +24,15 @@ class AddReview extends StatefulWidget {
 class _AddReviewState extends State<AddReview>{
 
 
-  int rating = 0;
+  double _ratings = 0;
   final date = new DateFormat('dd-MM-yyyy');
 
   String fullName = '';
   String review = '';
 
-  Widget _buildStar(int starCount) {
-    return InkWell(
-      child: Icon(
-        Icons.star,
-        // size: 30.0,
-        color: rating >= starCount ? Colors.orange : Colors.grey,
-      ),
-      onTap: () {
-        setState(() {
-          rating = starCount;
-        });
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-
 
     final user = Provider.of<User>(context);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -73,7 +58,7 @@ class _AddReviewState extends State<AddReview>{
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Container(
-                              height: 272,
+                              height: 290,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,15 +78,22 @@ class _AddReviewState extends State<AddReview>{
                                         color: Colors.grey[850], fontSize: 14.0),
                                   ),
                                   SizedBox(height: 5,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      _buildStar(1),
-                                      _buildStar(2),
-                                      _buildStar(3),
-                                      _buildStar(4),
-                                      _buildStar(5),
-                                    ],
+                                  RatingBar(
+                                    initialRating: 1,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    itemCount: 5,
+                                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (double value) {
+                                      print(value);
+                                      setState(() {
+                                        _ratings = value;
+                                      });
+                                    },
                                   ),
                                   SizedBox(height: 5,),
                                   Text(
@@ -138,7 +130,7 @@ class _AddReviewState extends State<AddReview>{
                                           await DatabaseService(uid: user.uid).updateReviewData(
                                               widget.supplierUID,
                                               snapshot.data.fullName,
-                                              rating,
+                                              _ratings.toInt(),
                                               review);
                                           Navigator.pop(context);
                                         },

@@ -51,6 +51,15 @@ class ReviewTile extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10,),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(5, (index) {
+                      return Icon(
+                        index < rating ? Icons.star : Icons.star_border,
+                      );
+                    }),
+                  ),
+                  SizedBox(height: 10,),
                   Text(
                     '$rating',
                     style: TextStyle(
