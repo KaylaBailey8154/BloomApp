@@ -267,8 +267,9 @@ class MessageBubble extends StatelessWidget {
 }
 
 
-/*
 
+
+/*
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -438,4 +439,4 @@ class SearchTile extends StatelessWidget {
       ),
     );
   }
-}
+}*/

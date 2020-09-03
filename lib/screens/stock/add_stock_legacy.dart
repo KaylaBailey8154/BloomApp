@@ -18,6 +18,7 @@ import 'dart:io';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'dart:async';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class AddStockMultiplePhotos extends StatefulWidget {
   @override
@@ -93,7 +94,7 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
     return image;
   }
 
-
+  double _currentSliderValue = 0;
 
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
@@ -101,22 +102,24 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
   @override
   Widget build(BuildContext context) {
-
-    Future<Widget> buildCarousel() async{
+    int stemLength = _currentSliderValue.toInt();
+    Widget buildCarousel() {
       if (images.length != 0){
 
-        for(final Asset asset in images){
+        /*for(final Asset asset in images){
           Image thumbImg = await assetThumbToImage(asset);
           return Image(image: thumbImg.image,);
-        }
-        /* return Carousel(
-          boxFit: BoxFit.cover,
-          images: [],
-          autoplay: false,
-          indicatorBgPadding: 5.0,
-          dotPosition: DotPosition.bottomCenter,
-          animationCurve: Curves.fastOutSlowIn,
-          animationDuration: Duration(milliseconds: 2000));*/}
+        }*/
+         return Column(
+           children: <Widget>[
+             CarouselSlider(
+               options: CarouselOptions(height: 300, autoPlay: true,autoPlayInterval: Duration(seconds: 3),
+                 autoPlayAnimationDuration: Duration(milliseconds: 800),),
+               items: images.map((image) => AssetThumb(asset: image,width: 300,height: 300,),).toList(),
+             ),
+           ],
+         )
+           ;}
       else
         return Container(color: Colors.white);
 
@@ -170,7 +173,7 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
       }
 
       await DatabaseService(uid: user.uid)
-          .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
+          .updateStockData(imageUrls, flowerType, _itemCount,stemLength,
           flowerColour, companyName);
     }
 
@@ -187,16 +190,9 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 150,
+                      height: 300,
                       width: 300,
-                      child: /*Carousel(images: images,
-                      )*/ FutureBuilder<Widget>(
-                        future: buildCarousel(),
-                        initialData: const SizedBox.shrink(),
-                        builder: (context, snapshot){
-                          return snapshot.data;
-                        },
-                      )
+                      child: buildCarousel()
                       ,),
                     RaisedButton(
                       child: Text('Pick Images'),
@@ -295,6 +291,42 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                                 setState(() => _itemCount = _itemCount + 10)),
                         Text(
                           'in stems',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Stem Length:',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Slider(
+                          value: _currentSliderValue,
+                          min: 0,
+                          max: 100,
+                          divisions: 10,
+                          activeColor: Colors.green,
+                          inactiveColor: Colors.lightGreen,
+                          label: _currentSliderValue.round().toString(),
+                          onChanged: (double value) {
+                            setState(() {
+                              _currentSliderValue = value;
+                            });
+                          },
+                        ),
+                        Text(
+                          'in cm',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
