@@ -17,7 +17,7 @@ class StockTile extends StatelessWidget {
     String dateAdded = stock.dateAdded;
     int flowerColour = stock.flowerColour;
     int stemLength = stock.stemLength;
-    String url = stock.url;
+    String url = stock.url.first;
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
