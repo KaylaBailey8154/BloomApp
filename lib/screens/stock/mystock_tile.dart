@@ -9,7 +9,7 @@ class MyStockTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String url = stock.url;
+    String url = stock.url.first;
     int flowerQuantity = stock.quantity;
     String flowerType = stock.flowerType;
     String dateAdded = stock.dateAdded;

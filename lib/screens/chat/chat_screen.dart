@@ -1,3 +1,5 @@
+
+
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +12,15 @@ import 'package:provider/provider.dart';
 
 final _firestore = Firestore.instance;
 
+
 class ChatScreen extends StatefulWidget {
 
 
   final CartItem cartItem;
 
+
   ChatScreen({this.cartItem});
+
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -28,6 +33,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final AuthService _auth = AuthService();
 
   String messageText;
+
+
 
   @override
   /*void initState() {
@@ -63,6 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
@@ -117,9 +125,23 @@ class _ChatScreenState extends State<ChatScreen> {
                       //initiateSearch();
                       _firestore.collection('messages').add({
                         'text': messageText,
-                        'sender': user.uid, //
+                        'sender': user.uid,
+
+
+
+
                         // cartItem.buyerUID,
                       });
+                      /*String getRecieverUid () {
+                        if (user.uid == widget.cartItem.buyerUID) {
+                          return widget.cartItem.supplierUID;
+                        }
+                        else {
+                          return widget.cartItem.buyerUID;
+                        }
+                      }*/
+
+
                     },
                     child: Text(
                       'Send',
@@ -143,7 +165,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
 class MessagesStream extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore.collection('messages').snapshots(),
       // when there is new data it should rebuild
@@ -157,15 +181,21 @@ class MessagesStream extends StatelessWidget {
           );
         }
 
-        final messages = snapshot.data.documents; //dynamic data type
+        final messages = snapshot.data.documents.reversed; //dynamic data type
         List <MessageBubble> messageBubbles = [];
         for (var message in messages) {
           final messageText = message.data ['text'];
           final messageSender = message.data['sender'];
+          final currentUser = user.uid;
+
+          /*if (currentUser == messageSender) {
+
+          }*/
 
           final messageBubble = MessageBubble (
-              sender: messageSender,
-              text:messageText
+            sender: messageSender,
+            text:messageText,
+            isMe: currentUser == messageSender,
           );
           messageBubbles.add(messageBubble);
         }
@@ -173,6 +203,7 @@ class MessagesStream extends StatelessWidget {
 
         return Expanded(
           child: ListView (
+            reverse: true,
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             children: messageBubbles,
           ),
@@ -187,37 +218,43 @@ class MessagesStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
 
-  MessageBubble ({this.sender, this.text});
+  MessageBubble ({this.sender, this.text, this.isMe});
 
   final String sender;
   final String text;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column (
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+        isMe? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(sender,
-          style: TextStyle (
-            fontSize: 12,
-            color: Colors.black54,
+            style: TextStyle (
+              fontSize: 12,
+              color: Colors.black54,
 
-          ),
+            ),
           ),
           Material(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(30),
-                bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+            borderRadius: isMe ?
+            BorderRadius.only(topLeft: Radius.circular(30),
+                bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+                : BorderRadius.only(
+              bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30), topRight: Radius.circular(30),
+            ),
             elevation: 5.0,
-            color:  Colors.lightGreen,
+            color:  isMe ? Colors.lightGreen : Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Text(
                 text ,
                 style: TextStyle(
                   fontSize: 15,
-                  color: Colors.white,
+                  color: isMe ?Colors.white : Colors.black54,
                 ),
               ),
             ),
@@ -230,8 +267,9 @@ class MessageBubble extends StatelessWidget {
 }
 
 
-/*
 
+
+/*
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -401,5 +439,4 @@ class SearchTile extends StatelessWidget {
       ),
     );
   }
-}
-*/
+}*/

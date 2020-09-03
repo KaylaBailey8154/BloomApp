@@ -7,7 +7,7 @@ class CartItem {
   final String dateAddedToCart;
   final String companyName;
   final String supplierUID;
-  final String photoUrl;
+  final List<String> photoUrl;
   final int stemLength;
 
   CartItem(

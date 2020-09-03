@@ -72,7 +72,7 @@ class DatabaseService {
   }
 
   Future updateCartStockData(
-      String url,
+      List<String> url,
       String supplierUID,
       String flowerType,
       int quantity,
@@ -120,16 +120,19 @@ class DatabaseService {
   //Stock list from snapshot
   List<Stock> stockListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
+
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
-        url: doc.data['url'] ?? '',
+        url: List.from(doc.data['url']) ?? [],
         flowerColour: doc.data['flowerColour'] ?? 0,
         stemLength: doc.data['stemLength'] ?? 0,
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
         companyName: doc.data['companyName'] ?? '',
+
       );
+
     }).toList();
   }
 
@@ -159,7 +162,7 @@ class DatabaseService {
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
-        photoUrl: doc.data['url'] ?? '',
+        photoUrl: List.from(doc.data['url']) ?? '',
         stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();

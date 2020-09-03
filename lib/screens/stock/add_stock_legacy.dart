@@ -18,6 +18,7 @@ import 'dart:io';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'dart:async';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class AddStockMultiplePhotos extends StatefulWidget {
   @override
@@ -48,25 +49,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
 
 
-  Widget buildCarousel() {
-    if (images.length != 0){
-List<ExactAssetImage> imgs = List<ExactAssetImage>();
-for(final Asset asset in images){
-  imgs.add(ExactAssetImage(asset.getByteData().toString()));
-}
 
-      return Carousel(
-          boxFit: BoxFit.cover,
-          images: [],
-          autoplay: false,
-          indicatorBgPadding: 5.0,
-          dotPosition: DotPosition.bottomCenter,
-          animationCurve: Curves.fastOutSlowIn,
-          animationDuration: Duration(milliseconds: 2000));}
-    else{
-      return Container(color: Colors.white);
-    }
-    }
+
 
 
   Future<void> loadAssets() async {
@@ -102,9 +86,15 @@ for(final Asset asset in images){
     return await (await uploadTask.onComplete).ref.getDownloadURL();
   }
 
+  Future<Image> assetThumbToImage(Asset asset) async {
+    final ByteData byteData = await asset.getByteData();
 
+    final Image image = Image.memory(byteData.buffer.asUint8List());
 
+    return image;
+  }
 
+  double _currentSliderValue = 0;
 
   // DateTime dateAdded = DateTime.now();
   // final List<String> flowers = <String>['Protea', 'Rose', 'Flour'];
@@ -112,7 +102,28 @@ for(final Asset asset in images){
 
   @override
   Widget build(BuildContext context) {
+    int stemLength = _currentSliderValue.toInt();
+    Widget buildCarousel() {
+      if (images.length != 0){
 
+        /*for(final Asset asset in images){
+          Image thumbImg = await assetThumbToImage(asset);
+          return Image(image: thumbImg.image,);
+        }*/
+         return Column(
+           children: <Widget>[
+             CarouselSlider(
+               options: CarouselOptions(height: 300, autoPlay: true,autoPlayInterval: Duration(seconds: 3),
+                 autoPlayAnimationDuration: Duration(milliseconds: 800),),
+               items: images.map((image) => AssetThumb(asset: image,width: 300,height: 300,),).toList(),
+             ),
+           ],
+         )
+           ;}
+      else
+        return Container(color: Colors.white);
+
+    }
 
     int flowerColour = pickerColor.value;
 
@@ -160,9 +171,9 @@ for(final Asset asset in images){
         imageUrls.add(url);
 
       }
-      
+
       await DatabaseService(uid: user.uid)
-          .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
+          .updateStockData(imageUrls, flowerType, _itemCount,stemLength,
           flowerColour, companyName);
     }
 
@@ -178,14 +189,10 @@ for(final Asset asset in images){
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-
                     SizedBox(
-                      height: 150,
+                      height: 300,
                       width: 300,
-                      child: /*Carousel(
-                        images: images,
-                      )*/
-                      buildCarousel ()
+                      child: buildCarousel()
                       ,),
                     RaisedButton(
                       child: Text('Pick Images'),
@@ -284,6 +291,42 @@ for(final Asset asset in images){
                                 setState(() => _itemCount = _itemCount + 10)),
                         Text(
                           'in stems',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Stem Length:',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Slider(
+                          value: _currentSliderValue,
+                          min: 0,
+                          max: 100,
+                          divisions: 10,
+                          activeColor: Colors.green,
+                          inactiveColor: Colors.lightGreen,
+                          label: _currentSliderValue.round().toString(),
+                          onChanged: (double value) {
+                            setState(() {
+                              _currentSliderValue = value;
+                            });
+                          },
+                        ),
+                        Text(
+                          'in cm',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

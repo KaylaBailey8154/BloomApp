@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class ProductDetails extends StatelessWidget {
   final Stock stock;
@@ -14,7 +15,13 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    String url = stock.url;
+    List<String> imageUrls = stock.url;
+
+    List<NetworkImage> images = List<NetworkImage>();
+    for(final String img in imageUrls){
+      images.add(NetworkImage(img));
+    }
+    String url = stock.url.first;
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
     String dateAdded = stock.dateAdded;
@@ -31,7 +38,14 @@ class ProductDetails extends StatelessWidget {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  Container(
+                  SizedBox(
+                    height: 350,
+                    width: 420,
+                    child: Carousel(
+                      images: images,
+                    ),
+                  ),
+                  /*Container(
                       height: 350,
                       width: 420,
                       decoration: BoxDecoration(
@@ -53,7 +67,7 @@ class ProductDetails extends StatelessWidget {
                           : Image.asset(
                               'assets/proteaimage.jpg',
                               fit: BoxFit.cover,
-                            )),
+                            )),*/
                   Positioned(
                       left: 0.0,
                       top: 20.0,
@@ -240,7 +254,7 @@ class ProductDetails extends StatelessWidget {
                     ));
 
                     await DatabaseService(uid: user.uid).updateCartStockData(
-                        url,
+                        imageUrls,
                         stock.uid,
                         flowerType,
                         flowerQuantity,

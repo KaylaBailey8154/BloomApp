@@ -1,6 +1,6 @@
 class Stock {
   final String uid;
-  final String url;
+  final List<String> url;
   final String flowerType;
   final int stemLength;
   final int quantity;

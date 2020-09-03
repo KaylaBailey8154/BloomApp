@@ -14,6 +14,7 @@ class _FlowerTypeStockList extends State<FlowerTypeStockList> {
   @override
   Widget build(BuildContext context) {
     final stocks = Provider.of<List<Stock>>(context) ?? [];
+
     List<Stock> filteredStocks = stocks.where((Stock s) {
       if (widget.supplier == null) {
         return s.uid != null;
@@ -21,6 +22,7 @@ class _FlowerTypeStockList extends State<FlowerTypeStockList> {
         return s.companyName.contains(widget.supplier);
       }
     }).toList();
+    //print(stocks.first.url.first);
 
     return ListView.builder(
       itemCount: filteredStocks.length,
