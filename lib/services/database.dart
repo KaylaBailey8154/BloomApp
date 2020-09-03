@@ -162,7 +162,7 @@ class DatabaseService {
         dateAddedToCart: doc.data['dateAddedToCart'] ?? null,
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
-        photoUrl: doc.data['url'] ?? '',
+        photoUrl: List.from(doc.data['url']) ?? '',
         stemLength: doc.data['stemLength'] ?? 0,
       );
     }).toList();

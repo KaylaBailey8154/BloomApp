@@ -18,7 +18,7 @@ class MyCartItemTile extends StatelessWidget {
     String datePicked = cartItem.datePicked;
     String supplier = cartItem.companyName;
     int stemLength = cartItem.stemLength;
-    String url = cartItem.photoUrl;
+    String url = cartItem.photoUrl.first;
 
 
     return Padding(
