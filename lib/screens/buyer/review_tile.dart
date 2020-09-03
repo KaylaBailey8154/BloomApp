@@ -21,7 +21,7 @@ class ReviewTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
         child: Container(
-          height: 100,
+          height: 120,
           width: 50,
           child: Card(
             shape:
@@ -56,16 +56,9 @@ class ReviewTile extends StatelessWidget {
                     children: List.generate(5, (index) {
                       return Icon(
                         index < rating ? Icons.star : Icons.star_border,
+                        color: Colors.orange,
                       );
                     }),
-                  ),
-                  SizedBox(height: 10,),
-                  Text(
-                    '$rating',
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 12,
-                    ),
                   ),
                   SizedBox(height: 10,),
                   Text(

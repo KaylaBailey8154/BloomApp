@@ -189,17 +189,43 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 300,
-                      width: 300,
-                      child: buildCarousel()
-                      ,),
-                    RaisedButton(
-                      child: Text('Pick Images'),
-                      onPressed: loadAssets,
+                    Stack(
+                      children: [
+                        SizedBox(
+                          height: 300,
+                          width: 500,
+                          child: buildCarousel()
+                          ,),
+                        Positioned(
+                            left: 0.0,
+                            top: 20.0,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              color: Colors.black,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              iconSize: 30,
+                            )),
+                      ],
                     ),
                     SizedBox(
                       height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        loadAssets();
+                      },
+                      child: Text(
+                          'Pick Images',
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -241,29 +267,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                     SizedBox(
                       height: 10,
                     ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        GestureDetector(
-                          child:
-                          Text(
-                            flowerType != '' ?
-                            'More information about the $flowerType' : '',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                          onTap: () {
-                            launchURL(flowerType: flowerType);
-
-                          },
-                        ),
-                      ],
-                    ),
-
-
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -432,7 +435,7 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
                           Navigator.pop(context);
                         },
-                        color: Colors.red[200],
+                        color: Colors.redAccent,
                         child: Text(
                           'Save',
                           style: TextStyle(
