@@ -292,7 +292,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
               );
             } else {
               //return Loading();
-              return null;
+              return Container();
             }
           }),
     );
