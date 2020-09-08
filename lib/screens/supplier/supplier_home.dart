@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock_legacy.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
@@ -147,7 +148,7 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddStock()),
+                          MaterialPageRoute(builder: (context) => ChatScreen()),
                         );
                       },
                       child: Container(
