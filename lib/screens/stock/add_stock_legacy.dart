@@ -121,7 +121,14 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
          )
            ;}
       else
-        return Container(color: Colors.white);
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/imageplaceholder.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
 
     }
 

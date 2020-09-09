@@ -21,7 +21,7 @@ class ReviewTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
         child: Container(
-          height: 120,
+          height: 130,
           width: 50,
           child: Card(
             shape:
