@@ -1,6 +1,7 @@
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
+import 'package:bloomflutterapp/screens/chat/chat_screen2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,7 @@ class MyCartItemTile extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatScreen()));
+                                    builder: (context) => ChatScreen(cartItem: cartItem,)));
                             //goes to chatroom
 
                           },

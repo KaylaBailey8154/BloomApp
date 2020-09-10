@@ -17,8 +17,6 @@ class ChatScreen extends StatefulWidget {
 
 
   final CartItem cartItem;
-
-
   ChatScreen({this.cartItem});
 
 
@@ -33,6 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final AuthService _auth = AuthService();
 
   String messageText;
+
 
 
 
@@ -122,8 +121,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: () {
                       messageTextController.clear();
-                      //initiateSearch();
-                      _firestore.collection('messages').add({
+
+                      _firestore.collection('messages').document(DateTime.now().toIso8601String())
+
+                          .setData({
                         'text': messageText,
                         'sender': user.uid,
 
@@ -169,7 +170,8 @@ class MessagesStream extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore.collection('messages')/*document('')
+          .collection('rooms')*/.snapshots(),
       // when there is new data it should rebuild
       // ignore: missing_return
       builder: (context, snapshot) {
@@ -268,175 +270,3 @@ class MessageBubble extends StatelessWidget {
 
 
 
-
-/*
-class ChatScreen extends StatefulWidget {
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  DatabaseService databaseMethods = new DatabaseService();
-
-  TextEditingController searchTextEditingController =
-      new TextEditingController();
-  QuerySnapshot searchSnapshot;
-
-  initiateSearch() {
-    databaseMethods.getUserByName(searchTextEditingController.text).then((val) {
-      setState(() {
-        searchSnapshot = val;
-      });
-    });
-  }
-
-  createChatRoomAndStartConversation(String fullName ){
-    List <String> users = [fullName, ];
-//databaseMethods.createChatRoom(chatRoomId, chatRoomMap);
-  }
-
-  Widget searchList() {
-    return searchSnapshot != null
-        ? ListView.builder(
-            itemCount: searchSnapshot.documents.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return SearchTile(
-                userName: searchSnapshot.documents[index].data["fullName"],
-                userNumber: searchSnapshot.documents[index].data["phoneNumber"],
-              );
-            })
-        : Container();
-  }
-
-  // searchSnapshot !=null ?
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final AuthService _auth = AuthService();
-
-  FirebaseUser email;
-  String messageText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {},
-          ),
-        ],
-        title: Text('Bloom Chat'),
-        backgroundColor: Colors.greenAccent,
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {},
-                      controller: searchTextEditingController,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        hintText: 'Search Name and Surname',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      initiateSearch();
-                    },
-                    child: Text(
-                      'Search',
-                      style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            searchList()
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SearchTile extends StatelessWidget {
-  final String userName;
-
-  final String userNumber;
-
-  const SearchTile({this.userName, this.userNumber});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                userName,
-                style: TextStyle(
-                  color: Colors.lightBlueAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-              ),
-              Text(
-                userNumber,
-                style: TextStyle(
-                  color: Colors.lightBlueAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-              ),
-            ],
-          ),
-          Spacer(),
-          GestureDetector(
-            onTap: (){
-
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 6,
-              ),
-              child: Text("Message" ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}*/
