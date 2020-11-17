@@ -221,7 +221,67 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        loadAssets();
+                        Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(20.0)),
+                          child: Container(
+                            height: 290,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                        height: 80,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: Colors.green,
+                                          ),
+                                        )
+
+                                    ),
+                                    Icon(
+                                      Icons.info_outline,
+                                      size: 20,
+                                      color: Colors.grey,
+                                    )
+                                  ],
+                                ),
+                                Text(
+                                  'Quick Tip!',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  'Choose the following photos for more detail:'
+                                      '1. Top View'
+                                      '2. Side View'
+                                      '3. Petals'
+                                      '4. Stem'
+                                      '5. Leaf'
+                                ),
+                                FlatButton(
+                                  color: Colors.green,
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    loadAssets();
+                                  }
+                                ),
+                              ],
+                            ),
+                          )
+
+                        );
                       },
                       child: Text(
                           'Pick Images',
