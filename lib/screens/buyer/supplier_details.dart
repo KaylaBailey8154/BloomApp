@@ -5,14 +5,21 @@ import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../models/supplier.dart';
 import 'add_review.dart';
 
+
+final _firestore = Firestore.instance;
+
+
 class SupplierDetails extends StatelessWidget {
+  final Function toggleView;
   final Supplier supplier;
-  SupplierDetails({this.supplier});
+  SupplierDetails({this.toggleView, this.supplier});
+
 
 
   void launchCaller(String number) async {
@@ -31,6 +38,7 @@ class SupplierDetails extends StatelessWidget {
     String companyName = supplier.companyName;
     String fullName = supplier.fullName;
     String phoneNumber = supplier.phoneNumber;
+
 
     return  MultiProvider(
       providers: [
@@ -88,15 +96,39 @@ class SupplierDetails extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 5,),
-                    Text(
-                      '$companyName',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Archivo',
-                        color: Colors.black,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$companyName',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Archivo',
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                        LikeButton(
+                          circleColor:
+                          CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                          bubblesColor: BubblesColor(
+                            dotPrimaryColor: Color(0xff33b5e5),
+                            dotSecondaryColor: Color(0xff0099cc),
+                          ),
+                          likeBuilder: (bool isLiked) {
+                            return IconButton(
+                             icon: Icon(
+                                 Icons.favorite,
+                               color: isLiked ? Colors.red : Colors.grey,),
+                              onPressed: () async{
+                                await DatabaseService(uid: supplier.uid).updateFavoriteData(
+                                    supplier.uid, url, companyName);
+                              },
+                              );
+                          },
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 5,),
                     /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -110,7 +142,7 @@ class SupplierDetails extends StatelessWidget {
                         ),
                       ],
                     ),*/
-                    SizedBox(height: 15,),
+                    SizedBox(height: 10,),
                     Text(
                       '$fullName',
                       style: TextStyle(
@@ -162,6 +194,9 @@ class SupplierDetails extends StatelessWidget {
             ),
           ),
     );
+
   }
+
+
 }
 

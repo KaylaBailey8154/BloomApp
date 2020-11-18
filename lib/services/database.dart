@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
+import 'package:bloomflutterapp/models/favorite.dart';
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
@@ -21,6 +22,8 @@ class DatabaseService {
       Firestore.instance.collection('cartItems');
   final CollectionReference reviewsCollection =
       Firestore.instance.collection('reviews');
+  final CollectionReference favoritesCollection =
+  Firestore.instance.collection('favorites');
 
 
   Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
@@ -94,6 +97,14 @@ class DatabaseService {
     });
   }
 
+  Future updateFavoriteData(String supplieruid, String url, String companyName) async {
+    return await favoritesCollection.document().setData({
+      'supplierUID':supplieruid,
+      'url': url,
+      'companyName': companyName,
+    });
+  }
+
   //Supplier list from snapshot
   List<Supplier> supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -146,6 +157,17 @@ class DatabaseService {
         dateAdded: doc.data['dateAdded'] ?? null,
         rating: doc.data['rating'] ?? 0,
         reviews: doc.data['review'] ?? '',
+      );
+    }).toList();
+  }
+
+  //Favorite list from snapshot
+  List<Favorite> favoriteListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Favorite(
+        supplieruid: doc.data['supplierUID'] ?? '',
+        url: doc.data['url'] ?? '',
+        companyName: doc.data['companyName'] ?? '',
       );
     }).toList();
   }
@@ -229,6 +251,11 @@ class DatabaseService {
   //get reviews stream
   Stream<List<Review>> get allReviews {
     return reviewsCollection.snapshots().map(reviewListFromSnapshot);
+  }
+
+  //get favorites stream
+  Stream<List<Favorite>> get allFavorites {
+    return favoritesCollection.snapshots().map(favoriteListFromSnapshot);
   }
 
   //get review for specific supplier steam

@@ -154,7 +154,7 @@ class StockTile extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
