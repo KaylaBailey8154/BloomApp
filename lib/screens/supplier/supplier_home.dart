@@ -148,7 +148,7 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatScreen()),
+                          MaterialPageRoute(builder: (context) => ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)),
                         );
                       },
                       child: Container(

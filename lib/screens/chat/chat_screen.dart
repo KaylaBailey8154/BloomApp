@@ -17,7 +17,8 @@ class ChatScreen extends StatefulWidget {
 
 
   final CartItem cartItem;
-  ChatScreen({this.cartItem});
+  final String otherParty;
+  ChatScreen({this.cartItem, this.otherParty});
 
 
   @override
@@ -29,7 +30,6 @@ class _ChatScreenState extends State<ChatScreen> {
   DatabaseService databaseService = new DatabaseService();
   final messageTextController = TextEditingController();
   final AuthService _auth = AuthService();
-
   String messageText;
 
 
@@ -90,8 +90,10 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            MessagesStream(),
-            // the async snap shot contains a query snapshot from firebase we access the query snapshot thorugh the data t
+            MessagesStream(otherParty:
+            //user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID
+             widget.otherParty ,),
+            // the async snap shot contains a query snapshot from firebase we access the query snapshot through the data
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -122,25 +124,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       messageTextController.clear();
 
-                      _firestore.collection('messages').document(DateTime.now().toIso8601String())
+                      _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
 
                           .setData({
                         'text': messageText,
-                        'sender': user.uid,
-
-
-
-
-                        // cartItem.buyerUID,
+                        'senderUid': user.uid,
+                        'receiverUid': widget.otherParty,//user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID,
+                        //'senderRole': user.uid== widget.cartItem.buyerUID? 'buyer':'supplier',
                       });
-                      /*String getRecieverUid () {
-                        if (user.uid == widget.cartItem.buyerUID) {
-                          return widget.cartItem.supplierUID;
-                        }
-                        else {
-                          return widget.cartItem.buyerUID;
-                        }
-                      }*/
+                      
 
 
                     },
@@ -166,12 +158,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
 class MessagesStream extends StatelessWidget {
   @override
-
+ final String otherParty;
+  MessagesStream({this.otherParty});
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages')/*document('')
-          .collection('rooms')*/.snapshots(),
+      stream: _firestore.collection('chatMessages') //.where('senderUID', isEqualTo: user.uid )
+          .snapshots(),
       // when there is new data it should rebuild
       // ignore: missing_return
       builder: (context, snapshot) {
@@ -186,21 +179,21 @@ class MessagesStream extends StatelessWidget {
         final messages = snapshot.data.documents.reversed; //dynamic data type
         List <MessageBubble> messageBubbles = [];
         for (var message in messages) {
+if((message.data['senderUid'] == user.uid || message.data['senderUid'] == otherParty) &&(message.data['receiverUid'] == user.uid || message.data['receiverUid'] == otherParty)){
           final messageText = message.data ['text'];
-          final messageSender = message.data['sender'];
+          final messageSender = message.data['senderUid'];
+          final messageReceiver = message.data['receiverUid'];
           final currentUser = user.uid;
-
-          /*if (currentUser == messageSender) {
-
-          }*/
 
           final messageBubble = MessageBubble (
             sender: messageSender,
+            receiver: messageReceiver,
             text:messageText,
             isMe: currentUser == messageSender,
           );
           messageBubbles.add(messageBubble);
-        }
+
+        }}
 
 
         return Expanded(
@@ -220,11 +213,12 @@ class MessagesStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
 
-  MessageBubble ({this.sender, this.text, this.isMe});
+  MessageBubble ({this.sender, this.text, this.isMe, this.receiver});
 
   final String sender;
   final String text;
   final bool isMe;
+  final String receiver;
 
   @override
   Widget build(BuildContext context) {

@@ -20,6 +20,7 @@ class MyCartItemTile extends StatelessWidget {
     String supplier = cartItem.companyName;
     int stemLength = cartItem.stemLength;
     String url = cartItem.photoUrl.first;
+    String otherParty = cartItem.supplierUID;
 
 
     return Padding(
@@ -84,7 +85,7 @@ class MyCartItemTile extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatScreen(cartItem: cartItem,)));
+                                    builder: (context) => ChatScreen(cartItem: cartItem,otherParty: otherParty,)));
                             //goes to chatroom
 
                           },
