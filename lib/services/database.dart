@@ -221,6 +221,10 @@ class DatabaseService {
         .map(_cartItemListFromSnapshot);
   }
 
+
+  Stream<List<User>> get myChats{}
+
+
   //get stocks stream
   Stream<List<Stock>> get allStocks {
     return stockCollection.snapshots().map(stockListFromSnapshot);
