@@ -4,6 +4,7 @@ import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -111,6 +112,8 @@ class DatabaseService {
   List<Buyer> _buyerListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Buyer(
+          uid: doc.documentID?? '',
+          url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');
@@ -146,6 +149,16 @@ class DatabaseService {
         dateAdded: doc.data['dateAdded'] ?? null,
         rating: doc.data['rating'] ?? 0,
         reviews: doc.data['review'] ?? '',
+      );
+    }).toList();
+  }
+
+  List<MessageBubble> messageListFromSnapshot (QuerySnapshot snapshot){
+    return snapshot.documents.map((doc) {
+      return MessageBubble(
+        sender: doc.data['senderUid'] ?? '',
+       receiver: doc.data ['receiverUid'] ?? '',
+        text:  doc.data['text'] ?? '',
       );
     }).toList();
   }
@@ -222,8 +235,6 @@ class DatabaseService {
   }
 
 
-  Stream<List<User>> get myChats{}
-
 
   //get stocks stream
   Stream<List<Stock>> get allStocks {
@@ -234,6 +245,16 @@ class DatabaseService {
   Stream<List<Review>> get allReviews {
     return reviewsCollection.snapshots().map(reviewListFromSnapshot);
   }
+
+  Stream<List<MessageBubble>> get myMessages {
+    return Firestore.instance
+        .collection('chatMessages')
+        .where('receiverUid', isEqualTo: uid)
+        .snapshots()
+        .map(messageListFromSnapshot);
+  }
+
+
 
   //get review for specific supplier steam
   Stream<List<Review>> get reviewType {

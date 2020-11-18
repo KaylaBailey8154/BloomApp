@@ -1,6 +1,7 @@
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/cart/view_mycart.dart';
+import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,8 +24,8 @@ class _ViewMyChatsState extends State<ViewMyChats> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     final user = Provider.of<User>(context);
-    return StreamProvider<List<CartItem>>.value(
-      value: DatabaseService(uid: user.uid).myCart,
+    return StreamProvider<List<MessageBubble>>.value(
+      value: DatabaseService(uid: user.uid).myMessages,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
