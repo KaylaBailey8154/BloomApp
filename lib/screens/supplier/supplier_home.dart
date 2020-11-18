@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
+import 'package:bloomflutterapp/screens/chat/view_mychats.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock_legacy.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
@@ -148,7 +149,8 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)),
+                          MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                          ),
                         );
                       },
                       child: Container(

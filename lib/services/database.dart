@@ -1,10 +1,10 @@
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
-import 'package:bloomflutterapp/models/favorite.dart';
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -22,8 +22,6 @@ class DatabaseService {
       Firestore.instance.collection('cartItems');
   final CollectionReference reviewsCollection =
       Firestore.instance.collection('reviews');
-  final CollectionReference favoritesCollection =
-  Firestore.instance.collection('favorites');
 
 
   Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
@@ -97,14 +95,6 @@ class DatabaseService {
     });
   }
 
-  Future updateFavoriteData(String supplieruid, String url, String companyName) async {
-    return await favoritesCollection.document().setData({
-      'supplierUID':supplieruid,
-      'url': url,
-      'companyName': companyName,
-    });
-  }
-
   //Supplier list from snapshot
   List<Supplier> supplierListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -122,6 +112,8 @@ class DatabaseService {
   List<Buyer> _buyerListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Buyer(
+          uid: doc.documentID?? '',
+          url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');
@@ -161,13 +153,12 @@ class DatabaseService {
     }).toList();
   }
 
-  //Favorite list from snapshot
-  List<Favorite> favoriteListFromSnapshot(QuerySnapshot snapshot) {
+  List<MessageBubble> messageListFromSnapshot (QuerySnapshot snapshot){
     return snapshot.documents.map((doc) {
-      return Favorite(
-        supplieruid: doc.data['supplierUID'] ?? '',
-        url: doc.data['url'] ?? '',
-        companyName: doc.data['companyName'] ?? '',
+      return MessageBubble(
+        sender: doc.data['senderUid'] ?? '',
+       receiver: doc.data ['receiverUid'] ?? '',
+        text:  doc.data['text'] ?? '',
       );
     }).toList();
   }
@@ -243,6 +234,8 @@ class DatabaseService {
         .map(_cartItemListFromSnapshot);
   }
 
+
+
   //get stocks stream
   Stream<List<Stock>> get allStocks {
     return stockCollection.snapshots().map(stockListFromSnapshot);
@@ -253,10 +246,15 @@ class DatabaseService {
     return reviewsCollection.snapshots().map(reviewListFromSnapshot);
   }
 
-  //get favorites stream
-  Stream<List<Favorite>> get allFavorites {
-    return favoritesCollection.snapshots().map(favoriteListFromSnapshot);
+  Stream<List<MessageBubble>> get myMessages {
+    return Firestore.instance
+        .collection('chatMessages')
+        .where('receiverUid', isEqualTo: uid)
+        .snapshots()
+        .map(messageListFromSnapshot);
   }
+
+
 
   //get review for specific supplier steam
   Stream<List<Review>> get reviewType {
