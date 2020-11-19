@@ -39,10 +39,10 @@ class DatabaseService {
     });
   }
 
-  Future updateFavoriteData(String supplieruid, String url, String companyName) async {
+  Future updateFavoriteData(String supplierUid, String url, String companyName) async {
     return await favoritesCollection.document().setData({
       'buyerUid': uid,
-      'supplierUID':supplieruid,
+      'supplierUID':supplierUid,
       'url': url,
       'companyName': companyName,
     });
@@ -169,7 +169,8 @@ class DatabaseService {
   List<Favorite> favoriteListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Favorite(
-        supplieruid: doc.data['supplierUID'] ?? '',
+        buyerUid: doc.data['buyerUid'],
+        supplierUid: doc.data['supplierUid'] ?? '',
         url: doc.data['url'] ?? '',
         companyName: doc.data['companyName'] ?? '',
       );

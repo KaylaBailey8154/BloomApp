@@ -163,6 +163,104 @@ return null;
                       ),
                     ),
                   ),
+                  RaisedButton(
+                    onPressed: () {
+                      messageTextController.clear();
+                      Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(20.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              height: 350,
+                              width: 400,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.info_outline,
+                                    size: 70,
+                                    color: Colors.green,
+                                  ),
+                                  SizedBox(height: 30,),
+                                  Text(
+                                    'Quick Tip!',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Text(
+                                    'Choose the following photos for more detail:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    '1. Top View',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    '2. Side View',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    '3. Petals',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    '4. Stem',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    '5. Leaf',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20,),
+                                  FlatButton(
+                                      color: Colors.green,
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      onPressed: () async {
+
+                                      }
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+
+                      );
+                    },
+                    color: Colors.lightGreen,
+                    child: Text(
+                      'Offer',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

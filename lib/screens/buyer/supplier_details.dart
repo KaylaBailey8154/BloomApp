@@ -120,14 +120,13 @@ class SupplierDetails extends StatefulWidget {
                             icon: Icon(Icons.favorite),
                           color: (isPressed) ? Colors.red : Colors.grey,
                           onPressed: () async{
+                            await DatabaseService(uid: user.uid).updateFavoriteData(widget.supplier.uid,
+                                url, companyName);
                             setState(() {
                               isPressed = true;
                             });
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("Supplier Added to Favorites"),
-                            ));
-                            await DatabaseService(uid: user.uid).updateFavoriteData( widget.supplier.uid,
-                               url, companyName);
+                          
+
                           },
                         )
                       ],

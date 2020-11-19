@@ -1,12 +1,12 @@
 class Favorite {
-  final String uid;
-  final String supplieruid;
+  final String buyerUid;
+  final String supplierUid;
   final String url;
   final String companyName;
 
   Favorite({
-    this.uid,
-    this.supplieruid,
+    this.buyerUid,
+    this.supplierUid,
     this.url,
     this.companyName,
   });
