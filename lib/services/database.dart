@@ -182,7 +182,7 @@ class DatabaseService {
   }
   //userData from snapshot
 
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
       url: snapshot.data['url'],
@@ -292,7 +292,9 @@ class DatabaseService {
   //get user doc stream
 
   Stream<UserData> get userData {
-    return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+    return userCollection.document(uid).snapshots().map(userDataFromSnapshot);
   }
+
+
   
 }

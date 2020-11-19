@@ -35,7 +35,7 @@ class BuyerTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ChatScreen(otherParty: buyer.uid)));
+                builder: (context) => ChatScreen(otherUid: buyer.uid)));
       },
         child: Container(
           height: 100,

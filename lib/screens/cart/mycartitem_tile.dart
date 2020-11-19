@@ -1,7 +1,10 @@
+import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen2.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +24,10 @@ class MyCartItemTile extends StatelessWidget {
     int stemLength = cartItem.stemLength;
     String url = cartItem.photoUrl.first;
     String otherParty = cartItem.supplierUID;
+
+
+
+
 
 
     return Padding(
@@ -81,11 +88,14 @@ class MyCartItemTile extends StatelessWidget {
                     Row(
                       children: [
                         RaisedButton(
-                          onPressed: (){
+                          onPressed: () async{
+
+
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatScreen(cartItem: cartItem,otherParty: otherParty,)));
+                                    builder: (context) => ChatScreen(cartItem: cartItem,otherUid: otherParty,)));
                             //goes to chatroom
 
                           },
@@ -103,7 +113,7 @@ class MyCartItemTile extends StatelessWidget {
                           child: IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () async {
-                              var deletedItem = await Firestore.instance
+                               await Firestore.instance
                                   .collection('cartItems')
                                   .where('supplierUID', isEqualTo: cartItem.supplierUID)
                                   .where('buyerUID', isEqualTo: cartItem.buyerUID)

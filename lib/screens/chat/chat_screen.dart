@@ -2,6 +2,7 @@
 
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/chat/Profile_details.dart';
 import 'package:flutter/material.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,8 +18,8 @@ class ChatScreen extends StatefulWidget {
 
 
   final CartItem cartItem;
-  final String otherParty;
-  ChatScreen({this.cartItem, this.otherParty});
+  final String otherUid;
+  ChatScreen({this.cartItem, this.otherUid});
 
 
   @override
@@ -32,42 +33,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final AuthService _auth = AuthService();
   String messageText;
 
-
-
-
-  @override
-  /*void initState() {
-    getCurrentUser();
-    super.initState();
-  }*/
-
-  /*void getCurrentUser() async {
-    try {
-      final user = await _auth.user;
-      if (user != null) {
-        loggedInUser = User as FirebaseUser;
-      }
-    }catch (e){
-      print (e);
-    }
-  }*/
-  /* void getMessages() async {
-    final messages = await _firestore.collection('messages').getDocuments();
-    for (var messages in messages.documents) {
-      print(messages.data);
-    }
-  }*/
-
-  // listening to changes like any new messages through data snapshots
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var messages in snapshot.documents) {
-        print(messages.data);
-      }
-    }
+  Future<UserData> otherUser (String otherParty) async{
+    var otherUser = await Firestore.instance.collection('users').document(otherParty).get();
+    return DatabaseService().userDataFromSnapshot(otherUser);
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<User>(context);
@@ -75,11 +46,21 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              messagesStream();
-            },
+          FlatButton.icon(
+            onPressed : () async {
+          UserData youser = await otherUser(widget.otherUid);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProfileDetails(userData: youser,)),
+          );},
+            icon: Icon(Icons.account_circle),
+            label: Text ('Profile'),
+          ),
+          FlatButton.icon(
+            onPressed: null,
+            icon: Icon(Icons.info),
+            label: Text ('Item'),
           ),
         ],
         title: Text('Bloom Chat'),
@@ -92,7 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             MessagesStream(otherParty:
             //user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID
-             widget.otherParty ,),
+             widget.otherUid ,),
             // the async snap shot contains a query snapshot from firebase we access the query snapshot through the data
             Container(
               decoration: BoxDecoration(
@@ -129,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           .setData({
                         'text': messageText,
                         'senderUid': user.uid,
-                        'receiverUid': widget.otherParty,//user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID,
+                        'receiverUid': widget.otherUid,//user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID,
                         //'senderRole': user.uid== widget.cartItem.buyerUID? 'buyer':'supplier',
                       });
                       
@@ -157,9 +138,10 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class MessagesStream extends StatelessWidget {
-  @override
- final String otherParty;
+  final String otherParty;
   MessagesStream({this.otherParty});
+  @override
+
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamBuilder<QuerySnapshot>(
