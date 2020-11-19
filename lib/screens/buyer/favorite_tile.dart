@@ -1,11 +1,13 @@
 import 'package:bloomflutterapp/models/favorite.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/buyer/supplier_details.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteTile extends StatelessWidget {
   final Favorite favorite;
@@ -13,6 +15,8 @@ class FavoriteTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     String companyName = favorite.companyName;
     String url = favorite.url;
 
@@ -50,8 +54,7 @@ class FavoriteTile extends StatelessWidget {
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -73,33 +76,35 @@ class FavoriteTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Supplier: ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          '$companyName',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                Text(
+                  '$companyName',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                    fontSize: 14,
+                  ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(left: 100),
+                  child: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () async {
+                      await Firestore.instance
+                          .collection('favorites')
+                          .where('buyerUid', isEqualTo: favorite.buyerUid)
+                          .where('supplierUid', isEqualTo: favorite.supplierUid)
+                          .where('url', isEqualTo: favorite.url)
+                          .where('companyName', isEqualTo: favorite.companyName)
+                          .getDocuments()
+                          .then((snapshot) {
+                        for (DocumentSnapshot ds in snapshot.documents) {
+                          ds.reference.delete();
+                        }
+                      });
+                    },
+                  ),
+                )
               ],
             ),
           ),

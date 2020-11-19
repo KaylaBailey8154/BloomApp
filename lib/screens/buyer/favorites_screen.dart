@@ -22,26 +22,46 @@ class FavoritesScreen extends StatelessWidget{
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 colors: [Colors.green, Colors.greenAccent])),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
                 body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Favorites',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Archivo',
-                        color: Colors.black,
-                      ),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 20, 320, 0),
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            color: Colors.black,
+                            iconSize: 30,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(115,35,0,0),
+                          child: Text(
+                            'FAVOURITES',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Archivo',
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 20,),
                     Container(
-                        height: 495,
-                        width: 400,
+                        height: 595,
+                        width: 450,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(40),
