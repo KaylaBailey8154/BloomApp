@@ -1,3 +1,4 @@
+
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/cart/view_mycart.dart';
@@ -30,30 +31,35 @@ class _ViewMyChatsState extends State<ViewMyChats> {
         backgroundColor: Colors.white,
         body: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  padding: EdgeInsets.fromLTRB(20, 40, 40, 10),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  color: Colors.black,
-                  iconSize: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(60, 40, 20, 10),
-                  child: Text(
-                    'MY CHATS',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Archivo',
-                      //fontWeight: FontWeight.bold,
-                      fontSize: 20,
+            Container(
+              color: Colors.green[800],
+              child: Row(
+                children: <Widget>[
+
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    padding: EdgeInsets.fromLTRB(20, 40, 40, 10),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    color: Colors.black,
+                    iconSize: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(40, 40, 20, 10),
+                    child: Text(
+                      'Bloom Chat',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Archivo',
+                        //fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 24,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Container(
               height: 550,

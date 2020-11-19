@@ -121,8 +121,8 @@ class SupplierDetails extends StatelessWidget {
                                  Icons.favorite,
                                color: isLiked ? Colors.red : Colors.grey,),
                               onPressed: () async{
-                                await DatabaseService(uid: supplier.uid).updateFavoriteData(
-                                    supplier.uid, url, companyName);
+                                await DatabaseService(uid: supplier.uid).updateReviewData(supplier.uid, url, 4,'' );
+                                   // .updateFavoriteData(supplier.uid, url, companyName);
                               },
                               );
                           },

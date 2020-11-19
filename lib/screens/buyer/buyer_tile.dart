@@ -9,7 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BuyerTile extends StatelessWidget {
   final Buyer buyer;
-  BuyerTile({this.buyer});
+  final String message;
+  BuyerTile({this.buyer, this.message});
 
   void launchCaller(String number) async {
     var url = "tel: $number";
@@ -26,6 +27,7 @@ class BuyerTile extends StatelessWidget {
     String number = buyer.phoneNumber;
     String url = buyer.url;
 
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Padding(
       padding: EdgeInsets.only(top: 5),
@@ -33,7 +35,7 @@ class BuyerTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ChatScreen(otherParty: buyer.uid,)));
+                builder: (context) => ChatScreen(otherParty: buyer.uid)));
       },
         child: Container(
           height: 100,
@@ -42,7 +44,9 @@ class BuyerTile extends StatelessWidget {
               shape:
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               color: Colors.white,
-              margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
+              shadowColor: Colors.green[800],
+              elevation: 10,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,20 +92,16 @@ class BuyerTile extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 7,
                       ),
-                      GestureDetector(
-                        child: Text(
-                          '$number',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
+                      Text(
+                        message,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.green[800],
+                          fontSize: 15,
                         ),
-                        onTap: () {
-                          launchCaller(number);
-                        },
-                      )
+                      ),
                     ],
                   )
                 ],

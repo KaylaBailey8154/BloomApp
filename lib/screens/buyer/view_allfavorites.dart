@@ -16,8 +16,8 @@ class ViewAllFavorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Favorite>>.value(
-      value: DatabaseService().allFavorites,
+    return StreamProvider<List<Review>>.value(
+      value: DatabaseService().allReviews,//DatabaseService().allFavorites,
       child: Scaffold(
         body: Padding(
             padding: EdgeInsets.all(10),
