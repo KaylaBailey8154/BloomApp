@@ -164,7 +164,7 @@ class DatabaseService {
   }
 
   //Cart Item list from snapshot
-  List<CartItem> _cartItemListFromSnapshot(QuerySnapshot snapshot) {
+  List<CartItem> cartItemListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return CartItem(
         supplierUID: doc.data['supplierUID'] ?? '',
@@ -193,9 +193,20 @@ class DatabaseService {
     );
   }
 
+  UserData otherUserDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: snapshot.documentID,
+      url: snapshot.data['url'],
+      fullName: snapshot.data['fullName'],
+      companyName: snapshot.data['companyName'],
+      phoneNumber: snapshot.data['phoneNumber'],
+      role: snapshot.data['role'],
+    );
+  }
+
   //StockData from snapshot
 
-  Stock _stockDataFromSnapshot(DocumentSnapshot snapshot) {
+  Stock stockDataFromSnapshot(DocumentSnapshot snapshot) {
     return Stock(
       uid: uid,
       url: snapshot.data['url'],
@@ -231,7 +242,7 @@ class DatabaseService {
     return cartItemCollection
         .where('buyerUID', isEqualTo: uid)
         .snapshots()
-        .map(_cartItemListFromSnapshot);
+        .map(cartItemListFromSnapshot);
   }
 
 
@@ -286,7 +297,7 @@ class DatabaseService {
   //get stocks doc stream
 
   Stream<Stock> get stockData {
-    return userCollection.document(uid).snapshots().map(_stockDataFromSnapshot);
+    return userCollection.document(uid).snapshots().map(stockDataFromSnapshot);
   }
 
   //get user doc stream

@@ -1,3 +1,4 @@
+import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
@@ -8,24 +9,25 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
-class ProductDetails extends StatelessWidget {
-  final Stock stock;
+class CartItemDetails extends StatelessWidget {
+  final CartItem stock;
 
-  ProductDetails({this.stock});
+  CartItemDetails({this.stock});
+
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    List<String> imageUrls = stock.url;
+    List<String> imageUrls = stock.photoUrl;
 
     List<NetworkImage> images = List<NetworkImage>();
     for(final String img in imageUrls){
       images.add(NetworkImage(img));
     }
-    String url = stock.url.first;
+
     int flowerQuantity = stock.quantity;
     String companyName = stock.companyName;
-    String dateAdded = stock.dateAdded;
+    String datePicked = stock.datePicked;
     int flowerColour = stock.flowerColour;
     int stemLength = stock.stemLength;
     String flowerType = stock.flowerType;
@@ -213,7 +215,7 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$dateAdded',
+                      '$datePicked',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -245,40 +247,7 @@ class ProductDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 50,
-                width: 300,
-                child: Visibility(
-                  child: RaisedButton(
-                    onPressed: () async {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text("Item Added to Cart"),
-                      ));
 
-                      await DatabaseService(uid: user.uid).updateCartStockData(
-                          imageUrls,
-                          stock.uid,
-                          flowerType,
-                          flowerQuantity,
-                          flowerColour,
-                          dateAdded,
-                          companyName,
-                        stemLength
-                          //the 10 is a placeholder for stemlength, we need to insert it into the screen
-                      );
-                    },
-                    color: Colors.red[300],
-                    child: Text(
-                      'Add to Cart',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  visible: true,
-                ),
-              ),
             ],
           ),
         );

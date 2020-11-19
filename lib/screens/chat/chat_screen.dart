@@ -1,8 +1,11 @@
 
 
 import 'package:bloomflutterapp/models/cartitem.dart';
+import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/chat/Profile_details.dart';
+import 'package:bloomflutterapp/screens/chat/cartItem_details.dart';
 import 'package:flutter/material.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +38,33 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<UserData> otherUser (String otherParty) async{
     var otherUser = await Firestore.instance.collection('users').document(otherParty).get();
-    return DatabaseService().userDataFromSnapshot(otherUser);
+    return DatabaseService().otherUserDataFromSnapshot(otherUser);
+  }
+
+
+  
+  Future<CartItem> theItemInQuestion (String theirRole, String myUid, String theirUid) async {
+     QuerySnapshot query = await Firestore.instance.collection('cartItems').getDocuments();
+
+    List<CartItem> allCartItems = DatabaseService().cartItemListFromSnapshot(query);
+
+    if(theirRole == 'buyer'){
+
+
+     CartItem filteredItems = allCartItems.where((CartItem c) {
+         return  c.buyerUID == theirUid && c.supplierUID == myUid;
+      }).last;
+        return filteredItems;
+    }
+      else if(theirRole== 'supplier'){
+
+      CartItem filteredItems =  allCartItems.where((CartItem c) {
+         return  c.supplierUID == theirUid && c.buyerUID == myUid;
+      }).last;
+      return filteredItems;
+    }
+return null;
+
   }
 
     @override
@@ -58,7 +87,15 @@ class _ChatScreenState extends State<ChatScreen> {
             label: Text ('Profile'),
           ),
           FlatButton.icon(
-            onPressed: null,
+            onPressed: () async{
+              UserData youser = await otherUser(widget.otherUid);
+              CartItem theItem = await theItemInQuestion(youser.role, user.uid, youser.uid);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CartItemDetails(stock: theItem,)),
+              );
+          },
             icon: Icon(Icons.info),
             label: Text ('Item'),
           ),
