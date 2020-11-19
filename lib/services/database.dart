@@ -1,9 +1,11 @@
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
+import 'package:bloomflutterapp/models/favorite.dart';
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
+import 'package:bloomflutterapp/screens/buyer/favorites_screen.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +24,8 @@ class DatabaseService {
       Firestore.instance.collection('cartItems');
   final CollectionReference reviewsCollection =
       Firestore.instance.collection('reviews');
+  final CollectionReference favoritesCollection =
+  Firestore.instance.collection('favorites');
 
 
   Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
@@ -35,6 +39,14 @@ class DatabaseService {
     });
   }
 
+  Future updateFavoriteData(String supplieruid, String url, String companyName) async {
+    return await favoritesCollection.document().setData({
+      'buyerUid': uid,
+      'supplierUID':supplieruid,
+      'url': url,
+      'companyName': companyName,
+    });
+  }
 
   Future updateStockData(List<String> url, String flowerType,  int quantity, int stemLength,
       int flowerColour, String companyName, ) async {
@@ -153,6 +165,17 @@ class DatabaseService {
     }).toList();
   }
 
+  //Favorite list from snapshot
+  List<Favorite> favoriteListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Favorite(
+        supplieruid: doc.data['supplierUID'] ?? '',
+        url: doc.data['url'] ?? '',
+        companyName: doc.data['companyName'] ?? '',
+      );
+    }).toList();
+  }
+
   List<MessageBubble> messageListFromSnapshot (QuerySnapshot snapshot){
     return snapshot.documents.map((doc) {
       return MessageBubble(
@@ -257,6 +280,11 @@ class DatabaseService {
     return reviewsCollection.snapshots().map(reviewListFromSnapshot);
   }
 
+  //get favorites stream
+  Stream<List<Favorite>> get allFavorites {
+    return favoritesCollection.snapshots().map(favoriteListFromSnapshot);
+  }
+
   Stream<List<MessageBubble>> get myMessages {
     return Firestore.instance
         .collection('chatMessages')
@@ -283,6 +311,15 @@ class DatabaseService {
         .where('flowerType', isEqualTo: filterValue)
         .snapshots()
         .map(stockListFromSnapshot);
+  }
+
+  //get flower type stocks stream
+  Stream<List<Favorite>> get favorites {
+    return Firestore.instance
+        .collection('favorite')
+        .where('buyerUid', isEqualTo: uid)
+        .snapshots()
+        .map(favoriteListFromSnapshot);
   }
 
   //get supplier stocks stream

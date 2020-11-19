@@ -44,6 +44,8 @@ class ProductDetails extends StatelessWidget {
                     width: 420,
                     child: Carousel(
                       images: images,
+                      animationDuration: const Duration(milliseconds: 500),
+
                     ),
                   ),
                   /*Container(

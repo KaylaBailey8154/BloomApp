@@ -1,4 +1,4 @@
-import 'package:bloomflutterapp/screens/buyer/favorites.dart';
+import 'package:bloomflutterapp/screens/buyer/favorites_screen.dart';
 import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/view_flowertypestock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
@@ -340,7 +340,7 @@ Daisy''',
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Favorites()));
+                            builder: (context) => FavoritesScreen()));
                   },
                 ),
                 IconButton(

@@ -1,5 +1,6 @@
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/view_allreviews.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -12,13 +13,13 @@ import '../../models/supplier.dart';
 import 'add_review.dart';
 
 
-final _firestore = Firestore.instance;
-
-
-class SupplierDetails extends StatelessWidget {
-  final Function toggleView;
+class SupplierDetails extends StatefulWidget {
   final Supplier supplier;
-  SupplierDetails({this.toggleView, this.supplier});
+  SupplierDetails({this.supplier});
+  @override
+  _SupplierDetailsState createState() => _SupplierDetailsState();
+
+}
 
 
 
@@ -31,21 +32,28 @@ class SupplierDetails extends StatelessWidget {
     }
   }
 
+  class _SupplierDetailsState extends State<SupplierDetails> {
+
   final _globalKey = GlobalKey<ScaffoldState>();
+  bool isPressed = false;
+
   @override
   Widget build(BuildContext context) {
-    String url = supplier.url;
-    String companyName = supplier.companyName;
-    String fullName = supplier.fullName;
-    String phoneNumber = supplier.phoneNumber;
+    final user = Provider.of<User>(context);
+    String url = widget.supplier.url;
+    String companyName = widget.supplier.companyName;
+    String fullName = widget.supplier.fullName;
+    String phoneNumber = widget.supplier.phoneNumber;
+    Color _iconColor = Colors.white;
+
 
 
     return  MultiProvider(
       providers: [
         StreamProvider<List<Stock>>.value(
-          value: DatabaseService(filterValue: supplier.uid).supplierStocks,),
+          value: DatabaseService(filterValue: widget.supplier.uid).supplierStocks,),
         StreamProvider<List<Review>>.value(
-          value: DatabaseService(filterValue: supplier.uid).reviewType,)
+          value: DatabaseService(filterValue: widget.supplier.uid).reviewType,)
       ],
       child: DefaultTabController(
           length: 2,
@@ -95,7 +103,7 @@ class SupplierDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5,),
+                    //SizedBox(height: 5,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -107,26 +115,21 @@ class SupplierDetails extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        LikeButton(
-                          circleColor:
-                          CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                          bubblesColor: BubblesColor(
-                            dotPrimaryColor: Color(0xff33b5e5),
-                            dotSecondaryColor: Color(0xff0099cc),
-                          ),
-                          likeBuilder: (bool isLiked) {
-                            return IconButton(
-                             icon: Icon(
-                                 Icons.favorite,
-                               color: isLiked ? Colors.red : Colors.grey,),
-                              onPressed: () async{
-                                await DatabaseService(uid: supplier.uid).updateReviewData(supplier.uid, url, 4,'' );
-                                   // .updateFavoriteData(supplier.uid, url, companyName);
-                              },
-                              );
+                        SizedBox(width: 2,),
+                        IconButton(
+                            icon: Icon(Icons.favorite),
+                          color: (isPressed) ? Colors.red : Colors.grey,
+                          onPressed: () async{
+                            setState(() {
+                              isPressed = true;
+                            });
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text("Supplier Added to Favorites"),
+                            ));
+                            await DatabaseService(uid: user.uid).updateFavoriteData( widget.supplier.uid,
+                               url, companyName);
                           },
-                        ),
+                        )
                       ],
                     ),
                     /*Row(
@@ -142,7 +145,7 @@ class SupplierDetails extends StatelessWidget {
                         ),
                       ],
                     ),*/
-                    SizedBox(height: 10,),
+                    //SizedBox(height: 5,),
                     Text(
                       '$fullName',
                       style: TextStyle(
@@ -150,7 +153,7 @@ class SupplierDetails extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    //SizedBox(height: 5,),
                     GestureDetector(
                       child: Text(
                         '$phoneNumber',
@@ -187,7 +190,7 @@ class SupplierDetails extends StatelessWidget {
               children: <Widget>[
                 StockList(),
                 AddReview(
-                  supplierUID: supplier.uid,
+                  supplierUID: widget.supplier.uid,
                 )
               ],
             ),
