@@ -125,7 +125,7 @@ class SupplierDetails extends StatefulWidget {
                             setState(() {
                               isPressed = true;
                             });
-                          
+
 
                           },
                         )

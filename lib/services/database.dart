@@ -42,7 +42,7 @@ class DatabaseService {
   Future updateFavoriteData(String supplierUid, String url, String companyName) async {
     return await favoritesCollection.document().setData({
       'buyerUid': uid,
-      'supplierUID':supplierUid,
+      'supplierUid':supplierUid,
       'url': url,
       'companyName': companyName,
     });
@@ -317,7 +317,7 @@ class DatabaseService {
   //get flower type stocks stream
   Stream<List<Favorite>> get favorites {
     return Firestore.instance
-        .collection('favorite')
+        .collection('favorites')
         .where('buyerUid', isEqualTo: uid)
         .snapshots()
         .map(favoriteListFromSnapshot);
