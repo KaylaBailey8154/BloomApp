@@ -379,7 +379,7 @@ return null;
                                                       'senderUid': user.uid,
                                                       'receiverUid': widget.otherUid,
                                                       'stemLength': widget.cartItem.stemLength,
-                                                      'quantity': currentSliderValue,
+                                                      'quantity': _currentSliderValue,
                                                       'price': price,
                                                      // 'totalPrice': currentSliderValue * double.parse(price),
                                                     });
