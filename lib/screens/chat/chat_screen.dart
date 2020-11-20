@@ -14,6 +14,7 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 final _firestore = Firestore.instance;
@@ -136,7 +137,31 @@ return null;
                   children: [
                     FlatButton(
                       onPressed: () {
-                                            },
+                        _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                            .setData({
+                          'text': 'I am happy to accept that offer. You should receive an invoice by email shortly.',
+                          'senderUid': user.uid,
+                          'receiverUid': widget.otherUid,
+                        });
+
+                        _firestore.collection('transactions').document()
+                            .setData({
+                          'buyerUid': snapshot.data.senderUid,
+                          'receiverUid': snapshot.data.receiverUid,
+                          'stemLength': snapshot.data.quantity,
+                          'companyName': snapshot.data.companyName,
+                          'datePicked':snapshot.data.datePicked,
+                          'photoUrl': snapshot.data.photoUrl,
+                          'flowerColour':snapshot.data.flowerColour,
+                          'flowerType':snapshot.data.flowerType,
+                          'quantity': snapshot.data.quantity,
+                          'price': snapshot.data.price,
+                          'totalPrice': snapshot.data.totalPrice,
+                        });
+                         Firestore.instance
+                            .collection('offers')
+                         .document(user.uid).delete();
+                                                                       },
                       color: Colors.green,
                       child: Text(
                         'Accept',
@@ -166,8 +191,9 @@ return null;
               }
               else {
                print('no snapshot');
+               return Container();
               }
-            return Container();}),
+            }),
             Container(
               decoration: BoxDecoration(
                 border: Border(
