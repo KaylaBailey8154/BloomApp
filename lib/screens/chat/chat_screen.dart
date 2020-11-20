@@ -194,158 +194,176 @@ return null;
                         if(snapshot.data.role == 'buyer'){
                         return RaisedButton(
                           onPressed: () {
-                            Dialog(
+                            showModalBottomSheet(
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.circular(20.0)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    height: 350,
-                                    width: 400,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Make an Offer:',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                                context: context,
+                                builder: (BuildContext bc) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                      height: 350,
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center,
+                                        children: [
+                                          Text(
+                                            'Make an Offer:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text(
-                                              'Quantity:',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
+                                            children: <Widget>[
+                                              Text(
+                                                'Quantity:',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
                                               ),
-                                            ),
-                                            Slider(
-                                              value: currentSliderValue,
-                                              min: 0,
-                                              max: 100,
-                                              divisions: 10,
-                                              activeColor: Colors.green,
-                                              inactiveColor: Colors.lightGreen,
-                                              label: currentSliderValue.round().toString(),
-                                              onChanged: (double value) {
-                                                setState(() {
-                                                  currentSliderValue = value;
-                                                });
-                                              },
-                                            ),
+                                              Slider(
+                                                value: currentSliderValue,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 10,
+                                                activeColor: Colors.green,
+                                                inactiveColor: Colors
+                                                    .lightGreen,
+                                                label: currentSliderValue
+                                                    .round().toString(),
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    currentSliderValue = value;
+                                                  });
+                                                },
+                                              ),
 
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Amount:',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Amount:',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 40,
-                                              width: 100,
-                                              child: TextFormField(
-                                                  keyboardType: TextInputType.number,
-                                                  inputFormatters: <TextInputFormatter>[
-                                                    FilteringTextInputFormatter.digitsOnly
-                                                  ],
+                                              SizedBox(
+                                                height: 40,
+                                                width: 100,
+                                                child: TextFormField(
+                                                    keyboardType: TextInputType
+                                                        .number,
+                                                    inputFormatters: <
+                                                        TextInputFormatter>[
+                                                      FilteringTextInputFormatter
+                                                          .digitsOnly
+                                                    ],
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      labelText: 'R',
+                                                      border: OutlineInputBorder(
+                                                        borderRadius: BorderRadius
+                                                            .circular(25),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.green,
+                                                            width: 2),
+                                                      ),
+                                                    ),
+                                                    validator: (val) =>
+                                                    val.isEmpty ? 'R' : null,
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        price = val;
+                                                      });
+                                                    }),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Total Amount:',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 50,
+                                                width: 350,
+                                                child: TextFormField(
                                                   decoration: InputDecoration(
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    labelText: 'R',
-                                                    border: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(25),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green, width: 2),
+                                                    border: OutlineInputBorder(),
+                                                    labelText: 'Total Amount',
+                                                  ),
+                                                  initialValue: '0',
+                                                  validator: (val) =>
+                                                  val.isEmpty
+                                                      ? 'Please Enter a Company Name'
+                                                      : null,
+                                                  onChanged: (val) =>
+                                                      setState(() =>
+                                                      total = val),
+                                                  // decoration: textInputDecoration,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 20,),
+                                          Row(
+                                            children: [
+                                              FlatButton(
+                                                  color: Colors.green,
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight: FontWeight
+                                                            .bold
                                                     ),
                                                   ),
-                                                  validator: (val) =>
-                                                  val.isEmpty ? 'R' : null,
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      price = val;
-                                                    });
-                                                  }),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Total Amount:',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                                  onPressed: () async {
+                                                    Navigator.pop(context);
+                                                  }
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 50,
-                                              width: 350,
-                                              child: TextFormField(
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  labelText: 'Total Amount',
-                                                ),
-                                                initialValue: '0',
-                                                validator: (val) => val.isEmpty
-                                                    ? 'Please Enter a Company Name'
-                                                    : null,
-                                                onChanged: (val) =>
-                                                    setState(() => total = val),
-                                                // decoration: textInputDecoration,
+                                              FlatButton(
+                                                  color: Colors.green,
+                                                  child: Text(
+                                                    'OK',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight: FontWeight
+                                                            .bold
+                                                    ),
+                                                  ),
+                                                  onPressed: () async {
+
+                                                  }
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 20,),
-                                        Row(
-                                          children: [
-                                            FlatButton(
-                                                color: Colors.green,
-                                                child: Text(
-                                                  'Cancel',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                                onPressed: () async {
-                                                  Navigator.pop(context);
-                                                }
-                                            ),
-                                            FlatButton(
-                                                color: Colors.green,
-                                                child: Text(
-                                                  'OK',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                                onPressed: () async {
+                                            ],
+                                          ),
 
-                                                }
-                                            ),
-                                          ],
-                                        ),
-
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )
+                                  );
+                                }
 
                             );
                             messageTextController.clear();
