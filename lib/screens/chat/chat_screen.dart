@@ -1,6 +1,7 @@
 
 
 import 'package:bloomflutterapp/models/cartitem.dart';
+import 'package:bloomflutterapp/models/offer.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
@@ -126,7 +127,47 @@ return null;
             MessagesStream(otherParty:
             //user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID
              widget.otherUid ,),
-            // the async snap shot contains a query snapshot from firebase we access the query snapshot through the data
+
+            StreamBuilder<Offer>(stream: DatabaseService(uid: user.uid).offer,
+                builder: (context, snapshot){
+              if(snapshot.hasData){
+
+                return Row(
+                  children: [
+                    FlatButton(
+                      onPressed: () {
+                                            },
+                      color: Colors.green,
+                      child: Text(
+                        'Accept',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+
+                      },
+                      color: Colors.red,
+                      child: Text(
+                        'Reject',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              }
+              else {
+               print('no snapshot');
+              }
+            return Container();}),
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -375,18 +416,23 @@ return null;
                                                   onPressed: () async {
                                                     int quant = _currentSliderValue.toInt();
                                                     double doublePrice = double.parse(price);
-                                                   ;
+
                                                     _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
                                                         .setData({
                                                       'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
                                                       'senderUid': user.uid,
                                                       'receiverUid': widget.otherUid,});
 
-                                                    _firestore.collection('offers').document(DateTime.now().toIso8601String())
+                                                    _firestore.collection('offers').document(widget.otherUid)
                                                         .setData({
                                                       'senderUid': user.uid,
                                                       'receiverUid': widget.otherUid,
                                                       'stemLength': widget.cartItem.stemLength,
+                                                      'companyName':widget.cartItem.companyName,
+                                                      'datePicked':widget.cartItem.datePicked,
+                                                      'photoUrl':widget.cartItem.photoUrl,
+                                                      'flowerColour':widget.cartItem.flowerColour,
+                                                      'flowerType':widget.cartItem.flowerType,
                                                       'quantity': _currentSliderValue,
                                                       'price': doublePrice,
                                                       'totalPrice': _currentSliderValue  * double.parse(price),

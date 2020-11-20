@@ -95,7 +95,7 @@ class BuyerTile extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        message,
+                        message.substring(0,43),
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.green[800],

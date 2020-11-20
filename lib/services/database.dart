@@ -1,6 +1,7 @@
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/favorite.dart';
+import 'package:bloomflutterapp/models/offer.dart';
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
@@ -8,6 +9,7 @@ import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/favorites_screen.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatabaseService {
@@ -26,6 +28,8 @@ class DatabaseService {
       Firestore.instance.collection('reviews');
   final CollectionReference favoritesCollection =
   Firestore.instance.collection('favorites');
+  final CollectionReference offersCollection =
+  Firestore.instance.collection('offers');
 
 
   Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
@@ -216,6 +220,21 @@ class DatabaseService {
       role: snapshot.data['role'],
     );
   }
+  Offer offerFromSnapshot(DocumentSnapshot snapshot) {
+    return Offer(
+      flowerColour: snapshot.data['flowerColour'],
+      photoUrl: List.from(snapshot.data['photoUrl']),
+      datePicked: snapshot.data['datePicked'],
+      companyName: snapshot.data['companyName'],
+      flowerType: snapshot.data['flowerType'],
+      price: snapshot.data['price'],
+      quantity: snapshot.data['quantity'],
+      receiverUid: snapshot.data['receiverUid'],
+      senderUid: snapshot.data['senderUid'],
+      stemLength: snapshot.data['stemLength'],
+      totalPrice: snapshot.data['totalPrice'],
+    );
+  }
 
   UserData otherUserDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
@@ -341,9 +360,17 @@ class DatabaseService {
   //get user doc stream
 
   Stream<UserData> get userData {
+
     return userCollection.document(uid).snapshots().map(userDataFromSnapshot);
+
   }
 
+  Stream<Offer> get offer{
+    var it = offersCollection.document(uid).snapshots().map(offerFromSnapshot);
+
+    return it;
+
+  }
 
   
 }
