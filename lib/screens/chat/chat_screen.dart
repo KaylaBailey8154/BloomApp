@@ -66,11 +66,23 @@ class _ChatScreenState extends State<ChatScreen> {
 return null;
 
   }
+  Future<bool> isVisible(String uid) async{
+    UserData youser = await otherUser(widget.otherUid);
+
+    if(
+    youser.role == 'buyer'
+    ){return false;}
+    else if (youser.role == 'supplier'){
+      return true;
+    }
+    return false;
+      }
 
     @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<User>(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: null,
@@ -163,105 +175,113 @@ return null;
                       ),
                     ),
                   ),
-                  RaisedButton(
-                    onPressed: () {
-                      messageTextController.clear();
-                      Dialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(20.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 350,
-                              width: 400,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.info_outline,
-                                    size: 70,
-                                    color: Colors.green,
-                                  ),
-                                  SizedBox(height: 30,),
-                                  Text(
-                                    'Quick Tip!',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    'Choose the following photos for more detail:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    '1. Top View',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '2. Side View',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '3. Petals',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '4. Stem',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '5. Leaf',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  SizedBox(height: 20,),
-                                  FlatButton(
-                                      color: Colors.green,
-                                      child: Text(
-                                        'OK',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold
+
+                    StreamBuilder<UserData>(
+                      stream: DatabaseService(uid: user.uid).userData,
+                      builder: (context, snapshot) {
+                        if(snapshot.data.role == 'buyer'){
+                        return RaisedButton(
+                          onPressed: () {
+                            messageTextController.clear();
+                            Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(20.0)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    height: 350,
+                                    width: 400,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.info_outline,
+                                          size: 70,
+                                          color: Colors.green,
                                         ),
-                                      ),
-                                      onPressed: () async {
+                                        SizedBox(height: 30,),
+                                        Text(
+                                          'Quick Tip!',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Text(
+                                          'Choose the following photos for more detail:',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text(
+                                          '1. Top View',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          '2. Side View',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          '3. Petals',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          '4. Stem',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          '5. Leaf',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        FlatButton(
+                                            color: Colors.green,
+                                            child: Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                            onPressed: () async {
 
-                                      }
+                                            }
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          )
+                                )
 
-                      );
-                    },
-                    color: Colors.lightGreen,
-                    child: Text(
-                      'Offer',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
+                            );
+                          },
+                          color: Colors.lightGreen,
+                          child: Text(
+                            'Offer',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        );}
+                        return Container();
+                      }
                     ),
-                  ),
-                ],
+                                 ],
               ),
             ),
             //searchList()
@@ -270,6 +290,8 @@ return null;
       ),
     );
   }
+
+
 }
 
 class MessagesStream extends StatelessWidget {
