@@ -191,6 +191,7 @@ return null;
                     StreamBuilder<UserData>(
                       stream: DatabaseService(uid: user.uid).userData,
                       builder: (context, snapshot) {
+                        if(snapshot.hasData){
                         if(snapshot.data.role == 'buyer'){
                         return RaisedButton(
                           onPressed: () {
@@ -377,7 +378,7 @@ return null;
                               fontSize: 18.0,
                             ),
                           ),
-                        );}
+                        );}}
                         return Container();
                       }
                     ),
