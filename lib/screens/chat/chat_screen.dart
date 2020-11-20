@@ -37,8 +37,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final AuthService _auth = AuthService();
   String messageText;
 
-  double currentSliderValue = 0;
   String price = '0';
+  double _currentSliderValue = 0;
 
 
 
@@ -90,8 +90,9 @@ return null;
     @override
   Widget build(BuildContext context) {
 
-      double totalAmount = currentSliderValue * double.parse(price);
+    double totalAmount = _currentSliderValue * double.parse(price);
       String total = totalAmount.toString();
+
 
     final user = Provider.of<User>(context);
 
@@ -235,21 +236,26 @@ return null;
                                                   fontSize: 16,
                                                 ),
                                               ),
-                                              Slider(
-                                                value: currentSliderValue,
-                                                min: 0,
-                                                max: 100,
-                                                divisions: 10,
-                                                activeColor: Colors.green,
-                                                inactiveColor: Colors
-                                                    .lightGreen,
-                                                label: currentSliderValue
-                                                    .round().toString(),
-                                                onChanged: (double value) {
-                                                  setState(() {
-                                                    currentSliderValue = value;
-                                                  });
-                                                },
+                                              StatefulBuilder(
+                                                builder: (context, setState) {
+                                                  return Slider(
+                                                    value: _currentSliderValue,
+                                                    min: 0,
+                                                    max: 100,
+                                                    divisions: 10,
+                                                    activeColor: Colors.green,
+                                                    inactiveColor: Colors
+                                                        .lightGreen,
+                                                    label: _currentSliderValue
+                                                        .round().toString(),
+                                                    onChanged: (double value) {
+                                                      setState(() {
+                                                        _currentSliderValue =
+                                                            value;
+                                                      });
+                                                    },
+                                                  );
+                                                }
                                               ),
 
                                             ],
@@ -273,8 +279,7 @@ return null;
                                                 height: 40,
                                                 width: 100,
                                                 child: TextFormField(
-                                                    keyboardType: TextInputType
-                                                        .number,
+                                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                                                     inputFormatters: <
                                                         TextInputFormatter>[
                                                       FilteringTextInputFormatter
