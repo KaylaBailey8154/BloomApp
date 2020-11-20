@@ -134,66 +134,74 @@ return null;
               if(snapshot.hasData){
 
                 return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    FlatButton(
-                      onPressed: () {
-                        _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                            .setData({
-                          'text': 'I am happy to accept that offer. You should receive an invoice by email shortly.',
-                          'senderUid': user.uid,
-                          'receiverUid': widget.otherUid,
-                        });
+                    SizedBox(
+                      child: FlatButton(
+                        onPressed: () {
+                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                              .setData({
+                            'text': 'I am happy to accept that offer. You should receive an invoice by email shortly.',
+                            'senderUid': user.uid,
+                            'receiverUid': widget.otherUid,
+                          });
 
-                        _firestore.collection('transactions').document()
-                            .setData({
-                          'buyerUid': snapshot.data.senderUid,
-                          'receiverUid': snapshot.data.receiverUid,
-                          'stemLength': snapshot.data.quantity,
-                          'companyName': snapshot.data.companyName,
-                          'datePicked':snapshot.data.datePicked,
-                          'photoUrl': snapshot.data.photoUrl,
-                          'flowerColour':snapshot.data.flowerColour,
-                          'flowerType':snapshot.data.flowerType,
-                          'quantity': snapshot.data.quantity,
-                          'price': snapshot.data.price,
-                          'totalPrice': snapshot.data.totalPrice,
-                        });
-                         Firestore.instance
-                            .collection('offers')
-                         .document(user.uid).delete();
-                                                                       },
-                      color: Colors.green,
-                      child: Text(
-                        'Accept',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                          _firestore.collection('transactions').document()
+                              .setData({
+                            'buyerUid': snapshot.data.senderUid,
+                            'receiverUid': snapshot.data.receiverUid,
+                            'stemLength': snapshot.data.quantity,
+                            'companyName': snapshot.data.companyName,
+                            'datePicked':snapshot.data.datePicked,
+                            'photoUrl': snapshot.data.photoUrl,
+                            'flowerColour':snapshot.data.flowerColour,
+                            'flowerType':snapshot.data.flowerType,
+                            'quantity': snapshot.data.quantity,
+                            'price': snapshot.data.price,
+                            'totalPrice': snapshot.data.totalPrice,
+                          });
+                           Firestore.instance
+                              .collection('offers')
+                           .document(user.uid).delete();
+                                                                         },
+                        color: Colors.green,
+                        child: Text(
+                          'Accept',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
                         ),
                       ),
+                      width: 200,
                     ),
-                    FlatButton(
-                      onPressed: () {
-                        _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                            .setData({
-                          'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
-                          'senderUid': user.uid,
-                          'receiverUid': widget.otherUid,
-                        });
-                        Firestore.instance
-                            .collection('offers')
-                            .document(user.uid).delete();
+                    SizedBox(
+                      child: FlatButton(
+                        onPressed: () {
+                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                              .setData({
+                            'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
+                            'senderUid': user.uid,
+                            'receiverUid': widget.otherUid,
+                          });
+                          Firestore.instance
+                              .collection('offers')
+                              .document(user.uid).delete();
 
-                      },
-                      color: Colors.red,
-                      child: Text(
-                        'Reject',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          'Reject',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
                         ),
                       ),
+                      width: 200,
                     )
                   ],
                 );
