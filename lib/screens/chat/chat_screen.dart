@@ -75,17 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
 return null;
 
   }
-  Future<bool> isVisible(String uid) async{
-    UserData youser = await otherUser(widget.otherUid);
 
-    if(
-    youser.role == 'buyer'
-    ){return false;}
-    else if (youser.role == 'supplier'){
-      return true;
-    }
-    return false;
-      }
 
     @override
   Widget build(BuildContext context) {
@@ -167,12 +157,10 @@ return null;
                       messageTextController.clear();
 
                       _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-
                           .setData({
                         'text': messageText,
                         'senderUid': user.uid,
-                        'receiverUid': widget.otherUid,//user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID,
-                        //'senderRole': user.uid== widget.cartItem.buyerUID? 'buyer':'supplier',
+                        'receiverUid': widget.otherUid,
                       });
                       
 
@@ -354,7 +342,25 @@ return null;
                                                     ),
                                                   ),
                                                   onPressed: () async {
+                                                    print('firing');
+                                                    _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                                                        .setData({
+                                                     // 'text': 'My offer is $currentSliderValue stems at R$price per stem',
+                                                      'text': 'dummyoffer',
+                                                      'senderUid': user.uid,
+                                                      'receiverUid': widget.otherUid,});
 
+                                                    _firestore.collection('offers').document(DateTime.now().toIso8601String())
+                                                        .setData({
+                                                      'senderUid': user.uid,
+                                                      'receiverUid': widget.otherUid,
+                                                      'stemLength': widget.cartItem.stemLength,
+                                                      'quantity': currentSliderValue,
+                                                      'price': price,
+                                                     // 'totalPrice': currentSliderValue * double.parse(price),
+                                                    });
+                                                    print('fired');
+                                                    Navigator.pop(context);
                                                   }
                                               ),
                                             ],
