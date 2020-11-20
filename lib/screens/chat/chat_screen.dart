@@ -187,12 +187,13 @@ return null;
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.circular(20.0)),
+                                isScrollControlled:true,
                                 context: context,
                                 builder: (BuildContext bc) {
                                   return Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Container(
-                                      height: 350,
+                                      height: 400,
                                       width: 400,
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment
@@ -204,9 +205,10 @@ return null;
                                             'Make an Offer:',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                              fontSize: 25,
                                             ),
                                           ),
+                                          SizedBox(height: 20,),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment
                                                 .center,
@@ -241,6 +243,10 @@ return null;
                                             ],
                                           ),
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
                                             children: [
                                               Text(
                                                 'Amount:',
@@ -250,6 +256,7 @@ return null;
                                                   fontSize: 16,
                                                 ),
                                               ),
+                                              SizedBox(width: 20,),
                                               SizedBox(
                                                 height: 40,
                                                 width: 100,
@@ -283,7 +290,12 @@ return null;
                                               ),
                                             ],
                                           ),
+                                          SizedBox(height: 20,),
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
                                             children: [
                                               Text(
                                                 'Total Amount:',
@@ -293,10 +305,12 @@ return null;
                                                   fontSize: 16,
                                                 ),
                                               ),
+                                              SizedBox(width: 20,),
                                               SizedBox(
                                                 height: 50,
-                                                width: 350,
+                                                width: 100,
                                                 child: TextFormField(
+                                                  enabled: false,
                                                   decoration: InputDecoration(
                                                     border: OutlineInputBorder(),
                                                     labelText: 'Total Amount',
@@ -314,8 +328,12 @@ return null;
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 20,),
+                                          SizedBox(height: 50,),
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .end,
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .end,
                                             children: [
                                               FlatButton(
                                                   color: Colors.green,
@@ -331,6 +349,7 @@ return null;
                                                     Navigator.pop(context);
                                                   }
                                               ),
+                                              SizedBox(width: 10,),
                                               FlatButton(
                                                   color: Colors.green,
                                                   child: Text(
