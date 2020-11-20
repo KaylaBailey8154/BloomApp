@@ -174,6 +174,15 @@ return null;
                     ),
                     FlatButton(
                       onPressed: () {
+                        _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                            .setData({
+                          'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
+                          'senderUid': user.uid,
+                          'receiverUid': widget.otherUid,
+                        });
+                        Firestore.instance
+                            .collection('offers')
+                            .document(user.uid).delete();
 
                       },
                       color: Colors.red,
