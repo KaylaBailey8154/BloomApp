@@ -183,6 +183,10 @@ class _BuyerRegisterState extends State<BuyerRegister> {
                             height: 40,
                             width: 350,
                             child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,

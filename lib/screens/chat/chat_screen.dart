@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bloomflutterapp/services/auth.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 final _firestore = Firestore.instance;
@@ -35,6 +36,14 @@ class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final AuthService _auth = AuthService();
   String messageText;
+
+  double currentSliderValue = 0;
+  String price = '0';
+
+
+
+
+
 
   Future<UserData> otherUser (String otherParty) async{
     var otherUser = await Firestore.instance.collection('users').document(otherParty).get();
@@ -80,6 +89,9 @@ return null;
 
     @override
   Widget build(BuildContext context) {
+
+      double totalAmount = currentSliderValue * double.parse(price);
+      String total = totalAmount.toString();
 
     final user = Provider.of<User>(context);
 
@@ -182,7 +194,6 @@ return null;
                         if(snapshot.data.role == 'buyer'){
                         return RaisedButton(
                           onPressed: () {
-                            messageTextController.clear();
                             Dialog(
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -196,77 +207,148 @@ return null;
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons.info_outline,
-                                          size: 70,
-                                          color: Colors.green,
-                                        ),
-                                        SizedBox(height: 30,),
                                         Text(
-                                          'Quick Tip!',
+                                          'Make an Offer:',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
                                           ),
                                         ),
-                                        SizedBox(height: 10,),
-                                        Text(
-                                          'Choose the following photos for more detail:',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text(
-                                          '1. Top View',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '2. Side View',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '3. Petals',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '4. Stem',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '5. Leaf',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        SizedBox(height: 20,),
-                                        FlatButton(
-                                            color: Colors.green,
-                                            child: Text(
-                                              'OK',
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              'Quantity:',
                                               style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
                                               ),
                                             ),
-                                            onPressed: () async {
+                                            Slider(
+                                              value: currentSliderValue,
+                                              min: 0,
+                                              max: 100,
+                                              divisions: 10,
+                                              activeColor: Colors.green,
+                                              inactiveColor: Colors.lightGreen,
+                                              label: currentSliderValue.round().toString(),
+                                              onChanged: (double value) {
+                                                setState(() {
+                                                  currentSliderValue = value;
+                                                });
+                                              },
+                                            ),
 
-                                            }
+                                          ],
                                         ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Amount:',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 40,
+                                              width: 100,
+                                              child: TextFormField(
+                                                  keyboardType: TextInputType.number,
+                                                  inputFormatters: <TextInputFormatter>[
+                                                    FilteringTextInputFormatter.digitsOnly
+                                                  ],
+                                                  decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    labelText: 'R',
+                                                    border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(25),
+                                                      borderSide: BorderSide(
+                                                          color: Colors.green, width: 2),
+                                                    ),
+                                                  ),
+                                                  validator: (val) =>
+                                                  val.isEmpty ? 'R' : null,
+                                                  onChanged: (val) {
+                                                    setState(() {
+                                                      price = val;
+                                                    });
+                                                  }),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Total Amount:',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 50,
+                                              width: 350,
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: 'Total Amount',
+                                                ),
+                                                initialValue: '0',
+                                                validator: (val) => val.isEmpty
+                                                    ? 'Please Enter a Company Name'
+                                                    : null,
+                                                onChanged: (val) =>
+                                                    setState(() => total = val),
+                                                // decoration: textInputDecoration,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 20,),
+                                        Row(
+                                          children: [
+                                            FlatButton(
+                                                color: Colors.green,
+                                                child: Text(
+                                                  'Cancel',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                }
+                                            ),
+                                            FlatButton(
+                                                color: Colors.green,
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+
+                                                }
+                                            ),
+                                          ],
+                                        ),
+
                                       ],
                                     ),
                                   ),
                                 )
 
                             );
+                            messageTextController.clear();
                           },
                           color: Colors.lightGreen,
                           child: Text(
