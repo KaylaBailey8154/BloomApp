@@ -229,19 +229,21 @@ return null;
                                                   return Slider(
                                                     value: _currentSliderValue,
                                                     min: 0,
-                                                    max: 100,
+                                                    max: widget.cartItem.quantity.toDouble(),
                                                     divisions: 10,
                                                     activeColor: Colors.green,
                                                     inactiveColor: Colors
                                                         .lightGreen,
                                                     label: _currentSliderValue
                                                         .round().toString(),
-                                                    onChanged: (double value) {
-                                                      setState(() {
-                                                        _currentSliderValue =
-                                                            value;
-                                                      });
-                                                    },
+                                                      onChanged: (val) {
+                                                        setState(() {
+                                                          _currentSliderValue = val;
+                                                          total = ( _currentSliderValue  * double.parse(price)).toInt().toString();
+                                                          print(total);
+                                                        });
+                                                      }
+
                                                   );
                                                 }
                                               ),
@@ -255,7 +257,7 @@ return null;
                                                 .center,
                                             children: [
                                               Text(
-                                                'Amount:',
+                                                'Price per stem:',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
@@ -290,6 +292,8 @@ return null;
                                                     onChanged: (val) {
                                                       setState(() {
                                                         price = val;
+                                                        total = ( _currentSliderValue  * double.parse(price)).toInt().toString();
+                                                        print(total);
                                                       });
                                                     }),
                                               ),
@@ -303,7 +307,7 @@ return null;
                                                 .center,
                                             children: [
                                               Text(
-                                                'Total Amount:',
+                                                'Total Amount: R$total',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
@@ -311,7 +315,8 @@ return null;
                                                 ),
                                               ),
                                               SizedBox(width: 20,),
-                                              SizedBox(
+
+                                              /*SizedBox(
                                                 height: 50,
                                                 width: 100,
                                                 child: TextFormField(
@@ -320,17 +325,19 @@ return null;
                                                     border: OutlineInputBorder(),
                                                     labelText: 'Total Amount',
                                                   ),
-                                                  initialValue: '0',
+                                                  initialValue: total,
                                                   validator: (val) =>
                                                   val.isEmpty
                                                       ? 'Please Enter a Company Name'
                                                       : null,
-                                                  onChanged: (val) =>
+                                                  onChanged: (total) =>
                                                       setState(() =>
-                                                      total = val),
+                                                          total=total
+                                                     // total = ( _currentSliderValue  * double.parse(price)).toInt().toString()
+                                                      ),
                                                   // decoration: textInputDecoration,
                                                 ),
-                                              ),
+                                              ),*/
                                             ],
                                           ),
                                           SizedBox(height: 50,),
@@ -358,7 +365,7 @@ return null;
                                               FlatButton(
                                                   color: Colors.green,
                                                   child: Text(
-                                                    'OK',
+                                                    'Offer',
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight: FontWeight
@@ -366,11 +373,12 @@ return null;
                                                     ),
                                                   ),
                                                   onPressed: () async {
-                                                    print('firing');
+                                                    int quant = _currentSliderValue.toInt();
+                                                    double doublePrice = double.parse(price);
+                                                   ;
                                                     _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
                                                         .setData({
-                                                     // 'text': 'My offer is $currentSliderValue stems at R$price per stem',
-                                                      'text': 'dummyoffer',
+                                                      'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
                                                       'senderUid': user.uid,
                                                       'receiverUid': widget.otherUid,});
 
@@ -380,8 +388,8 @@ return null;
                                                       'receiverUid': widget.otherUid,
                                                       'stemLength': widget.cartItem.stemLength,
                                                       'quantity': _currentSliderValue,
-                                                      'price': price,
-                                                     // 'totalPrice': currentSliderValue * double.parse(price),
+                                                      'price': doublePrice,
+                                                      'totalPrice': _currentSliderValue  * double.parse(price),
                                                     });
                                                     print('fired');
                                                     Navigator.pop(context);
