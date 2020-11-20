@@ -94,8 +94,6 @@ class FavoriteTile extends StatelessWidget {
                           .collection('favorites')
                           .where('buyerUid', isEqualTo: favorite.buyerUid)
                           .where('supplierUid', isEqualTo: favorite.supplierUid)
-                          .where('url', isEqualTo: favorite.url)
-                          .where('companyName', isEqualTo: favorite.companyName)
                           .getDocuments()
                           .then((snapshot) {
                         for (DocumentSnapshot ds in snapshot.documents) {
