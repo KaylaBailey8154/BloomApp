@@ -160,20 +160,7 @@ return null;
                       child: FlatButton(
                         onPressed: () async{
 
-                          _firestore.collection('transactions').document()
-                              .setData({
-                            'buyerUid': snapshot.data.senderUid,
-                            'receiverUid': snapshot.data.receiverUid,
-                            'stemLength': snapshot.data.quantity,
-                            'companyName': snapshot.data.companyName,
-                            'datePicked':snapshot.data.datePicked,
-                            'photoUrl': snapshot.data.photoUrl,
-                            'flowerColour':snapshot.data.flowerColour,
-                            'flowerType':snapshot.data.flowerType,
-                            'quantity': snapshot.data.quantity,
-                            'price': snapshot.data.price,
-                            'totalPrice': snapshot.data.totalPrice,
-                          });
+
 
                           Firestore.instance
                               .collection('offers')
@@ -225,6 +212,22 @@ return null;
                             'senderUid': user.uid,
                             'receiverUid': widget.otherUid,
                             'clickable': true,
+                          });
+
+                          _firestore.collection('transactions').document()
+                              .setData({
+                            'buyerUid': snapshot.data.senderUid,
+                            'receiverUid': snapshot.data.receiverUid,
+                            'stemLength': snapshot.data.quantity,
+                            'companyName': snapshot.data.companyName,
+                            'datePicked':snapshot.data.datePicked,
+                            'photoUrl': snapshot.data.photoUrl,
+                            'flowerColour':snapshot.data.flowerColour,
+                            'flowerType':snapshot.data.flowerType,
+                            'quantity': snapshot.data.quantity,
+                            'price': snapshot.data.price,
+                            'totalPrice': snapshot.data.totalPrice,
+                            'invoiceUrl': url,
                           });
                                                                                                    },
                         color: Colors.green,
