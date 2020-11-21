@@ -1,5 +1,5 @@
-
-
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/offer.dart';
 import 'package:bloomflutterapp/models/stock.dart';
@@ -7,6 +7,7 @@ import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/chat/Profile_details.dart';
 import 'package:bloomflutterapp/screens/chat/cartItem_details.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 final _firestore = Firestore.instance;
 
@@ -41,7 +45,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   String price = '0';
   double _currentSliderValue = 0;
-
+  String url;
+  File _pdf;
 
 
 
@@ -53,7 +58,19 @@ class _ChatScreenState extends State<ChatScreen> {
     return DatabaseService().otherUserDataFromSnapshot(otherUser);
   }
 
+  void uploadPdf() async {
+    String pdf = DateTime.now().toString();
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child("PDFs/");
+    StorageUploadTask uploadTask = firebaseStorageRef.child(
+        pdf + ".pdf").putFile(_pdf);
 
+    var pdfUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    url = pdfUrl.toString();
+
+    print("Image Url= " + url);
+  }
   
   Future<CartItem> theItemInQuestion (String theirRole, String myUid, String theirUid) async {
      QuerySnapshot query = await Firestore.instance.collection('cartItems').getDocuments();
@@ -85,6 +102,7 @@ return null;
 
     double totalAmount = _currentSliderValue * double.parse(price);
       String total = totalAmount.toString();
+
 
 
     final user = Provider.of<User>(context);
@@ -140,13 +158,7 @@ return null;
                   children: [
                     SizedBox(
                       child: FlatButton(
-                        onPressed: () {
-                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                              .setData({
-                            'text': 'I am happy to accept that offer. You should receive an invoice by email shortly.',
-                            'senderUid': user.uid,
-                            'receiverUid': widget.otherUid,
-                          });
+                        onPressed: () async{
 
                           _firestore.collection('transactions').document()
                               .setData({
@@ -162,10 +174,59 @@ return null;
                             'price': snapshot.data.price,
                             'totalPrice': snapshot.data.totalPrice,
                           });
-                           Firestore.instance
+
+                          Firestore.instance
                               .collection('offers')
-                           .document(user.uid).delete();
-                                                                         },
+                              .document(user.uid).delete();
+
+
+                          final pdf = pw.Document();
+
+
+                          pdf.addPage(pw.Page(
+                              pageFormat: PdfPageFormat.a4,
+                              build: (pw.Context context) {
+                                return pw.Center(
+                                  child: pw.Text(snapshot.data.companyName),
+                                ); // Center
+                              })); //
+
+                          final output = await getTemporaryDirectory();
+
+
+                          final file = File('${output.path}/example.pdf');
+                           await file.writeAsBytes(pdf.save());
+
+
+                            String time = DateTime.now().toString();
+                            StorageReference firebaseStorageRef = FirebaseStorage.instance
+                                .ref()
+                                .child("PDFs/");
+                            StorageUploadTask uploadTask = firebaseStorageRef.child(
+                                time + ".pdf").putFile(file);
+
+                          var pdfUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+                            url = pdfUrl.toString();
+
+
+                            print("Pdf Url= " + url);
+
+
+                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                              .setData({
+                            'text': 'I am happy to accept that offer. You can find your invoice here:',
+                            'senderUid': user.uid,
+                            'receiverUid': widget.otherUid,
+                            'clickable': false,
+                          });
+                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                              .setData({
+                            'text': '$url',
+                            'senderUid': user.uid,
+                            'receiverUid': widget.otherUid,
+                            'clickable': true,
+                          });
+                                                                                                   },
                         color: Colors.green,
                         child: Text(
                           'Accept',
@@ -180,16 +241,21 @@ return null;
                     ),
                     SizedBox(
                       child: FlatButton(
-                        onPressed: () {
+                        onPressed: ()  {
                           _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
                               .setData({
                             'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
                             'senderUid': user.uid,
                             'receiverUid': widget.otherUid,
+                            'clickable': false,
                           });
                           Firestore.instance
                               .collection('offers')
                               .document(user.uid).delete();
+
+
+
+
 
                         },
                         color: Colors.red,
@@ -247,6 +313,7 @@ return null;
                         'text': messageText,
                         'senderUid': user.uid,
                         'receiverUid': widget.otherUid,
+                        'clickable': false,
                       });
                       
 
@@ -465,7 +532,8 @@ return null;
                                                         .setData({
                                                       'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
                                                       'senderUid': user.uid,
-                                                      'receiverUid': widget.otherUid,});
+                                                      'receiverUid': widget.otherUid,
+                                                      'clickable': false,});
 
                                                     _firestore.collection('offers').document(widget.otherUid)
                                                         .setData({
@@ -552,12 +620,14 @@ if((message.data['senderUid'] == user.uid || message.data['senderUid'] == otherP
           final messageSender = message.data['senderUid'];
           final messageReceiver = message.data['receiverUid'];
           final currentUser = user.uid;
+          final clickable = message.data['clickable'];
 
           final messageBubble = MessageBubble (
             sender: messageSender,
             receiver: messageReceiver,
             text:messageText,
             isMe: currentUser == messageSender,
+            clickable: clickable,
           );
           messageBubbles.add(messageBubble);
 
@@ -581,28 +651,59 @@ if((message.data['senderUid'] == user.uid || message.data['senderUid'] == otherP
 
 class MessageBubble extends StatelessWidget {
 
-  MessageBubble ({this.sender, this.text, this.isMe, this.receiver});
+  MessageBubble ({this.sender, this.text, this.isMe, this.receiver, this.clickable});
 
   final String sender;
   final String text;
   final bool isMe;
   final String receiver;
+  final bool clickable;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+
+    if(clickable== true){
+    return GestureDetector(
+      onTap: (){ launch(text);},
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column (
+          crossAxisAlignment:
+          isMe? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: <Widget>[
+
+            Material(
+              borderRadius: isMe ?
+              BorderRadius.only(topLeft: Radius.circular(30),
+                  bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))
+                  : BorderRadius.only(
+                bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30), topRight: Radius.circular(30),
+              ),
+              elevation: 5.0,
+              color:  isMe ? Colors.lightGreen : Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Text(
+                  text ,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+      ),
+    );}
+    else{ return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column (
         crossAxisAlignment:
         isMe? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
-          Text(sender,
-            style: TextStyle (
-              fontSize: 12,
-              color: Colors.black54,
 
-            ),
-          ),
           Material(
             borderRadius: isMe ?
             BorderRadius.only(topLeft: Radius.circular(30),
@@ -626,7 +727,8 @@ class MessageBubble extends StatelessWidget {
         ],
       ),
 
-    );
+    );}
+
   }
 }
 

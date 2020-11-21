@@ -187,6 +187,7 @@ class DatabaseService {
         sender: doc.data['senderUid'] ?? '',
        receiver: doc.data ['receiverUid'] ?? '',
         text:  doc.data['text'] ?? '',
+       clickable: doc.data['clickable'],
       );
     }).toList();
   }
