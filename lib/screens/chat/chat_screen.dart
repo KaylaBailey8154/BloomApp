@@ -47,6 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
 
+
   Future<UserData> otherUser (String otherParty) async{
     var otherUser = await Firestore.instance.collection('users').document(otherParty).get();
     return DatabaseService().otherUserDataFromSnapshot(otherUser);
@@ -118,7 +119,7 @@ return null;
           ),
         ],
         title: Text('Bloom Chat'),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.green,
       ),
       body: SafeArea(
         child: Column(

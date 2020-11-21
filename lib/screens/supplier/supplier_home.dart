@@ -443,7 +443,13 @@ class SupplierHome extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.chat),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                      ),
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),

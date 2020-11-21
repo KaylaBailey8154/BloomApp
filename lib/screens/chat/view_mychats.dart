@@ -105,7 +105,13 @@ class _ViewMyChatsState extends State<ViewMyChats> {
                   ),
                   IconButton(
                     icon: Icon(Icons.chat),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
                     icon: Icon(Icons.history),

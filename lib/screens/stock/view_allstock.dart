@@ -1,4 +1,5 @@
 import 'package:bloomflutterapp/models/stock.dart';
+import 'package:bloomflutterapp/screens/chat/view_mychats.dart';
 import 'package:bloomflutterapp/screens/stock/stock_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
@@ -104,7 +105,13 @@ class ViewAllStock extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(Icons.chat),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                        ),
+                      );
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
