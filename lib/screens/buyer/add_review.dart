@@ -78,7 +78,7 @@ class _AddReviewState extends State<AddReview>{
                                         color: Colors.grey[850], fontSize: 14.0),
                                   ),
                                   SizedBox(height: 5,),
-                                  /*RatingBar(
+                                   RatingBar.builder(
                                     initialRating: 1,
                                     minRating: 1,
                                     direction: Axis.horizontal,
@@ -94,7 +94,7 @@ class _AddReviewState extends State<AddReview>{
                                         _ratings = value;
                                       });
                                     },
-                                  ),*/
+                                  ),
                                   SizedBox(height: 5,),
                                   Text(
                                     'Review:',
