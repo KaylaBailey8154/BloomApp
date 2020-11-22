@@ -216,17 +216,17 @@ return null;
 
                           _firestore.collection('transactions').document()
                               .setData({
-                            'buyerUid': snapshot.data.senderUid,
+                            'senderUid': snapshot.data.senderUid,
                             'receiverUid': snapshot.data.receiverUid,
-                            'stemLength': snapshot.data.quantity,
+                            'stemLength': snapshot.data.stemLength,
                             'companyName': snapshot.data.companyName,
                             'datePicked':snapshot.data.datePicked,
                             'photoUrl': snapshot.data.photoUrl,
                             'flowerColour':snapshot.data.flowerColour,
                             'flowerType':snapshot.data.flowerType,
-                            'quantity': snapshot.data.quantity,
-                            'price': snapshot.data.price,
-                            'totalPrice': snapshot.data.totalPrice,
+                            'quantity': snapshot.data.quantity.toInt(),
+                            'price': snapshot.data.price.toInt(),
+                            'totalPrice': snapshot.data.totalPrice.toInt(),
                             'invoiceUrl': url,
                           });
                                                                                                    },

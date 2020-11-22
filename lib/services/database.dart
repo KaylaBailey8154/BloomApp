@@ -5,6 +5,7 @@ import 'package:bloomflutterapp/models/offer.dart';
 import 'package:bloomflutterapp/models/review.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/supplier.dart';
+import 'package:bloomflutterapp/models/transaction.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/favorites_screen.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
@@ -30,6 +31,8 @@ class DatabaseService {
   Firestore.instance.collection('favorites');
   final CollectionReference offersCollection =
   Firestore.instance.collection('offers');
+  final CollectionReference transactionsCollection =
+  Firestore.instance.collection('transactions');
 
 
   Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
@@ -209,6 +212,24 @@ class DatabaseService {
       );
     }).toList();
   }
+  List<Ransaction> transactionListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Ransaction(
+        senderUid: doc.data['senderUid'] ?? '',
+        receiverUid: doc.data['receiverUid'] ?? '',
+        flowerColour: doc.data['flowerColour'] ?? 0,
+        quantity: doc.data['quantity'] ?? 0,
+        flowerType: doc.data['flowerType'] ?? '',
+        price: doc.data['price'] ?? 0,
+        totalPrice: doc.data['totalPrice']  ?? 0,
+        invoiceUrl: doc.data['invoiceUrl']?? '',
+        datePicked: doc.data['datePicked'] ?? '',
+        companyName: doc.data['companyName'] ?? '',
+        photoUrl: List.from(doc.data['photoUrl']) ?? [],
+        stemLength: doc.data['stemLength'] ?? 0,
+      );
+    }).toList();
+  }
   //userData from snapshot
 
   UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -279,6 +300,12 @@ class DatabaseService {
         .where('supplierUID', isEqualTo: uid)
         .snapshots()
         .map(stockListFromSnapshot);
+  }
+  Stream<List<Ransaction>> get myTransactions {
+    return transactionsCollection
+        .where('receiverUid', isEqualTo: uid)
+        .snapshots()
+        .map(transactionListFromSnapshot);
   }
 
   //get cart stream

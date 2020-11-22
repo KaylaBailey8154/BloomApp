@@ -5,6 +5,7 @@ import 'package:bloomflutterapp/screens/stock/add_stock_legacy.dart';
 import 'package:bloomflutterapp/screens/stock/view_allstock.dart';
 import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
+import 'package:bloomflutterapp/screens/supplier/view_mytransactions.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 
 import 'package:flutter/material.dart';
@@ -227,6 +228,13 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
                     child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ViewMyTransactions(),
+                          ),
+                        );
+                      },
                       child: Container(
                         width: 150,
                         height: 150,
