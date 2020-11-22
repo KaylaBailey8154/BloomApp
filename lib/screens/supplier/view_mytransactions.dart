@@ -1,9 +1,7 @@
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/transaction.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/chat/view_mychats.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
-import 'package:bloomflutterapp/screens/stock/mystock_list.dart';
 import 'package:bloomflutterapp/screens/supplier/mytransaction_list.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';

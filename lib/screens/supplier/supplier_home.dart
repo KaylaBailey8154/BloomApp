@@ -1,4 +1,3 @@
-import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/screens/chat/view_mychats.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock.dart';
 import 'package:bloomflutterapp/screens/stock/add_stock_legacy.dart';
@@ -7,7 +6,6 @@ import 'package:bloomflutterapp/screens/stock/view_mystock.dart';
 import 'package:bloomflutterapp/screens/supplier/view_allsuppliers.dart';
 import 'package:bloomflutterapp/screens/supplier/view_mytransactions.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-
 import 'package:flutter/material.dart';
 
 import 'update_supplierdetails.dart';

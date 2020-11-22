@@ -1,9 +1,7 @@
-import 'package:bloomflutterapp/models/user.dart';
-import 'package:bloomflutterapp/screens/authenticate/user_typeselection.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'forgot_password.dart';
 

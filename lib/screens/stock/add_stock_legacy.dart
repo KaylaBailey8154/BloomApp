@@ -1,11 +1,9 @@
-import 'dart:math';
+import 'dart:async';
+import 'dart:io';
 
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
-import 'package:bloomflutterapp/services/WebBrowser.dart';
 import 'package:bloomflutterapp/services/database.dart';
-import 'package:bloomflutterapp/services/image.dart';
-import 'package:firebase_picture_uploader/firebase_picture_uploader.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'dart:io';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'dart:async';
-import 'package:carousel_pro/carousel_pro.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 class AddStockMultiplePhotos extends StatefulWidget {
   @override

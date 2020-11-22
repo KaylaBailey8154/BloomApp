@@ -2,6 +2,7 @@ import 'package:bloomflutterapp/screens/wrapper.dart';
 import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'models/user.dart';
 
 void main() {

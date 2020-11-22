@@ -1,13 +1,11 @@
 import 'package:bloomflutterapp/models/cartitem.dart';
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/services/WebBrowser.dart';
-import 'package:bloomflutterapp/services/database.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 
 class CartItemDetails extends StatelessWidget {
   final CartItem stock;

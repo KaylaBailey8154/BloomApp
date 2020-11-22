@@ -1,5 +1,4 @@
 import 'package:bloomflutterapp/screens/buyer/review_list.dart';
-import 'package:bloomflutterapp/screens/buyer/reviewtype_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../../models/user.dart';
 import '../../services/database.dart';
-import 'view_allreviews.dart';
 
 class AddReview extends StatefulWidget {
   final String supplierUID;

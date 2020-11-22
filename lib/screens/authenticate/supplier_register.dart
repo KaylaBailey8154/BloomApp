@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:bloomflutterapp/screens/authenticate/authenticate.dart';
 import 'package:bloomflutterapp/services/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class SupplierRegister extends StatefulWidget {
   final Function toggleView;

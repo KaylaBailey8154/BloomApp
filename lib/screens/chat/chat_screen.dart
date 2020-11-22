@@ -1,25 +1,21 @@
 import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/offer.dart';
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
-import 'package:bloomflutterapp/screens/buyer/product_details.dart';
 import 'package:bloomflutterapp/screens/chat/Profile_details.dart';
 import 'package:bloomflutterapp/screens/chat/cartItem_details.dart';
+import 'package:bloomflutterapp/services/auth.dart';
+import 'package:bloomflutterapp/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:bloomflutterapp/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:bloomflutterapp/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bloomflutterapp/services/auth.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _firestore = Firestore.instance;
 

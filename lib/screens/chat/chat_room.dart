@@ -1,9 +1,7 @@
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
-import 'package:bloomflutterapp/screens/chat/constants.dart';
 import 'package:bloomflutterapp/services/auth.dart';
+import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/material.dart';
-import 'package:bloomflutterapp/services/database.dart';
-import 'package:bloomflutterapp/services/database.dart';
 
 class ChatRoom extends StatefulWidget {
   @override

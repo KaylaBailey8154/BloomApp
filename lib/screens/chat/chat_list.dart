@@ -1,9 +1,8 @@
-import 'dart:collection';
 
 import 'package:bloomflutterapp/models/buyer.dart';
 import 'package:bloomflutterapp/models/user.dart';
-import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/screens/buyer/buyer_tile.dart';
+import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

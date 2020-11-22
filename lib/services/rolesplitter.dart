@@ -1,12 +1,9 @@
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/buyer_home.dart';
 import 'package:bloomflutterapp/screens/supplier/supplier_home.dart';
-import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 
 class RoleSplitter extends StatelessWidget {
   final User user;

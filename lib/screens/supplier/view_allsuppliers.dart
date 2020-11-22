@@ -6,7 +6,6 @@ import 'package:bloomflutterapp/services/auth.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

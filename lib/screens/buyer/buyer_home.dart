@@ -2,9 +2,8 @@ import 'package:bloomflutterapp/screens/buyer/favorites_screen.dart';
 import 'package:bloomflutterapp/screens/buyer/update_buyerdetails.dart';
 import 'package:bloomflutterapp/screens/stock/view_flowertypestock.dart';
 import 'package:bloomflutterapp/services/auth.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
+
 import '../cart/view_mycart.dart';
 import '../supplier/update_supplierdetails.dart';
 

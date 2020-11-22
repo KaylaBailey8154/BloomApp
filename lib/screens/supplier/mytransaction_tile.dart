@@ -1,6 +1,4 @@
-import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/transaction.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -1,4 +1,3 @@
-import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/cart/view_mycart.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';

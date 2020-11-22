@@ -1,7 +1,6 @@
 import 'package:bloomflutterapp/models/favorite.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/favorite_list.dart';
-import 'package:bloomflutterapp/screens/buyer/view_allfavorites.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,4 @@
 import 'package:bloomflutterapp/models/buyer.dart';
-import 'package:bloomflutterapp/models/supplier.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
