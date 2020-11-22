@@ -14,7 +14,7 @@ class _MyTransactionsListState extends State<MyTransactionsList> {
   @override
   Widget build(BuildContext context) {
     final transactions = Provider.of<List<Ransaction>>(context) ?? [];
-print(transactions.length);
+    print(transactions.length);
     return ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (context, index) {

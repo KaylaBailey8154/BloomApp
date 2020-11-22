@@ -20,12 +20,12 @@ class ReviewTile extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
-        child: Container(
-          height: 130,
-          width: 50,
-          child: Card(
+      child: Container(
+        height: 130,
+        width: 50,
+        child: Card(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
             child: Padding(
@@ -50,7 +50,9 @@ class ReviewTile extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: List.generate(5, (index) {
@@ -60,7 +62,9 @@ class ReviewTile extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     '$reviews',
                     style: TextStyle(
@@ -70,9 +74,8 @@ class ReviewTile extends StatelessWidget {
                   ),
                 ],
               ),
-            )
-            ),
-          ),
-        );
+            )),
+      ),
+    );
   }
 }

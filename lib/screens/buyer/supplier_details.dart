@@ -12,28 +12,23 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../models/supplier.dart';
 import 'add_review.dart';
 
-
 class SupplierDetails extends StatefulWidget {
   final Supplier supplier;
   SupplierDetails({this.supplier});
   @override
   _SupplierDetailsState createState() => _SupplierDetailsState();
-
 }
 
-
-
-  void launchCaller(String number) async {
-    var url = "tel: $number";
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+void launchCaller(String number) async {
+  var url = "tel: $number";
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
+}
 
-  class _SupplierDetailsState extends State<SupplierDetails> {
-
+class _SupplierDetailsState extends State<SupplierDetails> {
   final _globalKey = GlobalKey<ScaffoldState>();
   bool isPressed = false;
 
@@ -46,31 +41,30 @@ class SupplierDetails extends StatefulWidget {
     String phoneNumber = widget.supplier.phoneNumber;
     Color _iconColor = Colors.white;
 
-
-
-    return  MultiProvider(
+    return MultiProvider(
       providers: [
         StreamProvider<List<Stock>>.value(
-          value: DatabaseService(filterValue: widget.supplier.uid).supplierStocks,),
+          value:
+              DatabaseService(filterValue: widget.supplier.uid).supplierStocks,
+        ),
         StreamProvider<List<Review>>.value(
-          value: DatabaseService(filterValue: widget.supplier.uid).reviewType,)
+          value: DatabaseService(filterValue: widget.supplier.uid).reviewType,
+        )
       ],
       child: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            key: _globalKey,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
-            appBar: PreferredSize(
+        length: 2,
+        child: Scaffold(
+          key: _globalKey,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(
               preferredSize: Size.fromHeight(230),
               child: Container(
                 decoration: BoxDecoration(
-                    gradient:
-                    LinearGradient(
+                    gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.green, Colors.greenAccent])
-                ),
+                        colors: [Colors.green, Colors.greenAccent])),
                 child: Column(
                   children: [
                     Row(
@@ -84,21 +78,23 @@ class SupplierDetails extends StatefulWidget {
                           iconSize: 30,
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(120,30,0,0),
+                          padding: const EdgeInsets.fromLTRB(120, 30, 0, 0),
                           child: CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.white,
-                            child: ClipOval(child: SizedBox(
-                                width: 80,
-                                height: 80,
-                                child: '$url' != null
-                                    ? Image.network(
-                                  '$url',
-                                  fit: BoxFit.fill,
-                                )
-                                    : Image.asset(
-                                  'assets/profile.png',
-                                )),),
+                            child: ClipOval(
+                              child: SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: '$url' != null
+                                      ? Image.network(
+                                          '$url',
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Image.asset(
+                                          'assets/profile.png',
+                                        )),
+                            ),
                           ),
                         ),
                       ],
@@ -115,18 +111,19 @@ class SupplierDetails extends StatefulWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(width: 2,),
+                        SizedBox(
+                          width: 2,
+                        ),
                         IconButton(
-                            icon: Icon(Icons.favorite),
+                          icon: Icon(Icons.favorite),
                           color: (isPressed) ? Colors.red : Colors.grey,
-                          onPressed: () async{
-                            await DatabaseService(uid: user.uid).updateFavoriteData(widget.supplier.uid,
-                                url, companyName);
+                          onPressed: () async {
+                            await DatabaseService(uid: user.uid)
+                                .updateFavoriteData(
+                                    widget.supplier.uid, url, companyName);
                             setState(() {
                               isPressed = true;
                             });
-
-
                           },
                         )
                       ],
@@ -166,7 +163,9 @@ class SupplierDetails extends StatefulWidget {
                         launchCaller(phoneNumber);
                       },
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     TabBar(
                       labelColor: Colors.black,
                       tabs: [
@@ -180,25 +179,19 @@ class SupplierDetails extends StatefulWidget {
                       indicatorColor: Colors.red,
                       indicatorWeight: 5.0,
                     ),
-
                   ],
                 ),
+              )),
+          body: TabBarView(
+            children: <Widget>[
+              StockList(),
+              AddReview(
+                supplierUID: widget.supplier.uid,
               )
-              ),
-            body: TabBarView(
-              children: <Widget>[
-                StockList(),
-                AddReview(
-                  supplierUID: widget.supplier.uid,
-                )
-              ],
-            ),
-            ),
+            ],
           ),
+        ),
+      ),
     );
-
   }
-
-
 }
-

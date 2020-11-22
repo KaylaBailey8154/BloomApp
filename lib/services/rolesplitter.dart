@@ -16,7 +16,6 @@ class RoleSplitter extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
-
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserData userData = snapshot.data;

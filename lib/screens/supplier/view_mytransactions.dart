@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 import '../supplier/supplier_home.dart';
 
-
 class ViewMyTransactions extends StatelessWidget {
   final AuthService _auth = AuthService();
 
@@ -59,7 +58,8 @@ class ViewMyTransactions extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
-          child: Container(height: 550, width: 400, child: MyTransactionsList()),
+          child:
+              Container(height: 550, width: 400, child: MyTransactionsList()),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.redAccent[700],
@@ -104,17 +104,17 @@ class ViewMyTransactions extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     icon: Icon(Icons.edit),
-
-
                   ),
                   IconButton(
                     icon: Icon(Icons.chat),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ViewMyChats(), //ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
                         ),
                       );
                     },

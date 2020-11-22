@@ -40,7 +40,6 @@ class _AddStockState extends State<AddStock> {
   String flowerType = '';
   String flowerColour = '';
 
-
   @override
   Widget build(BuildContext context) {
     int flowerColour = pickerColor.value;
@@ -386,12 +385,13 @@ class _AddStockState extends State<AddStock> {
                       child: RaisedButton(
                         onPressed: () async {
                           await DatabaseService(uid: user.uid).updateStockData(
-                              url,
-                              flowerType,
-                              _itemCount,
-                              stemLength,
-                              flowerColour,
-                              snapshot.data.companyName,);
+                            url,
+                            flowerType,
+                            _itemCount,
+                            stemLength,
+                            flowerColour,
+                            snapshot.data.companyName,
+                          );
                           Navigator.pop(context);
                         },
                         color: Colors.red,

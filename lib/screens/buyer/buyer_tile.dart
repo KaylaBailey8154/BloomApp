@@ -27,90 +27,90 @@ class BuyerTile extends StatelessWidget {
     String number = buyer.phoneNumber;
     String url = buyer.url;
 
-
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return Padding(
       padding: EdgeInsets.only(top: 5),
-      child: GestureDetector(onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChatScreen(otherUid: buyer.uid)));
-      },
-          child: Container(
-            height: 100,
-            width: 50,
-            child: Card(
-                shape:
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                color: Colors.white,
-                shadowColor: Colors.green[800],
-                elevation: 10,
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.white,
-                        child: ClipOval(
-                          child: SizedBox(
-                              width: 80,
-                              height: 80,
-                              child: '$url' != null
-                                  ? Image.network(
-                                      '$url',
-                                      fit: BoxFit.fill,
-                                    )
-                                  : Image.asset(
-                                      'assets/profile.png',
-                                    )),
-                        ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatScreen(otherUid: buyer.uid)));
+        },
+        child: Container(
+          height: 100,
+          width: 50,
+          child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              color: Colors.white,
+              shadowColor: Colors.green[800],
+              elevation: 10,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.white,
+                      child: ClipOval(
+                        child: SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: '$url' != null
+                                ? Image.network(
+                                    '$url',
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.asset(
+                                    'assets/profile.png',
+                                  )),
                       ),
                     ),
-                    Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            buyer.fullName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
+                  ),
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          buyer.fullName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 20,
                           ),
-                          Text(
-                            buyer.companyName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[600],
-                              fontSize: 15,
-                            ),
+                        ),
+                        Text(
+                          buyer.companyName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 15,
                           ),
-                          SizedBox(
-                            height: 7,
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Text(
+                          message,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.green[800],
+                            fontSize: 15,
                           ),
-                          Text(
-                            message,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.green[800],
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
-          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }

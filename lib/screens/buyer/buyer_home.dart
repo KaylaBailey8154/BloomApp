@@ -30,6 +30,7 @@ class BuyerHome extends StatelessWidget {
             );
           });
     }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -75,7 +76,6 @@ class BuyerHome extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: RaisedButton(
                           onPressed: () {
-
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -324,10 +324,8 @@ Daisy''',
                 IconButton(
                   icon: Icon(Icons.shopping_cart),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewMyCart()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ViewMyCart()));
                   },
                 ),
                 IconButton(

@@ -114,7 +114,9 @@ class ViewMyStock extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ViewMyChats(), //ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
                         ),
                       );
                     },

@@ -28,17 +28,17 @@ class DatabaseService {
   final CollectionReference reviewsCollection =
       Firestore.instance.collection('reviews');
   final CollectionReference favoritesCollection =
-  Firestore.instance.collection('favorites');
+      Firestore.instance.collection('favorites');
   final CollectionReference offersCollection =
-  Firestore.instance.collection('offers');
+      Firestore.instance.collection('offers');
   final CollectionReference transactionsCollection =
-  Firestore.instance.collection('transactions');
+      Firestore.instance.collection('transactions');
 
-
-  Future updateReviewData(String supplieruid, String fullName, int rating, String reviews) async {
+  Future updateReviewData(
+      String supplieruid, String fullName, int rating, String reviews) async {
     return await reviewsCollection.document().setData({
       'buyerUID': uid,
-      'supplierUID':supplieruid,
+      'supplierUID': supplieruid,
       'fullName': fullName,
       'dateAdded': DateFormat.yMMMd().format(DateTime.now()).toString(),
       'rating': rating,
@@ -46,17 +46,24 @@ class DatabaseService {
     });
   }
 
-  Future updateFavoriteData(String supplierUid, String url, String companyName) async {
+  Future updateFavoriteData(
+      String supplierUid, String url, String companyName) async {
     return await favoritesCollection.document().setData({
       'buyerUid': uid,
-      'supplierUid':supplierUid,
+      'supplierUid': supplierUid,
       'url': url,
       'companyName': companyName,
     });
   }
 
-  Future updateStockData(List<String> url, String flowerType,  int quantity, int stemLength,
-      int flowerColour, String companyName, ) async {
+  Future updateStockData(
+    List<String> url,
+    String flowerType,
+    int quantity,
+    int stemLength,
+    int flowerColour,
+    String companyName,
+  ) async {
     return await stockCollection.document().setData({
       'supplierUID': uid,
       'url': url,
@@ -123,7 +130,6 @@ class DatabaseService {
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
           phoneNumber: doc.data['phoneNumber'] ?? '');
-
     }).toList();
   }
 
@@ -131,7 +137,7 @@ class DatabaseService {
   List<Buyer> _buyerListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Buyer(
-          uid: doc.documentID?? '',
+          uid: doc.documentID ?? '',
           url: doc.data['url'] ?? '',
           fullName: doc.data['fullName'] ?? '',
           companyName: doc.data['companyName'] ?? '',
@@ -142,7 +148,6 @@ class DatabaseService {
   //Stock list from snapshot
   List<Stock> stockListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-
       return Stock(
         uid: doc.data['supplierUID'] ?? '',
         url: List.from(doc.data['url']) ?? [],
@@ -152,9 +157,7 @@ class DatabaseService {
         flowerType: doc.data['flowerType'] ?? '',
         dateAdded: doc.data['dateAdded'] ?? null,
         companyName: doc.data['companyName'] ?? '',
-
       );
-
     }).toList();
   }
 
@@ -184,13 +187,13 @@ class DatabaseService {
     }).toList();
   }
 
-  List<MessageBubble> messageListFromSnapshot (QuerySnapshot snapshot){
+  List<MessageBubble> messageListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return MessageBubble(
         sender: doc.data['senderUid'] ?? '',
-       receiver: doc.data ['receiverUid'] ?? '',
-        text:  doc.data['text'] ?? '',
-       clickable: doc.data['clickable'],
+        receiver: doc.data['receiverUid'] ?? '',
+        text: doc.data['text'] ?? '',
+        clickable: doc.data['clickable'],
       );
     }).toList();
   }
@@ -212,6 +215,7 @@ class DatabaseService {
       );
     }).toList();
   }
+
   List<Ransaction> transactionListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Ransaction(
@@ -221,8 +225,8 @@ class DatabaseService {
         quantity: doc.data['quantity'] ?? 0,
         flowerType: doc.data['flowerType'] ?? '',
         price: doc.data['price'] ?? 0,
-        totalPrice: doc.data['totalPrice']  ?? 0,
-        invoiceUrl: doc.data['invoiceUrl']?? '',
+        totalPrice: doc.data['totalPrice'] ?? 0,
+        invoiceUrl: doc.data['invoiceUrl'] ?? '',
         datePicked: doc.data['datePicked'] ?? '',
         companyName: doc.data['companyName'] ?? '',
         photoUrl: List.from(doc.data['photoUrl']) ?? [],
@@ -242,6 +246,7 @@ class DatabaseService {
       role: snapshot.data['role'],
     );
   }
+
   Offer offerFromSnapshot(DocumentSnapshot snapshot) {
     return Offer(
       flowerColour: snapshot.data['flowerColour'],
@@ -301,6 +306,7 @@ class DatabaseService {
         .snapshots()
         .map(stockListFromSnapshot);
   }
+
   Stream<List<Ransaction>> get myTransactions {
     return transactionsCollection
         .where('receiverUid', isEqualTo: uid)
@@ -315,8 +321,6 @@ class DatabaseService {
         .snapshots()
         .map(cartItemListFromSnapshot);
   }
-
-
 
   //get stocks stream
   Stream<List<Stock>> get allStocks {
@@ -340,8 +344,6 @@ class DatabaseService {
         .snapshots()
         .map(messageListFromSnapshot);
   }
-
-
 
   //get review for specific supplier steam
   Stream<List<Review>> get reviewType {
@@ -388,17 +390,12 @@ class DatabaseService {
   //get user doc stream
 
   Stream<UserData> get userData {
-
     return userCollection.document(uid).snapshots().map(userDataFromSnapshot);
-
   }
 
-  Stream<Offer> get offer{
+  Stream<Offer> get offer {
     var it = offersCollection.document(uid).snapshots().map(offerFromSnapshot);
 
     return it;
-
   }
-
-  
 }

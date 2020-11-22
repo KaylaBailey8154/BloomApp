@@ -239,7 +239,6 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                       SizedBox(
                         height: 20,
                       ),
-
                       SizedBox(
                         height: 20,
                       ),

@@ -23,34 +23,31 @@ class FavoriteTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: GestureDetector(
-        onTap: () async{
-          QuerySnapshot query = await Firestore.instance.collection(
-              'users')
-              .where(
-              'companyName', isEqualTo: companyName)
+        onTap: () async {
+          QuerySnapshot query = await Firestore.instance
+              .collection('users')
+              .where('companyName', isEqualTo: companyName)
               .getDocuments();
-          Supplier supplier = DatabaseService().supplierListFromSnapshot(query).first;
-
-
-
+          Supplier supplier =
+              DatabaseService().supplierListFromSnapshot(query).first;
 
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => SupplierDetails(
-                    supplier: supplier,
-                    // need to get document name where companyName in users
-                    //collection is the same as companyName here
-                    //then map that into a supplier object
-                    // then feed it into supplierDetails parameter
-                  )));
+                        supplier: supplier,
+                        // need to get document name where companyName in users
+                        //collection is the same as companyName here
+                        //then map that into a supplier object
+                        // then feed it into supplierDetails parameter
+                      )));
         },
         child: Container(
           height: 100,
           width: 50,
           child: Card(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             margin: EdgeInsets.fromLTRB(30, 6, 20, 0),
             child: Row(
@@ -67,12 +64,12 @@ class FavoriteTile extends StatelessWidget {
                           height: 80,
                           child: '$url' != null
                               ? Image.network(
-                            '$url',
-                            fit: BoxFit.fill,
-                          )
+                                  '$url',
+                                  fit: BoxFit.fill,
+                                )
                               : Image.asset(
-                            'assets/profile.png',
-                          )),
+                                  'assets/profile.png',
+                                )),
                     ),
                   ),
                 ),

@@ -19,7 +19,7 @@ class ProductDetails extends StatelessWidget {
     List<String> imageUrls = stock.url;
 
     List<NetworkImage> images = List<NetworkImage>();
-    for(final String img in imageUrls){
+    for (final String img in imageUrls) {
       images.add(NetworkImage(img));
     }
     String url = stock.url.first;
@@ -45,7 +45,6 @@ class ProductDetails extends StatelessWidget {
                     child: Carousel(
                       images: images,
                       animationDuration: const Duration(milliseconds: 400),
-
                     ),
                   ),
                   /*Container(
@@ -265,9 +264,9 @@ class ProductDetails extends StatelessWidget {
                           flowerColour,
                           dateAdded,
                           companyName,
-                        stemLength
+                          stemLength
                           //the 10 is a placeholder for stemlength, we need to insert it into the screen
-                      );
+                          );
                     },
                     color: Colors.red[300],
                     child: Text(

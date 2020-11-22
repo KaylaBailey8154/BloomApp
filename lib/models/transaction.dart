@@ -1,4 +1,4 @@
-class Ransaction{
+class Ransaction {
   final int price;
   final int quantity;
   final String receiverUid;
@@ -12,7 +12,17 @@ class Ransaction{
   final String flowerType;
   final String invoiceUrl;
 
-
-  Ransaction({this.price, this.quantity,this.receiverUid,this.senderUid,this.totalPrice, this.stemLength,
-    this.photoUrl,this.companyName,this.datePicked,this.flowerColour, this.flowerType, this.invoiceUrl});
+  Ransaction(
+      {this.price,
+      this.quantity,
+      this.receiverUid,
+      this.senderUid,
+      this.totalPrice,
+      this.stemLength,
+      this.photoUrl,
+      this.companyName,
+      this.datePicked,
+      this.flowerColour,
+      this.flowerType,
+      this.invoiceUrl});
 }

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileDetails extends StatelessWidget {
-
   final UserData userData;
   ProfileDetails({this.userData});
 
@@ -42,7 +41,7 @@ class ProfileDetails extends StatelessWidget {
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top:90),
+                  padding: const EdgeInsets.only(top: 90),
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.white,
@@ -52,12 +51,12 @@ class ProfileDetails extends StatelessWidget {
                           height: 150,
                           child: userData.url != null
                               ? Image.network(
-                            userData.url,
-                            fit: BoxFit.fill,
-                          )
+                                  userData.url,
+                                  fit: BoxFit.fill,
+                                )
                               : Image.asset(
-                            'assets/profile.png',
-                          )),
+                                  'assets/profile.png',
+                                )),
                     ),
                   ),
                 ),
@@ -79,7 +78,6 @@ class ProfileDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   Text(
                     userData.companyName,
                     style: TextStyle(
@@ -95,44 +93,42 @@ class ProfileDetails extends StatelessWidget {
               ),
               Center(
                 child: Container(
-                  width: 350,
+                    width: 350,
                     height: 100,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(width: 2, color: Colors.grey)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.phone_in_talk_sharp,
-                        color: Colors.green,
-                        size: 40,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          userData.phoneNumber,
-                          style: TextStyle(
-                            color: Colors.blue[800],
-                            decoration: TextDecoration.underline,
-                            fontSize: 20,
-                          ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.phone_in_talk_sharp,
+                          color: Colors.green,
+                          size: 40,
                         ),
-                        onTap: () {
-                          launchCaller(userData.phoneNumber);
-                        },
-                      ),
-                    ],
-                  )
-                ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            userData.phoneNumber,
+                            style: TextStyle(
+                              color: Colors.blue[800],
+                              decoration: TextDecoration.underline,
+                              fontSize: 20,
+                            ),
+                          ),
+                          onTap: () {
+                            launchCaller(userData.phoneNumber);
+                          },
+                        ),
+                      ],
+                    )),
               ),
               SizedBox(
                 height: 15,
               ),
-
             ],
           ),
         ),
@@ -140,7 +136,6 @@ class ProfileDetails extends StatelessWidget {
     );
   }
 }
-
 
 // drawing the background shapes
 class ShapesPainter extends CustomPainter {

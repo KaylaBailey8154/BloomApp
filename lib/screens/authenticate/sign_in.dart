@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
                       child: ColorizeAnimatedTextKit(
-                        text:['BLOOM'],
+                        text: ['BLOOM'],
                         textStyle: TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
@@ -56,7 +56,6 @@ class _SignInState extends State<SignIn> {
                           Colors.green,
                           Colors.blue,
                           Colors.greenAccent,
-
                         ],
                       ),
                     ),
@@ -173,7 +172,8 @@ class _SignInState extends State<SignIn> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               try {
-                                    await _auth.signInWithEmailAndPassword(email, password);
+                                await _auth.signInWithEmailAndPassword(
+                                    email, password);
                               } catch (e) {
                                 print(e);
                                 setState(() {
@@ -198,7 +198,7 @@ class _SignInState extends State<SignIn> {
                                 style: TextStyle(color: Colors.black)),
                             onTap: () {
                               widget.toggleView();
-                             /* Navigator.push(
+                              /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>

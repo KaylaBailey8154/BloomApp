@@ -46,13 +46,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
   String flowerType = '';
 
-
-
-
-
-
-
-
   Future<void> loadAssets() async {
     setState(() {
       images = List<Asset>();
@@ -65,7 +58,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
       resultList = await MultiImagePicker.pickImages(
         maxImages: 10,
         enableCamera: false,
-
       );
     } on Exception catch (e) {
       error = e.toString();
@@ -77,10 +69,13 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
       if (error == null) _error = 'No Error Dectected';
     });
   }
+
   Future saveImage(Asset asset) async {
     ByteData byteData = await asset.getByteData();
     List<int> imageData = byteData.buffer.asUint8List();
-    StorageReference ref = FirebaseStorage.instance.ref().child("StockPhotos/"+ asset.name+DateTime.now().toIso8601String());
+    StorageReference ref = FirebaseStorage.instance
+        .ref()
+        .child("StockPhotos/" + asset.name + DateTime.now().toIso8601String());
     StorageUploadTask uploadTask = ref.putData(imageData);
 
     return await (await uploadTask.onComplete).ref.getDownloadURL();
@@ -104,23 +99,33 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
   Widget build(BuildContext context) {
     int stemLength = _currentSliderValue.toInt();
     Widget buildCarousel() {
-      if (images.length != 0){
-
+      if (images.length != 0) {
         /*for(final Asset asset in images){
           Image thumbImg = await assetThumbToImage(asset);
           return Image(image: thumbImg.image,);
         }*/
-         return Column(
-           children: <Widget>[
-             CarouselSlider(
-               options: CarouselOptions(height: 300, autoPlay: true,autoPlayInterval: Duration(seconds: 4),
-                 autoPlayAnimationDuration: Duration(milliseconds: 800),),
-               items: images.map((image) => AssetThumb(asset: image,width: 300,height: 300,),).toList(),
-             ),
-           ],
-         )
-           ;}
-      else
+        return Column(
+          children: <Widget>[
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 300,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 4),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+              ),
+              items: images
+                  .map(
+                    (image) => AssetThumb(
+                      asset: image,
+                      width: 300,
+                      height: 300,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
+        );
+      } else
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -129,7 +134,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
             ),
           ),
         );
-
     }
 
     int flowerColour = pickerColor.value;
@@ -140,11 +144,10 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
 
     void uploadPic() async {
       String profilePic = DateTime.now().toString();
-      StorageReference firebaseStorageRef = FirebaseStorage.instance
-          .ref()
-          .child("profile/");
-      StorageUploadTask uploadTask = firebaseStorageRef.child(
-          profilePic + ".jpg").putFile(_image);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child("profile/");
+      StorageUploadTask uploadTask =
+          firebaseStorageRef.child(profilePic + ".jpg").putFile(_image);
 
       var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       url = imageUrl.toString();
@@ -172,18 +175,15 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
       });
     }
 
-    void saveImages(String companyName) async{
-      for (final Asset asset in images){
+    void saveImages(String companyName) async {
+      for (final Asset asset in images) {
         var url = await saveImage(asset);
         imageUrls.add(url);
-
       }
 
-      await DatabaseService(uid: user.uid)
-          .updateStockData(imageUrls, flowerType, _itemCount,stemLength,
-          flowerColour, companyName);
+      await DatabaseService(uid: user.uid).updateStockData(imageUrls,
+          flowerType, _itemCount, stemLength, flowerColour, companyName);
     }
-
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
@@ -201,8 +201,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                         SizedBox(
                           height: 300,
                           width: 500,
-                          child: buildCarousel()
-                          ,),
+                          child: buildCarousel(),
+                        ),
                         Positioned(
                             left: 0.0,
                             top: 20.0,
@@ -223,96 +223,102 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                       onTap: () {
                         showDialog(
                             context: context,
-                          builder: (BuildContext context) {
-                            return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(20.0)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    height: 350,
-                                    width: 400,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.info_outline,
-                                          size: 70,
-                                          color: Colors.green,
-                                        ),
-                                        SizedBox(height: 30,),
-                                        Text(
-                                          'Quick Tip!',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        SizedBox(height: 10,),
-                                        Text(
-                                            'Choose the following photos for more detail:',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text(
-                                          '1. Top View',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '2. Side View',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '3. Petals',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '4. Stem',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text(
-                                          '5. Leaf',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        SizedBox(height: 20,),
-                                        FlatButton(
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                      height: 350,
+                                      width: 400,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.info_outline,
+                                            size: 70,
                                             color: Colors.green,
-                                            child: Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold
-                                              ),
+                                          ),
+                                          SizedBox(
+                                            height: 30,
+                                          ),
+                                          Text(
+                                            'Quick Tip!',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
                                             ),
-                                            onPressed: () async {
-                                              loadAssets();
-                                            }
-                                        ),
-                                      ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            'Choose the following photos for more detail:',
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            '1. Top View',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            '2. Side View',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            '3. Petals',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            '4. Stem',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            '5. Leaf',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          FlatButton(
+                                              color: Colors.green,
+                                              child: Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              onPressed: () async {
+                                                loadAssets();
+                                              }),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )
-
-                            );
-                          }
-                        );
+                                  ));
+                            });
                       },
                       child: Text(
-                          'Pick Images',
+                        'Pick Images',
                         style: TextStyle(
                           color: Colors.blueAccent,
                           decoration: TextDecoration.underline,
@@ -347,11 +353,10 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                                 'Cape Daisy',
                                 'African Iris'
                               ]
-                                  .map((label) =>
-                                  DropdownMenuItem(
-                                    child: Text(label),
-                                    value: label,
-                                  ))
+                                  .map((label) => DropdownMenuItem(
+                                        child: Text(label),
+                                        value: label,
+                                      ))
                                   .toList(),
                               onChanged: (value) {
                                 setState(() => flowerType = value);
@@ -362,7 +367,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                     SizedBox(
                       height: 10,
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -377,10 +381,10 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                         ),
                         _itemCount != 0
                             ? new IconButton(
-                          icon: new Icon(Icons.remove),
-                          onPressed: () =>
-                              setState(() => _itemCount = _itemCount - 10),
-                        )
+                                icon: new Icon(Icons.remove),
+                                onPressed: () => setState(
+                                    () => _itemCount = _itemCount - 10),
+                              )
                             : new Container(),
                         new Text(_itemCount.toString()),
                         new IconButton(
@@ -462,7 +466,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                                         displayThumbColor: true,
                                         showLabel: true,
                                         paletteType: PaletteType.hsl,
-                                        pickerAreaBorderRadius: const BorderRadius.only(
+                                        pickerAreaBorderRadius:
+                                            const BorderRadius.only(
                                           topLeft: const Radius.circular(2),
                                           topRight: const Radius.circular(2),
                                         ),
@@ -472,7 +477,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                                       FlatButton(
                                         child: const Text('OK'),
                                         onPressed: () {
-                                          setState(() => currentColor = pickerColor);
+                                          setState(
+                                              () => currentColor = pickerColor);
                                           Navigator.of(context).pop();
                                         },
                                       )
@@ -488,7 +494,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                     SizedBox(
@@ -507,9 +512,8 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                         ),
                         Text(
                           date.format(DateTime.now()),
-                          style:
-                          new TextStyle(color: Colors.grey[850],
-                              fontSize: 14.0),
+                          style: new TextStyle(
+                              color: Colors.grey[850], fontSize: 14.0),
                         ),
                       ],
                     ),
@@ -521,12 +525,10 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
                       width: 150,
                       child: RaisedButton(
                         onPressed: () async {
-
                           saveImages(snapshot.data.companyName);
                           /*await DatabaseService(uid: user.uid)
                               .updateStockData(imageUrls, flowerType, _itemCount,_itemCount,
                               flowerColour, snapshot.data.companyName);*/
-
 
                           Navigator.pop(context);
                         },
@@ -545,9 +547,6 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
               ),
             ),
           );
-        }
-    );
+        });
   }
-
 }
-

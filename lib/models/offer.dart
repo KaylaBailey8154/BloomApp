@@ -1,4 +1,4 @@
-class Offer{
+class Offer {
   final double price;
   final double quantity;
   final String receiverUid;
@@ -11,8 +11,16 @@ class Offer{
   final int flowerColour;
   final String flowerType;
 
-
-  Offer({this.price, this.quantity,this.receiverUid,this.senderUid,this.totalPrice, this.stemLength,
-          this.photoUrl,this.companyName,this.datePicked,this.flowerColour, this.flowerType});
+  Offer(
+      {this.price,
+      this.quantity,
+      this.receiverUid,
+      this.senderUid,
+      this.totalPrice,
+      this.stemLength,
+      this.photoUrl,
+      this.companyName,
+      this.datePicked,
+      this.flowerColour,
+      this.flowerType});
 }
-

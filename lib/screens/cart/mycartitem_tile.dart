@@ -3,7 +3,6 @@ import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/stock.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/buyer/product_details.dart';
-import 'package:bloomflutterapp/screens/chat/chat_screen2.dart';
 import 'package:bloomflutterapp/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ class MyCartItemTile extends StatelessWidget {
   final CartItem cartItem;
   MyCartItemTile({this.cartItem});
 
-
   @override
   Widget build(BuildContext context) {
     int quantity = cartItem.quantity;
@@ -24,11 +22,6 @@ class MyCartItemTile extends StatelessWidget {
     int stemLength = cartItem.stemLength;
     String url = cartItem.photoUrl.first;
     String otherParty = cartItem.supplierUID;
-
-
-
-
-
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
@@ -41,7 +34,7 @@ class MyCartItemTile extends StatelessWidget {
           width: 50,
           child: Card(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.white,
             shadowColor: Colors.grey,
             elevation: 5,
@@ -61,12 +54,12 @@ class MyCartItemTile extends StatelessWidget {
                           height: 70,
                           child: '$url' != null
                               ? Image.network(
-                            '$url',
-                            fit: BoxFit.fill,
-                          )
+                                  '$url',
+                                  fit: BoxFit.fill,
+                                )
                               : Image.asset(
-                            'assets/profile.png',
-                          )),
+                                  'assets/profile.png',
+                                )),
                     ),
                   ),
                 ),
@@ -75,7 +68,7 @@ class MyCartItemTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        '$flowerType supplied by $supplier',
+                      '$flowerType supplied by $supplier',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -88,16 +81,15 @@ class MyCartItemTile extends StatelessWidget {
                     Row(
                       children: [
                         RaisedButton(
-                          onPressed: () async{
-
-
-
+                          onPressed: () async {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatScreen(cartItem: cartItem,otherUid: otherParty,)));
+                                    builder: (context) => ChatScreen(
+                                          cartItem: cartItem,
+                                          otherUid: otherParty,
+                                        )));
                             //goes to chatroom
-
                           },
                           color: Colors.green,
                           child: Text(
@@ -113,17 +105,22 @@ class MyCartItemTile extends StatelessWidget {
                           child: IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () async {
-                               await Firestore.instance
+                              await Firestore.instance
                                   .collection('cartItems')
-                                  .where('supplierUID', isEqualTo: cartItem.supplierUID)
-                                  .where('buyerUID', isEqualTo: cartItem.buyerUID)
+                                  .where('supplierUID',
+                                      isEqualTo: cartItem.supplierUID)
+                                  .where('buyerUID',
+                                      isEqualTo: cartItem.buyerUID)
                                   .where('dateAddedToCart',
-                                  isEqualTo: cartItem.dateAddedToCart)
-                                  .where('quantity', isEqualTo: cartItem.quantity)
-                                  .where('flowerType', isEqualTo: cartItem.flowerType)
+                                      isEqualTo: cartItem.dateAddedToCart)
+                                  .where('quantity',
+                                      isEqualTo: cartItem.quantity)
+                                  .where('flowerType',
+                                      isEqualTo: cartItem.flowerType)
                                   .getDocuments()
                                   .then((snapshot) {
-                                for (DocumentSnapshot ds in snapshot.documents) {
+                                for (DocumentSnapshot ds
+                                    in snapshot.documents) {
                                   ds.reference.delete();
                                 }
                               });

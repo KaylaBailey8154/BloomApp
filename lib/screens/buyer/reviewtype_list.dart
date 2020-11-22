@@ -28,7 +28,7 @@ class _ReviewTypeList extends State<ReviewTypeList> {
       itemCount: filteredReviews.length,
       itemBuilder: (context, index) {
         return ReviewTile(review: filteredReviews[index])
-        //Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails())))
+            //Navigator.push(context,  MaterialPageRoute(builder: (context) => ProductDetails())))
             ;
       },
     );

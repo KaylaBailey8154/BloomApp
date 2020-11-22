@@ -1,4 +1,3 @@
-
 import 'package:bloomflutterapp/models/cartitem.dart';
 import 'package:bloomflutterapp/models/user.dart';
 import 'package:bloomflutterapp/screens/cart/view_mycart.dart';
@@ -35,7 +34,6 @@ class _ViewMyChatsState extends State<ViewMyChats> {
               color: Colors.green[800],
               child: Row(
                 children: <Widget>[
-
                   IconButton(
                     icon: Icon(Icons.arrow_back),
                     padding: EdgeInsets.fromLTRB(20, 40, 40, 10),
@@ -108,7 +106,9 @@ class _ViewMyChatsState extends State<ViewMyChats> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ViewMyChats(), //ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
                         ),
                       );
                     },

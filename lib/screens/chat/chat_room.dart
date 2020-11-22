@@ -11,22 +11,18 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  DatabaseService databaseMethods = new DatabaseService ();
+  DatabaseService databaseMethods = new DatabaseService();
   AuthService _auth = AuthService();
-
-
 
   @override
   void initState() {
     //getUserInfo();
     super.initState();
-
   }
   /*getUserInfo () async{
     Constants.myName = await HelperFunctions.getUserFullNameLoggedInSharedPreference("");
 
   }*/
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +47,7 @@ class _ChatRoomState extends State<ChatRoom> {
           )
         ],
       ),
-      body: Container(
-
-      ),
+      body: Container(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: () {

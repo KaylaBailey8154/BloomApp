@@ -77,29 +77,25 @@ class StockTile extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                            onTap: () async{
-
-
-                                QuerySnapshot query = await Firestore.instance.collection(
-                                    'users')
-                                    .where(
-                                    'companyName', isEqualTo: companyName)
-                                    .getDocuments();
-                            Supplier supplier = DatabaseService().supplierListFromSnapshot(query).first;
-
-
-
+                            onTap: () async {
+                              QuerySnapshot query = await Firestore.instance
+                                  .collection('users')
+                                  .where('companyName', isEqualTo: companyName)
+                                  .getDocuments();
+                              Supplier supplier = DatabaseService()
+                                  .supplierListFromSnapshot(query)
+                                  .first;
 
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SupplierDetails(
-                                        supplier: supplier,
-                                        // need to get document name where companyName in users
-                                        //collection is the same as companyName here
-                                        //then map that into a supplier object
-                                        // then feed it into supplierDetails parameter
-                                      )));
+                                            supplier: supplier,
+                                            // need to get document name where companyName in users
+                                            //collection is the same as companyName here
+                                            //then map that into a supplier object
+                                            // then feed it into supplierDetails parameter
+                                          )));
                             },
                             child: Text(
                               '$companyName',

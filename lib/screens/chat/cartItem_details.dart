@@ -14,14 +14,13 @@ class CartItemDetails extends StatelessWidget {
 
   CartItemDetails({this.stock});
 
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     List<String> imageUrls = stock.photoUrl;
 
     List<NetworkImage> images = List<NetworkImage>();
-    for(final String img in imageUrls){
+    for (final String img in imageUrls) {
       images.add(NetworkImage(img));
     }
 
@@ -248,7 +247,6 @@ class CartItemDetails extends StatelessWidget {
                   ],
                 ),
               ),
-
             ],
           ),
         );

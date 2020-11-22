@@ -11,9 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'add_review.dart';
 
-
 class ViewAllFavorites extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Favorite>>.value(
@@ -21,8 +19,7 @@ class ViewAllFavorites extends StatelessWidget {
       child: Scaffold(
         body: Padding(
             padding: EdgeInsets.all(10),
-            child: Container(height: 550, width: 400, child: FavoritesList())
-        ),
+            child: Container(height: 550, width: 400, child: FavoritesList())),
       ),
     );
   }

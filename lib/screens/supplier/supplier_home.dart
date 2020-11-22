@@ -60,7 +60,8 @@ class SupplierHome extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddStockMultiplePhotos()),
+                                  builder: (context) =>
+                                      AddStockMultiplePhotos()),
                             );
                           },
                           child: Container(
@@ -150,7 +151,9 @@ class SupplierHome extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ViewMyChats(), //ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
                           ),
                         );
                       },
@@ -228,10 +231,11 @@ class SupplierHome extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(40, 20, 20, 0),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ViewMyTransactions(),
+                          MaterialPageRoute(
+                            builder: (context) => ViewMyTransactions(),
                           ),
                         );
                       },
@@ -454,7 +458,9 @@ class SupplierHome extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ViewMyChats(),//ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ViewMyChats(), //ChatScreen(otherParty: 'yOEA9tykhJXA0raR6s4KbxvaNOT2',)
                       ),
                     );
                   },
