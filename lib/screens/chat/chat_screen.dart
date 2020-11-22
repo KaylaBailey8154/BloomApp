@@ -49,12 +49,9 @@ class _ChatScreenState extends State<ChatScreen> {
   File _pdf;
 
 
-
-
-
-
-  Future<UserData> otherUser (String otherParty) async{
-    var otherUser = await Firestore.instance.collection('users').document(otherParty).get();
+  Future<UserData> otherUser(String otherParty) async {
+    var otherUser = await Firestore.instance.collection('users').document(
+        otherParty).get();
     return DatabaseService().otherUserDataFromSnapshot(otherUser);
   }
 
@@ -72,37 +69,34 @@ class _ChatScreenState extends State<ChatScreen> {
     print("Image Url= " + url);
   }
 
-  Future<CartItem> theItemInQuestion (String theirRole, String myUid, String theirUid) async {
-     QuerySnapshot query = await Firestore.instance.collection('cartItems').getDocuments();
+  Future<CartItem> theItemInQuestion(String theirRole, String myUid,
+      String theirUid) async {
+    QuerySnapshot query = await Firestore.instance.collection('cartItems')
+        .getDocuments();
 
-    List<CartItem> allCartItems = DatabaseService().cartItemListFromSnapshot(query);
+    List<CartItem> allCartItems = DatabaseService().cartItemListFromSnapshot(
+        query);
 
-    if(theirRole == 'buyer'){
-
-
-     CartItem filteredItems = allCartItems.where((CartItem c) {
-         return  c.buyerUID == theirUid && c.supplierUID == myUid;
-      }).last;
-        return filteredItems;
-    }
-      else if(theirRole== 'supplier'){
-
-      CartItem filteredItems =  allCartItems.where((CartItem c) {
-         return  c.supplierUID == theirUid && c.buyerUID == myUid;
+    if (theirRole == 'buyer') {
+      CartItem filteredItems = allCartItems.where((CartItem c) {
+        return c.buyerUID == theirUid && c.supplierUID == myUid;
       }).last;
       return filteredItems;
     }
-return null;
-
+    else if (theirRole == 'supplier') {
+      CartItem filteredItems = allCartItems.where((CartItem c) {
+        return c.supplierUID == theirUid && c.buyerUID == myUid;
+      }).last;
+      return filteredItems;
+    }
+    return null;
   }
 
 
-    @override
+  @override
   Widget build(BuildContext context) {
-
     double totalAmount = _currentSliderValue * double.parse(price);
-      String total = totalAmount.toString();
-
+    String total = totalAmount.toString();
 
 
     final user = Provider.of<User>(context);
@@ -112,28 +106,30 @@ return null;
         leading: null,
         actions: <Widget>[
           FlatButton.icon(
-            onPressed : () async {
-          UserData youser = await otherUser(widget.otherUid);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProfileDetails(userData: youser,)),
-          );},
+            onPressed: () async {
+              UserData youser = await otherUser(widget.otherUid);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfileDetails(userData: youser,)),
+              );
+            },
             icon: Icon(Icons.account_circle),
-            label: Text ('Profile'),
+            label: Text('Profile'),
           ),
           FlatButton.icon(
-            onPressed: () async{
+            onPressed: () async {
               UserData youser = await otherUser(widget.otherUid);
-              CartItem theItem = await theItemInQuestion(youser.role, user.uid, youser.uid);
+              CartItem theItem = await theItemInQuestion(
+                  youser.role, user.uid, youser.uid);
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => CartItemDetails(stock: theItem,)),
               );
-          },
+            },
             icon: Icon(Icons.info),
-            label: Text ('Item'),
+            label: Text('Item'),
           ),
         ],
         title: Text('Bloom Chat'),
@@ -146,354 +142,474 @@ return null;
           children: <Widget>[
             MessagesStream(otherParty:
             //user.uid!= widget.cartItem.buyerUID ? widget.cartItem.buyerUID : widget.cartItem.supplierUID
-             widget.otherUid ,),
+            widget.otherUid,),
 
             StreamBuilder<Offer>(stream: DatabaseService(uid: user.uid).offer,
-                builder: (context, snapshot){
-              if(snapshot.hasData){
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      child: FlatButton(
-                        onPressed: () async{
-
-
-
-                          Firestore.instance
-                              .collection('offers')
-                              .document(user.uid).delete();
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: FlatButton(
+                            onPressed: () async {
+                              Firestore.instance
+                                  .collection('offers')
+                                  .document(user.uid).delete();
 
 
-                          final pdf = pw.Document();
+                              final pdf = pw.Document();
 
 
-                          pdf.addPage(pw.Page(
-                              pageFormat: PdfPageFormat.a4,
-                              build: (pw.Context context) {
-                                return  pw.Column(
-                                    children: [
-                                      pw.Row(
-                                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              pdf.addPage(pw.Page(
+                                  pageFormat: PdfPageFormat.a4,
+                                  build: (pw.Context context) {
+                                    return pw.Column(
                                         children: [
-                                          pw.Expanded(
-                                            child: pw.Column(
-                                              children: [
-                                                pw.Container(
-                                                  height: 50,
-                                                  padding: const pw.EdgeInsets.only(left: 20),
-                                                  alignment: pw.Alignment.centerLeft,
-                                                  child: pw.Text(
-                                                    'INVOICE',
-                                                    style: pw.TextStyle(
-                                                      color: PdfColors.black,
-                                                      fontWeight: pw.FontWeight.bold,
-                                                      fontSize: 40,
-                                                    ),
-                                                  ),
-                                                ),
-                                                pw.Container(
-                                                  decoration: pw.BoxDecoration(
-                                                    color: PdfColors.green,
-                                                  ),
-                                                  padding: const pw.EdgeInsets.only(
-                                                      left: 40, top: 10, bottom: 10, right: 20),
-                                                  alignment: pw.Alignment.centerLeft,
-                                                  height: 50,
-                                                  child: pw.DefaultTextStyle(
-                                                    style: pw.TextStyle(
-                                                      color: PdfColors.white,
-                                                      fontSize: 14,
-                                                    ),
-                                                    child: pw.GridView(
-                                                      crossAxisCount: 2,
-                                                      children: [
-                                                        pw.Text('Invoice #'),
-                                                        pw.Text('995342'),
-                                                        pw.Text('Date:'),
-                                                        pw.Text(DateTime.now().toString()),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                pw.SizedBox(height: 15),
-                                                pw.Row(
+                                          pw.Row(
+                                            crossAxisAlignment: pw
+                                                .CrossAxisAlignment.start,
+                                            children: [
+                                              pw.Expanded(
+                                                child: pw.Column(
                                                   children: [
-                                                    pw.Text('Total:',
+                                                    pw.Container(
+                                                      height: 50,
+                                                      padding: const pw
+                                                          .EdgeInsets.only(
+                                                          left: 20),
+                                                      alignment: pw.Alignment
+                                                          .centerLeft,
+                                                      child: pw.Text(
+                                                        'INVOICE',
                                                         style: pw.TextStyle(
-                                                          fontWeight: pw.FontWeight.bold,
-                                                          fontSize: 20,
-                                                        )),
-                                                    pw.SizedBox(width: 10),
-                                                    pw.Text('R',
-                                                        style: pw.TextStyle(
-                                                          fontWeight: pw.FontWeight.bold,
-                                                          fontSize: 20,
-                                                        )),
-                                                    pw.Text(
-                                                        snapshot.data.totalPrice.toString(),
-                                                        style: pw.TextStyle(
-                                                          fontWeight: pw.FontWeight.bold,
-                                                          fontSize: 20,
-                                                        )
+                                                          color: PdfColors
+                                                              .black,
+                                                          fontWeight: pw
+                                                              .FontWeight.bold,
+                                                          fontSize: 40,
+                                                        ),
+                                                      ),
                                                     ),
-                                                    pw.SizedBox(width: 50),
-                                                    pw.Text('Invoice from:',
+                                                    pw.Container(
+                                                      decoration: pw
+                                                          .BoxDecoration(
+                                                        color: PdfColors.green,
+                                                      ),
+                                                      padding: const pw
+                                                          .EdgeInsets.only(
+                                                          left: 40,
+                                                          top: 10,
+                                                          bottom: 10,
+                                                          right: 20),
+                                                      alignment: pw.Alignment
+                                                          .centerLeft,
+                                                      height: 50,
+                                                      child: pw
+                                                          .DefaultTextStyle(
                                                         style: pw.TextStyle(
-                                                          fontWeight: pw.FontWeight.bold,
-                                                          fontSize: 20,
-                                                        )),
-                                                    pw.SizedBox(width: 10),
-                                                    pw.Text(snapshot.data.companyName,
-                                                        style: pw.TextStyle(
-                                                          fontWeight: pw.FontWeight.bold,
-                                                          fontSize: 20,
-                                                        )),
-                                                  ]
-                                                ),
-                                                pw.Container(
-                                                  color: PdfColors.white,
-                                                  padding: pw.EdgeInsets.all(20.0),
-                                                  child: pw.Table(
-                                                    border: pw.TableBorder(bottom: true, top: true, left: true, right: true, color: PdfColors.black),
-                                                    children: [
-                                                      pw.TableRow(children: [
-                                                        pw.Text(
-                                                            'Item Description',
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 16,
-                                                          )
+                                                          color: PdfColors
+                                                              .white,
+                                                          fontSize: 14,
                                                         ),
-                                                        pw.Text(
-                                                            'Price (R)',
-                                                            style: pw.TextStyle(
-                                                              fontWeight: pw.FontWeight.bold,
-                                                              fontSize: 16,
-                                                            )),
-                                                        pw.Text('Quantity',
-                                                            style: pw.TextStyle(
-                                                              fontWeight: pw.FontWeight.bold,
-                                                              fontSize: 16,
-                                                            )
+                                                        child: pw.GridView(
+                                                          crossAxisCount: 2,
+                                                          children: [
+                                                            pw.Text(
+                                                                'Invoice #'),
+                                                            pw.Text('995342'),
+                                                            pw.Text('Date:'),
+                                                            pw.Text(
+                                                                DateTime.now()
+                                                                    .toString()),
+                                                          ],
                                                         ),
-                                                      ]),
-                                                      pw.TableRow(children: [
-                                                        pw.Text(snapshot.data.flowerType,
-                                                            style: pw.TextStyle(
-                                                              fontSize: 14,
-                                                            )),
-                                                        pw.Text(snapshot.data.price.toString(),
-                                                            style: pw.TextStyle(
-                                                              fontSize: 14,
-                                                            )),
-                                                        pw.Text(snapshot.data.quantity.toString(),
-                                                            style: pw.TextStyle(
-                                                              fontSize: 14,
-                                                            )),
-                                                      ])
-                                                    ],
-                                                  ),
-                                                ),
-                                                pw.Text(
-                                                  'Thank you for doing business with us!',
-                                                    style: pw.TextStyle(
-                                                      fontWeight: pw.FontWeight.bold,
-                                                      fontSize: 16,
-                                                      color: PdfColors.green,
-                                                    )
-                                                ),
-                                                pw.SizedBox(height: 30),
-                                                pw.Container(
-                                                  height: 100,
-                                                  padding: const pw.EdgeInsets.only(left: 20),
-                                                  //alignment: pw.Alignment.centerLeft,
-                                                  child: pw.Column(
-                                                    children: [
-                                                      pw.Text(
-                                                          'Payment Info:',
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 16,
-                                                            color: PdfColors.green,
-                                                          )
                                                       ),
-                                                      pw.Text(
-                                                          'Account No.: 6266789156',
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 14,
-                                                            color: PdfColors.black,
-                                                          )
-                                                      ),
-                                                      pw.Text(
-                                                             'Account Type: Cheque'  ,
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 14,
-                                                            color: PdfColors.black,
-                                                          )
-                                                      ),
-                                                      pw.Text(
-                                                          'Account Holder: Flori Farms',
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 14,
-                                                            color: PdfColors.black,
-                                                          )
-                                                      ),
-                                                      pw.Text(
-                                                          'Bank: FNB'  ,
-                                                          style: pw.TextStyle(
-                                                            fontWeight: pw.FontWeight.bold,
-                                                            fontSize: 14,
-                                                            color: PdfColors.black,
-                                                          )
-                                                      ),
-                                                    ]
-                                                  )
-                                                ),
-                                                pw.SizedBox(height: 15),
-                                                pw.Container(
-                                                    height: 80,
-                                                    padding: const pw.EdgeInsets.only(left: 20),
-                                                    alignment: pw.Alignment.centerLeft,
-                                                    child: pw.Column(
+                                                    ),
+                                                    pw.SizedBox(height: 15),
+                                                    pw.Row(
                                                         children: [
+                                                          pw.Text('Total:',
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                fontWeight: pw
+                                                                    .FontWeight
+                                                                    .bold,
+                                                                fontSize: 20,
+                                                              )),
+                                                          pw.SizedBox(
+                                                              width: 10),
+                                                          pw.Text('R',
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                fontWeight: pw
+                                                                    .FontWeight
+                                                                    .bold,
+                                                                fontSize: 20,
+                                                              )),
                                                           pw.Text(
-                                                              'Terms and Conditions',
-                                                              style: pw.TextStyle(
-                                                                fontWeight: pw.FontWeight.bold,
-                                                                fontSize: 14,
-                                                                color: PdfColors.green,
+                                                              snapshot.data
+                                                                  .totalPrice
+                                                                  .toString(),
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                fontWeight: pw
+                                                                    .FontWeight
+                                                                    .bold,
+                                                                fontSize: 20,
                                                               )
                                                           ),
+                                                          pw.SizedBox(
+                                                              width: 50),
                                                           pw.Text(
-                                                              pw.LoremText().paragraph(20),
-                                                              style: pw.TextStyle(
-                                                                fontWeight: pw.FontWeight.bold,
-                                                                fontSize: 10,
-                                                                color: PdfColors.black,
-                                                              )
-                                                          )
+                                                              'Invoice from:',
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                fontWeight: pw
+                                                                    .FontWeight
+                                                                    .bold,
+                                                                fontSize: 20,
+                                                              )),
+                                                          pw.SizedBox(
+                                                              width: 10),
+                                                          pw.Text(snapshot.data
+                                                              .companyName,
+                                                              style: pw
+                                                                  .TextStyle(
+                                                                fontWeight: pw
+                                                                    .FontWeight
+                                                                    .bold,
+                                                                fontSize: 20,
+                                                              )),
                                                         ]
-                                                    )
+                                                    ),
+                                                    pw.Container(
+                                                      color: PdfColors.white,
+                                                      padding: pw.EdgeInsets
+                                                          .all(20.0),
+                                                      child: pw.Table(
+                                                        border: pw.TableBorder(
+                                                            bottom: true,
+                                                            top: true,
+                                                            left: true,
+                                                            right: true,
+                                                            color: PdfColors
+                                                                .black),
+                                                        children: [
+                                                          pw.TableRow(
+                                                              children: [
+                                                                pw.Text(
+                                                                    'Item Description',
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontWeight: pw
+                                                                          .FontWeight
+                                                                          .bold,
+                                                                      fontSize: 16,
+                                                                    )
+                                                                ),
+                                                                pw.Text(
+                                                                    'Price (R)',
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontWeight: pw
+                                                                          .FontWeight
+                                                                          .bold,
+                                                                      fontSize: 16,
+                                                                    )),
+                                                                pw.Text(
+                                                                    'Quantity',
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontWeight: pw
+                                                                          .FontWeight
+                                                                          .bold,
+                                                                      fontSize: 16,
+                                                                    )
+                                                                ),
+                                                              ]),
+                                                          pw.TableRow(
+                                                              children: [
+                                                                pw.Text(snapshot
+                                                                    .data
+                                                                    .flowerType,
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontSize: 14,
+                                                                    )),
+                                                                pw.Text(snapshot
+                                                                    .data.price
+                                                                    .toString(),
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontSize: 14,
+                                                                    )),
+                                                                pw.Text(snapshot
+                                                                    .data
+                                                                    .quantity
+                                                                    .toString(),
+                                                                    style: pw
+                                                                        .TextStyle(
+                                                                      fontSize: 14,
+                                                                    )),
+                                                              ])
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    pw.Text(
+                                                        'Thank you for doing business with us!',
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw
+                                                              .FontWeight.bold,
+                                                          fontSize: 16,
+                                                          color: PdfColors
+                                                              .green,
+                                                        )
+                                                    ),
+                                                    pw.SizedBox(height: 30),
+                                                    pw.Container(
+                                                        height: 100,
+                                                        padding: const pw
+                                                            .EdgeInsets.only(
+                                                            left: 20),
+                                                        //alignment: pw.Alignment.centerLeft,
+                                                        child: pw.Column(
+                                                            children: [
+                                                              pw.Text(
+                                                                  'Payment Info:',
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 16,
+                                                                    color: PdfColors
+                                                                        .green,
+                                                                  )
+                                                              ),
+                                                              pw.Text(
+                                                                  'Account No.: 6266789156',
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 14,
+                                                                    color: PdfColors
+                                                                        .black,
+                                                                  )
+                                                              ),
+                                                              pw.Text(
+                                                                  'Account Type: Cheque',
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 14,
+                                                                    color: PdfColors
+                                                                        .black,
+                                                                  )
+                                                              ),
+                                                              pw.Row(
+                                                                  children: [
+                                                                    pw.Text(
+                                                                        'Account Holder: ',
+                                                                        style: pw
+                                                                            .TextStyle(
+                                                                          fontWeight: pw
+                                                                              .FontWeight
+                                                                              .bold,
+                                                                          fontSize: 14,
+                                                                          color: PdfColors
+                                                                              .black,
+                                                                        )
+                                                                    ),
+                                                                    pw.Text(
+                                                                        snapshot
+                                                                            .data
+                                                                            .companyName,
+                                                                        style: pw
+                                                                            .TextStyle(
+                                                                          fontWeight: pw
+                                                                              .FontWeight
+                                                                              .bold,
+                                                                          fontSize: 14,
+                                                                          color: PdfColors
+                                                                              .black,
+                                                                        )
+                                                                    ),
+                                                                  ]
+                                                              ),
+                                                              pw.Text(
+                                                                  'Bank: FNB',
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 14,
+                                                                    color: PdfColors
+                                                                        .black,
+                                                                  )
+                                                              ),
+                                                            ]
+                                                        )
+                                                    ),
+                                                    pw.SizedBox(height: 15),
+                                                    pw.Container(
+                                                        height: 80,
+                                                        padding: const pw
+                                                            .EdgeInsets.only(
+                                                            left: 20),
+                                                        alignment: pw.Alignment
+                                                            .centerLeft,
+                                                        child: pw.Column(
+                                                            children: [
+                                                              pw.Text(
+                                                                  'Terms and Conditions',
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 14,
+                                                                    color: PdfColors
+                                                                        .green,
+                                                                  )
+                                                              ),
+                                                              pw.Text(
+                                                                  pw.LoremText()
+                                                                      .paragraph(
+                                                                      20),
+                                                                  style: pw
+                                                                      .TextStyle(
+                                                                    fontWeight: pw
+                                                                        .FontWeight
+                                                                        .bold,
+                                                                    fontSize: 10,
+                                                                    color: PdfColors
+                                                                        .black,
+                                                                  )
+                                                              )
+                                                            ]
+                                                        )
+                                                    ),
+
+                                                  ],
                                                 ),
-
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ]
-                                );
-                              })); //
+                                        ]
+                                    );
+                                  })); //
 
-                          final output = await getTemporaryDirectory();
+                              final output = await getTemporaryDirectory();
 
 
-                          final file = File('${output.path}/example.pdf');
-                           await file.writeAsBytes(pdf.save());
+                              final file = File('${output.path}/example.pdf');
+                              await file.writeAsBytes(pdf.save());
 
 
-                            String time = DateTime.now().toString();
-                            StorageReference firebaseStorageRef = FirebaseStorage.instance
-                                .ref()
-                                .child("PDFs/");
-                            StorageUploadTask uploadTask = firebaseStorageRef.child(
-                                time + ".pdf").putFile(file);
+                              String time = DateTime.now().toString();
+                              StorageReference firebaseStorageRef = FirebaseStorage
+                                  .instance
+                                  .ref()
+                                  .child("PDFs/");
+                              StorageUploadTask uploadTask = firebaseStorageRef
+                                  .child(
+                                  time + ".pdf").putFile(file);
 
-                          var pdfUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-                            url = pdfUrl.toString();
+                              var pdfUrl = await (await uploadTask.onComplete)
+                                  .ref.getDownloadURL();
+                              url = pdfUrl.toString();
 
 
-                            print("Pdf Url= " + url);
+                              print("Pdf Url= " + url);
 
 
-                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                              .setData({
-                            'text': 'I am happy to accept that offer. You can find your invoice here:',
-                            'senderUid': user.uid,
-                            'receiverUid': widget.otherUid,
-                            'clickable': false,
-                          });
-                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                              .setData({
-                            'text': '$url',
-                            'senderUid': user.uid,
-                            'receiverUid': widget.otherUid,
-                            'clickable': true,
-                          });
+                              _firestore.collection('chatMessages').document(
+                                  DateTime.now().toIso8601String())
+                                  .setData({
+                                'text': 'I am happy to accept that offer. You can find your invoice here:',
+                                'senderUid': user.uid,
+                                'receiverUid': widget.otherUid,
+                                'clickable': false,
+                              });
+                              _firestore.collection('chatMessages').document(
+                                  DateTime.now().toIso8601String())
+                                  .setData({
+                                'text': '$url',
+                                'senderUid': user.uid,
+                                'receiverUid': widget.otherUid,
+                                'clickable': true,
+                              });
 
-                          _firestore.collection('transactions').document()
-                              .setData({
-                            'senderUid': snapshot.data.senderUid,
-                            'receiverUid': snapshot.data.receiverUid,
-                            'stemLength': snapshot.data.stemLength,
-                            'companyName': snapshot.data.companyName,
-                            'datePicked':snapshot.data.datePicked,
-                            'photoUrl': snapshot.data.photoUrl,
-                            'flowerColour':snapshot.data.flowerColour,
-                            'flowerType':snapshot.data.flowerType,
-                            'quantity': snapshot.data.quantity.toInt(),
-                            'price': snapshot.data.price.toInt(),
-                            'totalPrice': snapshot.data.totalPrice.toInt(),
-                            'invoiceUrl': url,
-                          });
-                                                                                                   },
-                        color: Colors.green,
-                        child: Text(
-                          'Accept',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
+                              _firestore.collection('transactions').document()
+                                  .setData({
+                                'senderUid': snapshot.data.senderUid,
+                                'receiverUid': snapshot.data.receiverUid,
+                                'stemLength': snapshot.data.stemLength,
+                                'companyName': snapshot.data.companyName,
+                                'datePicked': snapshot.data.datePicked,
+                                'photoUrl': snapshot.data.photoUrl,
+                                'flowerColour': snapshot.data.flowerColour,
+                                'flowerType': snapshot.data.flowerType,
+                                'quantity': snapshot.data.quantity.toInt(),
+                                'price': snapshot.data.price.toInt(),
+                                'totalPrice': snapshot.data.totalPrice.toInt(),
+                                'invoiceUrl': url,
+                              });
+                            },
+                            color: Colors.green,
+                            child: Text(
+                              'Accept',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
+                            ),
                           ),
+                          width: 200,
                         ),
-                      ),
-                      width: 200,
-                    ),
-                    SizedBox(
-                      child: FlatButton(
-                        onPressed: ()  {
-                          _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                              .setData({
-                            'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
-                            'senderUid': user.uid,
-                            'receiverUid': widget.otherUid,
-                            'clickable': false,
-                          });
-                          Firestore.instance
-                              .collection('offers')
-                              .document(user.uid).delete();
-
-
-
-
-
-                        },
-                        color: Colors.red,
-                        child: Text(
-                          'Reject',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
+                        SizedBox(
+                          child: FlatButton(
+                            onPressed: () {
+                              _firestore.collection('chatMessages').document(
+                                  DateTime.now().toIso8601String())
+                                  .setData({
+                                'text': 'Unfortunately I cannot accept that offer. Please send an improved offer and I will consider it!',
+                                'senderUid': user.uid,
+                                'receiverUid': widget.otherUid,
+                                'clickable': false,
+                              });
+                              Firestore.instance
+                                  .collection('offers')
+                                  .document(user.uid).delete();
+                            },
+                            color: Colors.red,
+                            child: Text(
+                              'Reject',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      width: 200,
-                    )
-                  ],
-                );
-              }
-              else {
-               print('no snapshot');
-               return Container();
-              }
-            }),
+                          width: 200,
+                        )
+                      ],
+                    );
+                  }
+                  else {
+                    print('no snapshot');
+                    return Container();
+                  }
+                }),
             Container(
               decoration: BoxDecoration(
                 border: Border(
@@ -507,7 +623,6 @@ return null;
                     child: TextField(
                       controller: messageTextController,
                       onChanged: (value) {
-
                         messageText = value;
                       },
 
@@ -524,16 +639,14 @@ return null;
                     onPressed: () {
                       messageTextController.clear();
 
-                      _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                      _firestore.collection('chatMessages').document(
+                          DateTime.now().toIso8601String())
                           .setData({
                         'text': messageText,
                         'senderUid': user.uid,
                         'receiverUid': widget.otherUid,
                         'clickable': false,
                       });
-
-
-
                     },
                     child: Text(
                       'Send',
@@ -545,146 +658,174 @@ return null;
                     ),
                   ),
 
-                    StreamBuilder<UserData>(
+                  StreamBuilder<UserData>(
                       stream: DatabaseService(uid: user.uid).userData,
                       builder: (context, snapshot) {
-                        if(snapshot.hasData){
-                        if(snapshot.data.role == 'buyer'){
-                        return RaisedButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                isScrollControlled:true,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(20.0)),
-                                context: context,
-                                builder: (BuildContext bc) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 50.0),
-                                    child: Container(
-                                      height: 500,
-                                      width: 400,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .start,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .center,
-                                        children: [
-                                          Text(
-                                            'Make an Offer:',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 25,
-                                            ),
-                                          ),
-                                          SizedBox(height: 20,),
-                                          Row(
+                        if (snapshot.hasData) {
+                          if (snapshot.data.role == 'buyer') {
+                            return RaisedButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(20.0)),
+                                    context: context,
+                                    builder: (BuildContext bc) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 50.0),
+                                        child: Container(
+                                          height: 500,
+                                          width: 400,
+                                          child: Column(
                                             mainAxisAlignment: MainAxisAlignment
-                                                .center,
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .center,
-                                            children: <Widget>[
-                                              Text(
-                                                'Quantity:',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              StatefulBuilder(
-                                                builder: (context, setState) {
-                                                  return Slider(
-                                                    value: _currentSliderValue,
-                                                    min: 0,
-                                                    max: widget.cartItem.quantity.toDouble(),
-                                                    divisions: 10,
-                                                    activeColor: Colors.green,
-                                                    inactiveColor: Colors
-                                                        .lightGreen,
-                                                    label: _currentSliderValue
-                                                        .round().toString(),
-                                                      onChanged: (val) {
-                                                        setState(() {
-                                                          _currentSliderValue = val;
-                                                          total = ( _currentSliderValue  * double.parse(price)).toInt().toString();
-                                                          print(total);
-                                                        });
-                                                      }
-
-                                                  );
-                                                }
-                                              ),
-
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .center,
+                                                .start,
                                             crossAxisAlignment: CrossAxisAlignment
                                                 .center,
                                             children: [
                                               Text(
-                                                'Price per stem:',
+                                                'Make an Offer:',
                                                 style: TextStyle(
-                                                  color: Colors.black,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
+                                                  fontSize: 25,
                                                 ),
                                               ),
-                                              SizedBox(width: 20,),
-                                              SizedBox(
-                                                height: 40,
-                                                width: 100,
-                                                child: TextFormField(
-                                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                    inputFormatters: <
-                                                        TextInputFormatter>[
-                                                      FilteringTextInputFormatter
-                                                          .digitsOnly
-                                                    ],
-                                                    decoration: InputDecoration(
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      labelText: 'R',
-                                                      border: OutlineInputBorder(
-                                                        borderRadius: BorderRadius
-                                                            .circular(25),
-                                                        borderSide: BorderSide(
-                                                            color: Colors.green,
-                                                            width: 2),
-                                                      ),
+                                              SizedBox(height: 20,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .center,
+                                                crossAxisAlignment: CrossAxisAlignment
+                                                    .center,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Quantity:',
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight
+                                                          .bold,
+                                                      fontSize: 16,
                                                     ),
-                                                    validator: (val) =>
-                                                    val.isEmpty ? 'R' : null,
-                                                    onChanged: (val) {
-                                                      setState(() {
-                                                        price = val;
-                                                        total = ( _currentSliderValue  * double.parse(price)).toInt().toString();
-                                                        print(total);
-                                                      });
-                                                    }),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 20,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .center,
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .center,
-                                            children: [
-                                              Text(
-                                                'Total Amount: R$total',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              SizedBox(width: 20,),
+                                                  ),
+                                                  StatefulBuilder(
+                                                      builder: (context,
+                                                          setState) {
+                                                        return Slider(
+                                                            value: _currentSliderValue,
+                                                            min: 0,
+                                                            max: widget.cartItem
+                                                                .quantity
+                                                                .toDouble(),
+                                                            divisions: 10,
+                                                            activeColor: Colors
+                                                                .green,
+                                                            inactiveColor: Colors
+                                                                .lightGreen,
+                                                            label: _currentSliderValue
+                                                                .round()
+                                                                .toString(),
+                                                            onChanged: (val) {
+                                                              setState(() {
+                                                                _currentSliderValue =
+                                                                    val;
+                                                                total =
+                                                                    (_currentSliderValue *
+                                                                        double
+                                                                            .parse(
+                                                                            price))
+                                                                        .toInt()
+                                                                        .toString();
+                                                                print(total);
+                                                              });
+                                                            }
 
-                                              /*SizedBox(
+                                                        );
+                                                      }
+                                                  ),
+
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .center,
+                                                crossAxisAlignment: CrossAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  Text(
+                                                    'Price per stem:',
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight
+                                                          .bold,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 20,),
+                                                  SizedBox(
+                                                    height: 40,
+                                                    width: 100,
+                                                    child: TextFormField(
+                                                        keyboardType: TextInputType
+                                                            .numberWithOptions(
+                                                            decimal: true),
+                                                        inputFormatters: <
+                                                            TextInputFormatter>[
+                                                          FilteringTextInputFormatter
+                                                              .digitsOnly
+                                                        ],
+                                                        decoration: InputDecoration(
+                                                          filled: true,
+                                                          fillColor: Colors
+                                                              .white,
+                                                          labelText: 'R',
+                                                          border: OutlineInputBorder(
+                                                            borderRadius: BorderRadius
+                                                                .circular(25),
+                                                            borderSide: BorderSide(
+                                                                color: Colors
+                                                                    .green,
+                                                                width: 2),
+                                                          ),
+                                                        ),
+                                                        validator: (val) =>
+                                                        val.isEmpty
+                                                            ? 'R'
+                                                            : null,
+                                                        onChanged: (val) {
+                                                          setState(() {
+                                                            price = val;
+                                                            total =
+                                                                (_currentSliderValue *
+                                                                    double
+                                                                        .parse(
+                                                                        price))
+                                                                    .toInt()
+                                                                    .toString();
+                                                            print(total);
+                                                          });
+                                                        }),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 20,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .center,
+                                                crossAxisAlignment: CrossAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  Text(
+                                                    'Total Amount: R$total',
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight
+                                                          .bold,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 20,),
+
+                                                  /*SizedBox(
                                                 height: 50,
                                                 width: 100,
                                                 child: TextFormField(
@@ -706,98 +847,133 @@ return null;
                                                   // decoration: textInputDecoration,
                                                 ),
                                               ),*/
+                                                ],
+                                              ),
+                                              SizedBox(height: 40,),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 20.0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment
+                                                      .end,
+                                                  crossAxisAlignment: CrossAxisAlignment
+                                                      .end,
+                                                  children: [
+                                                    FlatButton(
+                                                        color: Colors.green,
+                                                        child: Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white,
+                                                              fontWeight: FontWeight
+                                                                  .bold
+                                                          ),
+                                                        ),
+                                                        onPressed: () async {
+                                                          Navigator.pop(
+                                                              context);
+                                                        }
+                                                    ),
+                                                    SizedBox(width: 10,),
+                                                    FlatButton(
+                                                        color: Colors.green,
+                                                        child: Text(
+                                                          'Offer',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white,
+                                                              fontWeight: FontWeight
+                                                                  .bold
+                                                          ),
+                                                        ),
+                                                        onPressed: () async {
+                                                          int quant = _currentSliderValue
+                                                              .toInt();
+                                                          double doublePrice = double
+                                                              .parse(price);
+
+                                                          _firestore.collection(
+                                                              'chatMessages')
+                                                              .document(DateTime
+                                                              .now()
+                                                              .toIso8601String())
+                                                              .setData({
+                                                            'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
+                                                            'senderUid': user
+                                                                .uid,
+                                                            'receiverUid': widget
+                                                                .otherUid,
+                                                            'clickable': false,
+                                                          });
+
+                                                          _firestore.collection(
+                                                              'offers')
+                                                              .document(widget
+                                                              .otherUid)
+                                                              .setData({
+                                                            'senderUid': user
+                                                                .uid,
+                                                            'receiverUid': widget
+                                                                .otherUid,
+                                                            'stemLength': widget
+                                                                .cartItem
+                                                                .stemLength,
+                                                            'companyName': widget
+                                                                .cartItem
+                                                                .companyName,
+                                                            'datePicked': widget
+                                                                .cartItem
+                                                                .datePicked,
+                                                            'photoUrl': widget
+                                                                .cartItem
+                                                                .photoUrl,
+                                                            'flowerColour': widget
+                                                                .cartItem
+                                                                .flowerColour,
+                                                            'flowerType': widget
+                                                                .cartItem
+                                                                .flowerType,
+                                                            'quantity': _currentSliderValue,
+                                                            'price': doublePrice,
+                                                            'totalPrice': _currentSliderValue *
+                                                                double.parse(
+                                                                    price),
+                                                          });
+                                                          print('fired');
+                                                          Navigator.pop(
+                                                              context);
+                                                        }
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+
                                             ],
                                           ),
-                                          SizedBox(height: 40,),
-                                          Padding(
-                                            padding: const EdgeInsets.only(right: 20.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment
-                                                  .end,
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .end,
-                                              children: [
-                                                FlatButton(
-                                                    color: Colors.green,
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      ),
-                                                    ),
-                                                    onPressed: () async {
-                                                      Navigator.pop(context);
-                                                    }
-                                                ),
-                                                SizedBox(width: 10,),
-                                                FlatButton(
-                                                    color: Colors.green,
-                                                    child: Text(
-                                                      'Offer',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      ),
-                                                    ),
-                                                    onPressed: () async {
-                                                      int quant = _currentSliderValue.toInt();
-                                                      double doublePrice = double.parse(price);
+                                        ),
+                                      );
+                                    }
 
-                                                      _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                                                          .setData({
-                                                        'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
-                                                        'senderUid': user.uid,
-                                                        'receiverUid': widget.otherUid,
-                                                        'clickable': false,});
-
-                                                      _firestore.collection('offers').document(widget.otherUid)
-                                                          .setData({
-                                                        'senderUid': user.uid,
-                                                        'receiverUid': widget.otherUid,
-                                                        'stemLength': widget.cartItem.stemLength,
-                                                        'companyName':widget.cartItem.companyName,
-                                                        'datePicked':widget.cartItem.datePicked,
-                                                        'photoUrl':widget.cartItem.photoUrl,
-                                                        'flowerColour':widget.cartItem.flowerColour,
-                                                        'flowerType':widget.cartItem.flowerType,
-                                                        'quantity': _currentSliderValue,
-                                                        'price': doublePrice,
-                                                        'totalPrice': _currentSliderValue  * double.parse(price),
-                                                      });
-                                                      print('fired');
-                                                      Navigator.pop(context);
-                                                    }
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-
+                                );
+                                messageTextController.clear();
+                              },
+                              color: Colors.lightGreen,
+                              child: Text(
+                                'Offer',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                ),
+                              ),
                             );
-                            messageTextController.clear();
-                          },
-                          color: Colors.lightGreen,
-                          child: Text(
-                            'Offer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                        );}}
+                          }
+                        }
                         return Container();
                       }
-                    ),
-                                 ],
+                  ),
+                ],
               ),
             ),
             //searchList()
@@ -806,100 +982,6 @@ return null;
       ),
     );
   }
-
-  Future<void> _createPDF() async  {
-    var doc = pw.Document();
-
-    String _formatDate(DateTime date) {
-      final format = DateFormat.yMMMd('en_US');
-      return format.format(date);
-    }
-    var logo = PdfImage.file(
-      doc.document,
-      bytes: (await rootBundle.load('assets/bloomlogo.png')).buffer.asUint8List(),
-    );
-
-    doc.addPage(
-        pw.Page(
-            pageFormat: PdfPageFormat.a4,
-            build: (pw.Context context){
-              return pw.Column(
-                  children: [
-                    pw.Row(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Expanded(
-                          child: pw.Column(
-                            children: [
-                              pw.Container(
-                                height: 50,
-                                padding: const pw.EdgeInsets.only(left: 20),
-                                alignment: pw.Alignment.centerLeft,
-                                child: pw.Text(
-                                  'INVOICE',
-                                  style: pw.TextStyle(
-                                    color: PdfColors.black,
-                                    fontWeight: pw.FontWeight.bold,
-                                    fontSize: 40,
-                                  ),
-                                ),
-                              ),
-                              pw.Container(
-                                decoration: pw.BoxDecoration(
-                                  color: PdfColors.green,
-                                ),
-                                padding: const pw.EdgeInsets.only(
-                                    left: 40, top: 10, bottom: 10, right: 20),
-                                alignment: pw.Alignment.centerLeft,
-                                height: 50,
-                                child: pw.DefaultTextStyle(
-                                  style: pw.TextStyle(
-                                    color: PdfColors.white,
-                                    fontSize: 12,
-                                  ),
-                                  child: pw.GridView(
-                                    crossAxisCount: 2,
-                                    children: [
-                                      pw.Text('Invoice #'),
-                                      pw.Text('995342'),
-                                      pw.Text('Date:'),
-                                      pw.Text(_formatDate(DateTime.now())),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        pw.Expanded(
-                          child: pw.Column(
-                            mainAxisSize: pw.MainAxisSize.min,
-                            children: [
-                              pw.Container(
-                                alignment: pw.Alignment.topRight,
-                                padding: const pw.EdgeInsets.only(bottom: 8, left: 30),
-                                height: 72,
-                                child: logo != null ? pw.Image(logo) : pw.PdfLogo(),
-                              ),
-                              // pw.Container(
-                              //   color: baseColor,
-                              //   padding: pw.EdgeInsets.only(top: 3),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]
-              );
-            }
-        )
-    );
-
-    return doc.save();
-  }
-
-
 }
 
 
@@ -960,9 +1042,6 @@ if((message.data['senderUid'] == user.uid || message.data['senderUid'] == otherP
     );
   }
 }
-
-
-
 
 class MessageBubble extends StatelessWidget {
 
