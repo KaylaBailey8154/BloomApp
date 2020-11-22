@@ -22,7 +22,7 @@ class MyTransactionTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8),
       child: Container(
-        height: 150,
+        height: 120,
         width: 100,
         child: Card(
           margin: EdgeInsets.fromLTRB(20, 6, 20, 0),

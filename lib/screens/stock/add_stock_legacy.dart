@@ -113,7 +113,7 @@ class _AddStockMultiplePhotosState extends State<AddStockMultiplePhotos> {
          return Column(
            children: <Widget>[
              CarouselSlider(
-               options: CarouselOptions(height: 300, autoPlay: true,autoPlayInterval: Duration(seconds: 3),
+               options: CarouselOptions(height: 300, autoPlay: true,autoPlayInterval: Duration(seconds: 4),
                  autoPlayAnimationDuration: Duration(milliseconds: 800),),
                items: images.map((image) => AssetThumb(asset: image,width: 300,height: 300,),).toList(),
              ),

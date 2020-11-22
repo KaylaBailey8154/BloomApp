@@ -79,6 +79,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
 
     final user = Provider.of<User>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: StreamBuilder<UserData>(
           stream: DatabaseService(uid: user.uid).userData,
           builder: (context, snapshot) {
@@ -238,28 +239,7 @@ class _SupplierDetailsFormState extends State<SupplierDetailsForm> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Upload accreditation document:   ',
-                          ),
-                          SizedBox(
-                            height: 30,
-                            width: 100,
-                            child: FlatButton(
-                              onPressed: () {
-                                authUploaded = true;
-                              },
-                              color: Colors.green,
-                              child: Text('Browse'),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+
                       SizedBox(
                         height: 20,
                       ),
