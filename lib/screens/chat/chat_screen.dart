@@ -71,7 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     print("Image Url= " + url);
   }
-  
+
   Future<CartItem> theItemInQuestion (String theirRole, String myUid, String theirUid) async {
      QuerySnapshot query = await Firestore.instance.collection('cartItems').getDocuments();
 
@@ -173,9 +173,222 @@ return null;
                           pdf.addPage(pw.Page(
                               pageFormat: PdfPageFormat.a4,
                               build: (pw.Context context) {
-                                return pw.Center(
-                                  child: pw.Text(snapshot.data.companyName),
-                                ); // Center
+                                return  pw.Column(
+                                    children: [
+                                      pw.Row(
+                                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Expanded(
+                                            child: pw.Column(
+                                              children: [
+                                                pw.Container(
+                                                  height: 50,
+                                                  padding: const pw.EdgeInsets.only(left: 20),
+                                                  alignment: pw.Alignment.centerLeft,
+                                                  child: pw.Text(
+                                                    'INVOICE',
+                                                    style: pw.TextStyle(
+                                                      color: PdfColors.black,
+                                                      fontWeight: pw.FontWeight.bold,
+                                                      fontSize: 40,
+                                                    ),
+                                                  ),
+                                                ),
+                                                pw.Container(
+                                                  decoration: pw.BoxDecoration(
+                                                    color: PdfColors.green,
+                                                  ),
+                                                  padding: const pw.EdgeInsets.only(
+                                                      left: 40, top: 10, bottom: 10, right: 20),
+                                                  alignment: pw.Alignment.centerLeft,
+                                                  height: 50,
+                                                  child: pw.DefaultTextStyle(
+                                                    style: pw.TextStyle(
+                                                      color: PdfColors.white,
+                                                      fontSize: 14,
+                                                    ),
+                                                    child: pw.GridView(
+                                                      crossAxisCount: 2,
+                                                      children: [
+                                                        pw.Text('Invoice #'),
+                                                        pw.Text('995342'),
+                                                        pw.Text('Date:'),
+                                                        pw.Text(DateTime.now().toString()),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                pw.SizedBox(height: 15),
+                                                pw.Row(
+                                                  children: [
+                                                    pw.Text('Total:',
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw.FontWeight.bold,
+                                                          fontSize: 20,
+                                                        )),
+                                                    pw.SizedBox(width: 10),
+                                                    pw.Text('R',
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw.FontWeight.bold,
+                                                          fontSize: 20,
+                                                        )),
+                                                    pw.Text(
+                                                        snapshot.data.totalPrice.toString(),
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw.FontWeight.bold,
+                                                          fontSize: 20,
+                                                        )
+                                                    ),
+                                                    pw.SizedBox(width: 50),
+                                                    pw.Text('Invoice from:',
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw.FontWeight.bold,
+                                                          fontSize: 20,
+                                                        )),
+                                                    pw.SizedBox(width: 10),
+                                                    pw.Text(snapshot.data.companyName,
+                                                        style: pw.TextStyle(
+                                                          fontWeight: pw.FontWeight.bold,
+                                                          fontSize: 20,
+                                                        )),
+                                                  ]
+                                                ),
+                                                pw.Container(
+                                                  color: PdfColors.white,
+                                                  padding: pw.EdgeInsets.all(20.0),
+                                                  child: pw.Table(
+                                                    border: pw.TableBorder(bottom: true, top: true, left: true, right: true, color: PdfColors.black),
+                                                    children: [
+                                                      pw.TableRow(children: [
+                                                        pw.Text(
+                                                            'Item Description',
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 16,
+                                                          )
+                                                        ),
+                                                        pw.Text(
+                                                            'Price (R)',
+                                                            style: pw.TextStyle(
+                                                              fontWeight: pw.FontWeight.bold,
+                                                              fontSize: 16,
+                                                            )),
+                                                        pw.Text('Quantity',
+                                                            style: pw.TextStyle(
+                                                              fontWeight: pw.FontWeight.bold,
+                                                              fontSize: 16,
+                                                            )
+                                                        ),
+                                                      ]),
+                                                      pw.TableRow(children: [
+                                                        pw.Text(snapshot.data.flowerType,
+                                                            style: pw.TextStyle(
+                                                              fontSize: 14,
+                                                            )),
+                                                        pw.Text(snapshot.data.price.toString(),
+                                                            style: pw.TextStyle(
+                                                              fontSize: 14,
+                                                            )),
+                                                        pw.Text(snapshot.data.quantity.toString(),
+                                                            style: pw.TextStyle(
+                                                              fontSize: 14,
+                                                            )),
+                                                      ])
+                                                    ],
+                                                  ),
+                                                ),
+                                                pw.Text(
+                                                  'Thank you for doing business with us!',
+                                                    style: pw.TextStyle(
+                                                      fontWeight: pw.FontWeight.bold,
+                                                      fontSize: 16,
+                                                      color: PdfColors.green,
+                                                    )
+                                                ),
+                                                pw.SizedBox(height: 30),
+                                                pw.Container(
+                                                  height: 100,
+                                                  padding: const pw.EdgeInsets.only(left: 20),
+                                                  //alignment: pw.Alignment.centerLeft,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      pw.Text(
+                                                          'Payment Info:',
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 16,
+                                                            color: PdfColors.green,
+                                                          )
+                                                      ),
+                                                      pw.Text(
+                                                          'Account No.: 6266789156',
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 14,
+                                                            color: PdfColors.black,
+                                                          )
+                                                      ),
+                                                      pw.Text(
+                                                             'Account Type: Cheque'  ,
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 14,
+                                                            color: PdfColors.black,
+                                                          )
+                                                      ),
+                                                      pw.Text(
+                                                          'Account Holder: Flori Farms',
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 14,
+                                                            color: PdfColors.black,
+                                                          )
+                                                      ),
+                                                      pw.Text(
+                                                          'Bank: FNB'  ,
+                                                          style: pw.TextStyle(
+                                                            fontWeight: pw.FontWeight.bold,
+                                                            fontSize: 14,
+                                                            color: PdfColors.black,
+                                                          )
+                                                      ),
+                                                    ]
+                                                  )
+                                                ),
+                                                pw.SizedBox(height: 15),
+                                                pw.Container(
+                                                    height: 80,
+                                                    padding: const pw.EdgeInsets.only(left: 20),
+                                                    alignment: pw.Alignment.centerLeft,
+                                                    child: pw.Column(
+                                                        children: [
+                                                          pw.Text(
+                                                              'Terms and Conditions',
+                                                              style: pw.TextStyle(
+                                                                fontWeight: pw.FontWeight.bold,
+                                                                fontSize: 14,
+                                                                color: PdfColors.green,
+                                                              )
+                                                          ),
+                                                          pw.Text(
+                                                              pw.LoremText().paragraph(20),
+                                                              style: pw.TextStyle(
+                                                                fontWeight: pw.FontWeight.bold,
+                                                                fontSize: 10,
+                                                                color: PdfColors.black,
+                                                              )
+                                                          )
+                                                        ]
+                                                    )
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ]
+                                );
                               })); //
 
                           final output = await getTemporaryDirectory();
@@ -318,7 +531,7 @@ return null;
                         'receiverUid': widget.otherUid,
                         'clickable': false,
                       });
-                      
+
 
 
                     },
@@ -340,20 +553,20 @@ return null;
                         return RaisedButton(
                           onPressed: () {
                             showModalBottomSheet(
+                                isScrollControlled:true,
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.circular(20.0)),
-                                isScrollControlled:true,
                                 context: context,
                                 builder: (BuildContext bc) {
                                   return Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.only(top: 50.0),
                                     child: Container(
-                                      height: 400,
+                                      height: 500,
                                       width: 400,
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment
-                                            .center,
+                                            .start,
                                         crossAxisAlignment: CrossAxisAlignment
                                             .center,
                                         children: [
@@ -495,68 +708,71 @@ return null;
                                               ),*/
                                             ],
                                           ),
-                                          SizedBox(height: 50,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .end,
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .end,
-                                            children: [
-                                              FlatButton(
-                                                  color: Colors.green,
-                                                  child: Text(
-                                                    'Cancel',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight: FontWeight
-                                                            .bold
+                                          SizedBox(height: 40,),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 20.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment
+                                                  .end,
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .end,
+                                              children: [
+                                                FlatButton(
+                                                    color: Colors.green,
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight
+                                                              .bold
+                                                      ),
                                                     ),
-                                                  ),
-                                                  onPressed: () async {
-                                                    Navigator.pop(context);
-                                                  }
-                                              ),
-                                              SizedBox(width: 10,),
-                                              FlatButton(
-                                                  color: Colors.green,
-                                                  child: Text(
-                                                    'Offer',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight: FontWeight
-                                                            .bold
+                                                    onPressed: () async {
+                                                      Navigator.pop(context);
+                                                    }
+                                                ),
+                                                SizedBox(width: 10,),
+                                                FlatButton(
+                                                    color: Colors.green,
+                                                    child: Text(
+                                                      'Offer',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight
+                                                              .bold
+                                                      ),
                                                     ),
-                                                  ),
-                                                  onPressed: () async {
-                                                    int quant = _currentSliderValue.toInt();
-                                                    double doublePrice = double.parse(price);
+                                                    onPressed: () async {
+                                                      int quant = _currentSliderValue.toInt();
+                                                      double doublePrice = double.parse(price);
 
-                                                    _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
-                                                        .setData({
-                                                      'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
-                                                      'senderUid': user.uid,
-                                                      'receiverUid': widget.otherUid,
-                                                      'clickable': false,});
+                                                      _firestore.collection('chatMessages').document(DateTime.now().toIso8601String())
+                                                          .setData({
+                                                        'text': 'I would like to offer you R$price per stem for $quant stems. The total price for this is R$total',
+                                                        'senderUid': user.uid,
+                                                        'receiverUid': widget.otherUid,
+                                                        'clickable': false,});
 
-                                                    _firestore.collection('offers').document(widget.otherUid)
-                                                        .setData({
-                                                      'senderUid': user.uid,
-                                                      'receiverUid': widget.otherUid,
-                                                      'stemLength': widget.cartItem.stemLength,
-                                                      'companyName':widget.cartItem.companyName,
-                                                      'datePicked':widget.cartItem.datePicked,
-                                                      'photoUrl':widget.cartItem.photoUrl,
-                                                      'flowerColour':widget.cartItem.flowerColour,
-                                                      'flowerType':widget.cartItem.flowerType,
-                                                      'quantity': _currentSliderValue,
-                                                      'price': doublePrice,
-                                                      'totalPrice': _currentSliderValue  * double.parse(price),
-                                                    });
-                                                    print('fired');
-                                                    Navigator.pop(context);
-                                                  }
-                                              ),
-                                            ],
+                                                      _firestore.collection('offers').document(widget.otherUid)
+                                                          .setData({
+                                                        'senderUid': user.uid,
+                                                        'receiverUid': widget.otherUid,
+                                                        'stemLength': widget.cartItem.stemLength,
+                                                        'companyName':widget.cartItem.companyName,
+                                                        'datePicked':widget.cartItem.datePicked,
+                                                        'photoUrl':widget.cartItem.photoUrl,
+                                                        'flowerColour':widget.cartItem.flowerColour,
+                                                        'flowerType':widget.cartItem.flowerType,
+                                                        'quantity': _currentSliderValue,
+                                                        'price': doublePrice,
+                                                        'totalPrice': _currentSliderValue  * double.parse(price),
+                                                      });
+                                                      print('fired');
+                                                      Navigator.pop(context);
+                                                    }
+                                                ),
+                                              ],
+                                            ),
                                           ),
 
                                         ],
@@ -591,8 +807,102 @@ return null;
     );
   }
 
+  Future<void> _createPDF() async  {
+    var doc = pw.Document();
+
+    String _formatDate(DateTime date) {
+      final format = DateFormat.yMMMd('en_US');
+      return format.format(date);
+    }
+    var logo = PdfImage.file(
+      doc.document,
+      bytes: (await rootBundle.load('assets/bloomlogo.png')).buffer.asUint8List(),
+    );
+
+    doc.addPage(
+        pw.Page(
+            pageFormat: PdfPageFormat.a4,
+            build: (pw.Context context){
+              return pw.Column(
+                  children: [
+                    pw.Row(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                          child: pw.Column(
+                            children: [
+                              pw.Container(
+                                height: 50,
+                                padding: const pw.EdgeInsets.only(left: 20),
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                  'INVOICE',
+                                  style: pw.TextStyle(
+                                    color: PdfColors.black,
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 40,
+                                  ),
+                                ),
+                              ),
+                              pw.Container(
+                                decoration: pw.BoxDecoration(
+                                  color: PdfColors.green,
+                                ),
+                                padding: const pw.EdgeInsets.only(
+                                    left: 40, top: 10, bottom: 10, right: 20),
+                                alignment: pw.Alignment.centerLeft,
+                                height: 50,
+                                child: pw.DefaultTextStyle(
+                                  style: pw.TextStyle(
+                                    color: PdfColors.white,
+                                    fontSize: 12,
+                                  ),
+                                  child: pw.GridView(
+                                    crossAxisCount: 2,
+                                    children: [
+                                      pw.Text('Invoice #'),
+                                      pw.Text('995342'),
+                                      pw.Text('Date:'),
+                                      pw.Text(_formatDate(DateTime.now())),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        pw.Expanded(
+                          child: pw.Column(
+                            mainAxisSize: pw.MainAxisSize.min,
+                            children: [
+                              pw.Container(
+                                alignment: pw.Alignment.topRight,
+                                padding: const pw.EdgeInsets.only(bottom: 8, left: 30),
+                                height: 72,
+                                child: logo != null ? pw.Image(logo) : pw.PdfLogo(),
+                              ),
+                              // pw.Container(
+                              //   color: baseColor,
+                              //   padding: pw.EdgeInsets.only(top: 3),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]
+              );
+            }
+        )
+    );
+
+    return doc.save();
+  }
+
 
 }
+
+
 
 class MessagesStream extends StatelessWidget {
   final String otherParty;
@@ -650,6 +960,8 @@ if((message.data['senderUid'] == user.uid || message.data['senderUid'] == otherP
     );
   }
 }
+
+
 
 
 class MessageBubble extends StatelessWidget {
